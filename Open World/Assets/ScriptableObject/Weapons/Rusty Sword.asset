@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2329ed0448a4747b6a9d7874b425ff, type: 3}
+  m_Name: Rusty Sword
+  m_EditorClassIdentifier: 
+  weaponName: Rusty Sword
+  weaponType: Sword
+  subStatType: 
+  isSubStatPercentage: 0
+  subStat: 0
+  rarity: 1
+  icon: {fileID: 21300000, guid: df1e21234524c8a45b077798b03ac261, type: 3}
+  effectName: 
+  effect: 
+  description: An old sword marked by time. It can seems useless but it can still
+    serve its purpose.
+  BaseATK1: 23
+  BaseATK20: 68
+  BaseATK40: 113
+  BaseATK60: 168
+  BaseATK70: 0
+  BaseATK80: 0
+  BaseATK90: 0
+  BaseATK100: 0
+  incrementATK: 1.7
+  incrementSubStat: 0
+  equipPrefab: {fileID: 0}

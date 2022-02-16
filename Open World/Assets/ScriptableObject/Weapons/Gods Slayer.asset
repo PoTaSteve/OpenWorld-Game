@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2329ed0448a4747b6a9d7874b425ff, type: 3}
+  m_Name: Gods Slayer
+  m_EditorClassIdentifier: 
+  weaponName: Gods Slayer
+  weaponType: Bow
+  subStatType: Crit Rate
+  isSubStatPercentage: 1
+  subStat: 32.8
+  rarity: 5
+  icon: {fileID: 21300000, guid: 2b5cba0dbc9e14e439c3c0bf656fcb66, type: 3}
+  effectName: The Call
+  effect: Summons a friendly entity for 10 seconds. This entity will shoot a projectile
+    dealing 50% of base ATK every 1 second. This Effect has a cooldown of 25 seconds.
+  description: A bow used by the ancient hero Brytor to end the God's tiranny on
+    Earth.
+  BaseATK1: 0
+  BaseATK20: 0
+  BaseATK40: 0
+  BaseATK60: 0
+  BaseATK70: 0
+  BaseATK80: 0
+  BaseATK90: 0
+  BaseATK100: 0
+  incrementATK: 0
+  incrementSubStat: 0
+  equipPrefab: {fileID: 0}

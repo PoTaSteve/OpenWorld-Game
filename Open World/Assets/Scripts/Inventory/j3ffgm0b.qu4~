@@ -1,0 +1,475 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
+
+public class InventoryManager : MonoBehaviour
+{
+    public Dictionary<string, int> ItemToCount; // = new Dictionary<string, int>()
+    [Space]
+    public List<string> EquipmentTab = new List<string>();
+    public List<string> MaterialsTab = new List<string>();
+    public List<string> IngredientsTab = new List<string>();
+    public List<string> FoodTab = new List<string>();
+    public List<string> SpecialItemsTab = new List<string>();
+    [Space]
+    public GameObject[] Tabs = new GameObject[5];
+    public GameObject[] TabIcons = new GameObject[5];
+    [Space]
+    public Animator TabIconsAnim;
+    [Space]
+    public Color TabActiveColor;
+    public Color TabInactiveColor;
+    private int currentActiveTab = 0;
+    [Space]
+    public Sprite CommonBG;
+    public Sprite NotCommonBG;
+    public Sprite RareBG;
+    public Sprite EpicBG;
+    public Sprite LegendaryBG;
+    [Space]
+    private Color CommonNameSpace = new Color(144f / 255f, 144f / 255f, 144f / 255f);
+    private Color NotCommonNameSpace = new Color(24f / 255f, 126f / 255f, 24f / 255f);
+    private Color RareNameSpace = new Color(31f / 255f, 84f / 255f, 255f / 169f);
+    private Color EpicNameSpace = new Color(146f / 255f, 38f / 255f, 197f / 255f);
+    private Color LegendaryNameSpace = new Color(217f / 255f, 130f / 255f, 0f / 255f);
+    [Space]
+    public Sprite PadlockOpen;
+    public Sprite PadlockClosed;
+    public Color openPadlockColBG = Color.white;
+    public Color closedPadlockColBG = new Color(75f / 255f, 75f / 255f, 75f / 255f);
+    public Color openPadlockCol = new Color(175f / 255f, 175f / 255f, 175f / 255f);
+    public Color closedPadlockCol = new Color(1, 100f / 255f, 100f / 255f);
+    [Space]
+    public GameObject DomainSourcePrefab;
+    public GameObject OtherSourcePrefab;
+    [Space]
+    public GameObject AttackBuffIcon;
+    public GameObject DefenseBuffIcon;
+    public GameObject HealIcon;
+    public GameObject RegenIcon;
+    public GameObject StatusBuffIcon;
+    public GameObject PotionIcon;
+    [Space]
+    public GameObject WeaponInvSlot;
+    public GameObject MaterialInvSlot;
+    public GameObject IngredientInvSlot;
+    public GameObject FoodInvSlot;
+    public GameObject SpecialItemInvSlot;
+    [Space]
+    public GameObject WeaponInvWindow;
+    public GameObject MaterialInvWindow;
+    public GameObject IngredientInvWindow;
+    public GameObject FoodInvWindow;
+    public GameObject SpecialItemInvWindow;
+    [Space]
+    public GameObject WeaponInvDetails;
+    public GameObject MaterialInvDetails;
+    public GameObject IngredientInvDetails;
+    public GameObject FoodInvDetails;
+    public GameObject SpecialItemInvDetails;
+    [Space]
+    public Color inactiveLevelAscension = new Color(75f / 255f, 75f / 255f, 75f / 255f, 1f);
+    public Color activeLevelAscension = Color.white;
+    [Space]
+    private GameObject LastSelectedWeapSlot = null;
+    private GameObject LastSelectedMatSlot = null;
+    //private GameObject LastSelectedIngrSlot = null;
+    //private GameObject LastSelectedFoodSlot = null;
+    //private GameObject LastSelectedSpecItemSlot = null;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        foreach (GameObject obj in TabIcons)
+        {
+            obj.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            obj.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            obj.transform.GetChild(1).gameObject.GetComponent<Image>().color = TabInactiveColor;
+        }
+
+        TabIcons[0].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        TabIcons[0].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        TabIcons[0].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabActiveColor;
+
+        foreach (GameObject obj in Tabs)
+        {
+            obj.SetActive(false);
+        }
+
+        Tabs[0].SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+              
+    }
+
+    public void GoToNextInventoryTab()
+    {
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabInactiveColor;
+
+        Tabs[currentActiveTab].SetActive(false);
+
+        if (currentActiveTab == 4)
+        {
+            currentActiveTab = 0;
+        }
+        else
+        {
+            currentActiveTab++;
+        }
+
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabActiveColor;
+
+        TabIconsAnim.SetTrigger(currentActiveTab.ToString());
+
+        Tabs[currentActiveTab].SetActive(true);
+    }
+
+    public void GoToPreviousInvetoryTab()
+    {
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabInactiveColor;
+
+        Tabs[currentActiveTab].SetActive(false);
+
+        if (currentActiveTab == 0)
+        {
+            currentActiveTab = 4;
+        }
+        else
+        {
+            currentActiveTab--;
+        }
+
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabActiveColor;
+
+        TabIconsAnim.SetTrigger(currentActiveTab.ToString());
+
+        Tabs[currentActiveTab].SetActive(true);
+    }
+
+    public void GoToSpecificInventoryTab(int n)
+    {
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabInactiveColor;
+
+        Tabs[currentActiveTab].SetActive(false);
+
+        currentActiveTab = n;
+
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        TabIcons[currentActiveTab].transform.GetChild(1).gameObject.GetComponent<Image>().color = TabActiveColor;
+
+        TabIconsAnim.SetTrigger(currentActiveTab.ToString());
+
+        Tabs[currentActiveTab].SetActive(true);
+    }
+
+    // Space for functions to update inventory details (right part)
+    public void UpdateWeaponInvSlotDetails()
+    {
+        WeaponInfo weapInfo = EventSystem.current.currentSelectedGameObject.GetComponent<WeaponInfo>();
+
+        // Activate selected border
+        if (LastSelectedWeapSlot != null)
+        {
+            LastSelectedWeapSlot.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        LastSelectedWeapSlot = weapInfo.gameObject;
+        weapInfo.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+
+        // Deactivate "NEW" message
+        weapInfo.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
+        // Top
+        WeaponInvDetails.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = FromIntToRarityColor(weapInfo.rarity);
+        WeaponInvDetails.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().color = FromIntToRarityColor(weapInfo.rarity);
+        WeaponInvDetails.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(2).GetComponent<Image>().color = FromIntToRarityColor(weapInfo.rarity);
+
+        WeaponInvDetails.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = weapInfo.weaponName;
+
+        WeaponInvDetails.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = FromIntToRaritySprite(weapInfo.rarity);
+        WeaponInvDetails.transform.GetChild(0).GetChild(4).GetComponent<Image>().sprite = weapInfo.icon;
+
+        // Top Details
+        Transform details = WeaponInvDetails.transform.GetChild(0).GetChild(5);
+
+        details.GetChild(0).GetComponent<TextMeshProUGUI>().text = weapInfo.weaponType;
+        
+        if (weapInfo.rarity <= 2)
+        {
+            details.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
+            details.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
+        }
+        else
+        {
+            details.GetChild(1).GetComponent<TextMeshProUGUI>().text = weapInfo.subStatType;
+            if (weapInfo.isSubStatPercentage)
+            {
+                details.GetChild(2).GetComponent<TextMeshProUGUI>().text = weapInfo.subStat.ToString() + "%";
+            }
+            else
+            {
+                details.GetChild(2).GetComponent<TextMeshProUGUI>().text = weapInfo.subStat.ToString();
+            }
+        }
+        
+        details.GetChild(4).GetComponent<TextMeshProUGUI>().text = weapInfo.baseATK.ToString();
+
+        // Rarity
+        Transform rarity = details.GetChild(5);
+        foreach (Transform t in rarity)
+        {
+            t.gameObject.SetActive(false);
+        }
+        for (int i = 0; i < weapInfo.rarity; i++)
+        {
+            rarity.GetChild(i).gameObject.SetActive(true);
+        }
+
+
+        // Middle
+        WeaponInvDetails.transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = weapInfo.currentLevel.ToString();
+        WeaponInvDetails.transform.GetChild(1).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "/" + weapInfo.currentMaxLevel.ToString();
+
+        // Ascension
+        Transform ascension = WeaponInvDetails.transform.GetChild(1).GetChild(1).GetChild(0).GetChild(1).transform;
+
+        if (weapInfo.rarity <= 2)
+        {
+            ascension.GetChild(4).gameObject.SetActive(false);
+            ascension.GetChild(5).gameObject.SetActive(false);
+        }
+        else
+        {
+            ascension.GetChild(4).gameObject.SetActive(true);
+            ascension.GetChild(5).gameObject.SetActive(true);
+        }
+
+        foreach (Transform t in ascension)
+        {
+            t.GetComponent<Image>().color = inactiveLevelAscension;
+            t.GetChild(0).GetComponent<Image>().color = inactiveLevelAscension;
+            t.GetChild(0).GetChild(0).GetComponent<Image>().color = inactiveLevelAscension;
+        }
+        for (int i = 0; i < weapInfo.ascensionLevel; i++)
+        {
+            ascension.GetChild(i).GetComponent<Image>().color = activeLevelAscension;
+            ascension.GetChild(i).GetChild(0).GetComponent<Image>().color = activeLevelAscension;
+            ascension.GetChild(i).GetChild(0).GetChild(0).GetComponent<Image>().color = activeLevelAscension;
+        }
+
+        // isLocked
+        if (weapInfo.isLocked)
+        {
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetComponent<Image>().color = closedPadlockColBG;
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>().color = closedPadlockCol;
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>().sprite = PadlockClosed;
+        }
+        else
+        {
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetComponent<Image>().color = openPadlockColBG;
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>().color = openPadlockCol;
+            WeaponInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>().sprite = PadlockOpen;
+        }
+
+        // Details
+        Transform details2 = WeaponInvDetails.transform.GetChild(1).GetChild(3);
+
+        if (weapInfo.rarity <= 2)
+        {
+            details2.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+
+            FixHeight fixDet = details2.GetComponent<FixHeight>();
+
+            fixDet.multiplier = 1;
+            fixDet.offsets[1] = 0;
+            fixDet.objects[0] = details2.GetChild(1).GetComponent<RectTransform>();
+            fixDet.objects[1] = null;
+
+            details2.GetChild(1).GetComponent<FixUIPosition>().offsetY = 0;
+        }
+        else
+        {
+            details2.GetChild(0).GetComponent<TextMeshProUGUI>().text = weapInfo.effectName + "\n  • " + weapInfo.effect;
+
+            FixHeight fixDet = details2.GetComponent<FixHeight>();
+
+            fixDet.multiplier = 2;
+            fixDet.offsets[1] = 10;
+            fixDet.objects[0] = details2.GetChild(0).GetComponent<RectTransform>();
+            fixDet.objects[1] = details2.GetChild(1).GetComponent<RectTransform>();
+
+            details2.GetChild(1).GetComponent<FixUIPosition>().offsetY = 10;
+        }
+        details2.GetChild(1).GetComponent<TextMeshProUGUI>().text = weapInfo.description;
+
+        // Fix UI Height and position
+        details2.GetChild(1).GetComponent<FixHeight>().UpdateHeight();
+        details2.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+
+        details2.GetChild(1).GetComponent<FixUIPosition>().UpdatePosition();
+
+        details2.GetComponent<FixHeight>().UpdateHeight();
+
+        WeaponInvDetails.transform.GetChild(1).GetComponent<FixHeight>().UpdateHeight();
+    }
+
+    public void UpdateMaterialInvSlotDetails()
+    {
+        MaterialInfo matInfo = EventSystem.current.currentSelectedGameObject.GetComponent<MaterialInfo>();
+
+        // Activate selected border
+        if (LastSelectedMatSlot != null)
+        {
+            LastSelectedMatSlot.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        LastSelectedMatSlot = matInfo.gameObject;
+        matInfo.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+
+        // Deactivate "NEW" message
+        matInfo.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+
+        // Top
+        MaterialInvDetails.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = FromIntToRarityColor(matInfo.rarity);
+        MaterialInvDetails.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().color = FromIntToRarityColor(matInfo.rarity);
+        MaterialInvDetails.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(2).GetComponent<Image>().color = FromIntToRarityColor(matInfo.rarity);
+
+        MaterialInvDetails.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = matInfo.materialName;
+
+        MaterialInvDetails.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = FromIntToRaritySprite(matInfo.rarity);
+        MaterialInvDetails.transform.GetChild(0).GetChild(4).GetComponent<Image>().sprite = matInfo.icon;
+
+        // Details
+        MaterialInvDetails.transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>().text = matInfo.materialType;
+        Transform rarity = MaterialInvDetails.transform.GetChild(0).GetChild(5).GetChild(1).transform;
+
+        foreach (Transform t in rarity)
+        {
+            t.gameObject.SetActive(false);
+        }
+        for (int i = 0; i < matInfo.rarity; i++)
+        {
+            rarity.GetChild(i).gameObject.SetActive(true);
+        }
+
+        // Middle
+        MaterialInvDetails.transform.GetChild(1).GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = matInfo.description;
+        GameObject buttons = MaterialInvDetails.transform.GetChild(1).GetChild(2).GetChild(1).GetChild(2).gameObject;
+        FixHeight buttonHeight = buttons.GetComponent<FixHeight>();
+
+        // Clean buttonHeight
+        for (int i = 0; i < 5; i++)
+        {
+            buttonHeight.offsets[i] = 0;
+            buttonHeight.objects[i] = null;
+        }
+
+        for (int i = 0; i < matInfo.numberOfSources; i++)
+        {
+            GameObject source = Instantiate(DomainSourcePrefab, buttons.transform);
+
+            source.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = matInfo.sources[i];
+
+            buttonHeight.multiplier++;
+            buttonHeight.objects[i] = source.GetComponent<RectTransform>();
+
+            if (i > 0)
+            {
+                buttonHeight.offsets[i] = 10;
+            }
+        }
+    }
+
+    public Sprite FromIntToRaritySprite(int rarity)
+    {
+        if (rarity == 1)
+        {
+            return CommonBG;
+        }
+        else if (rarity == 2)
+        {
+            return NotCommonBG;
+        }
+        else if (rarity == 3)
+        {
+            return RareBG;
+        }
+        else if (rarity == 4)
+        {
+            return EpicBG;
+        }
+        else
+        {
+            return LegendaryBG;
+        }
+    }
+
+    public Color FromIntToRarityColor(int rarity)
+    {
+        if (rarity == 1)
+        {
+            return CommonNameSpace;
+        }
+        else if (rarity == 2)
+        {
+            return NotCommonNameSpace;
+        }
+        else if (rarity == 3)
+        {
+            return RareNameSpace;
+        }
+        else if (rarity == 4)
+        {
+            return EpicNameSpace;
+        }
+        else
+        {
+            return LegendaryNameSpace;
+        }
+    }
+
+    public GameObject FromBuffStringToGameObject(string buffType)
+    {
+        if (buffType == "Attack")
+        {
+            return AttackBuffIcon;
+        }
+        else if (buffType == "Defense")
+        {
+            return DefenseBuffIcon;
+        }
+        else if (buffType == "Heal")
+        {
+            return HealIcon;
+        }
+        else if (buffType == "Regen")
+        {
+            return RegenIcon;
+        }
+        else if (buffType == "Status")
+        {
+            return StatusBuffIcon;
+        }
+        else
+        {
+            return PotionIcon;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dbda1851652cb4980ec9af23d66304, type: 3}
+  m_Name: Rusty Sword
+  m_EditorClassIdentifier: 
+  weaponName: Rusty Sword
+  weaponType: 0
+  subStatType: 
+  isSubStatPercentage: 0
+  subStat: 0
+  rarity: 1
+  icon: {fileID: 0}
+  effectName: 
+  effect: 
+  description: 
+  BaseATK1: 0
+  BaseATK20: 0
+  BaseATK40: 0
+  BaseATK60: 0
+  BaseATK70: 0
+  BaseATK80: 0
+  BaseATK90: 0
+  BaseATK100: 0
+  incrementATK: 0
+  incrementSubStat: 0
+  equipPrefab: {fileID: 0}

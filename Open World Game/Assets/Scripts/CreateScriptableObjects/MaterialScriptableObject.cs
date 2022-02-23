@@ -8,7 +8,7 @@ public enum MaterialTypeEnum
     CrafingResult
 }
 
-[CreateAssetMenu(fileName = "New Material", menuName = "Material")]
+[CreateAssetMenu(fileName = "New Material", menuName = "Material Item")]
 public class MaterialScriptableObject : ScriptableObject
 {
     //Top

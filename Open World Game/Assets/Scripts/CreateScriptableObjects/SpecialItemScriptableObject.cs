@@ -8,7 +8,6 @@ public class SpecialItemScriptableObject : ScriptableObject
     //Top
 
     public string specialItemName;
-    public string specialItemType;
     public int rarity;
 
     public Sprite icon;

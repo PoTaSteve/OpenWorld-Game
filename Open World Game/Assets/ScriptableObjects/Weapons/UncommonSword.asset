@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dbda1851652cb4980ec9af23d66304, type: 3}
-  m_Name: Traveller Sword
+  m_Name: UncommonSword
   m_EditorClassIdentifier: 
-  weaponName: Traveller Sword
+  weaponName: Uncommon Sword
   weaponType: 0
   subStatType: 
   isSubStatPercentage: 0
   subStat: 0
   rarity: 2
-  icon: {fileID: 0}
-  effectName: 
-  effect: 
-  description: 
-  BaseATK1: 0
-  BaseATK20: 0
-  BaseATK40: 0
-  BaseATK60: 0
+  icon: {fileID: 21300000, guid: afece524978d93b4787f0a945565d05f, type: 3}
+  effectName: Sword Effect
+  effect: 'Test Item: Common sword effect.'
+  description: 'Test Item: Common sword description.'
+  BaseATK1: 33
+  BaseATK20: 92
+  BaseATK40: 151
+  BaseATK60: 220
   BaseATK70: 0
   BaseATK80: 0
   BaseATK90: 0
   BaseATK100: 0
-  incrementATK: 0
+  incrementATK: 2.3
   incrementSubStat: 0
   equipPrefab: {fileID: 0}

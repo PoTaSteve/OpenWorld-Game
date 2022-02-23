@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7086ba8127e755a488df3dab72da0704, type: 3}
+  m_Name: EpicIngredient
+  m_EditorClassIdentifier: 
+  ingredientName: Epic ingredient
+  ingredientType: 0
+  rarity: 4
+  icon: {fileID: 21300000, guid: 6bf27c9b3e85a044ca4edbecc21b96fa, type: 3}
+  isBase: 1
+  baseHeal: 0
+  specificType: 0
+  description: 'Test item: Epic ingredient. Base ingredient.'
+  numberOfSources: 0
+  sources: []
+  cost: 0

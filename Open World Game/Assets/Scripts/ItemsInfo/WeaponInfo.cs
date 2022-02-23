@@ -18,6 +18,7 @@ public class WeaponInfo : MonoBehaviour
     public int currentLevel;
     public int currentMaxLevel;
     public int ascensionLevel;
+    public int refinementLevel;
     public bool isLocked;
     #endregion
 
@@ -87,5 +88,37 @@ public class WeaponInfo : MonoBehaviour
         }
 
         return totXp;
+    }
+
+    public string StringWeaponType()
+    {
+        string type;
+
+        if (SO.weaponType == WeaponType.Sword)
+        {
+            type = "Sword";
+        }
+        else if (SO.weaponType == WeaponType.Bow)
+        {
+            type = "Bow";
+        }
+        else if (SO.weaponType == WeaponType.Claymore)
+        {
+            type = "Claymore";
+        }
+        else if (SO.weaponType == WeaponType.Staff)
+        {
+            type = "Staff";
+        }
+        else if (SO.weaponType == WeaponType.Polearm)
+        {
+            type = "Polearm";
+        }
+        else
+        {
+            type = "Error";
+        }
+
+        return type;
     }
 }

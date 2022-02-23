@@ -14,6 +14,7 @@ public enum FoodBuffType
     Defence,
     StaminaConsumption,
     Speed,
+    Regen,
     Heal
 }
 
@@ -50,9 +51,13 @@ public class FoodScriptableObject : ScriptableObject
         {
             s = "Food";
         }
-        else
+        else if (type == FoodType.Potion)
         {
             s = "Potion";
+        }
+        else
+        {
+            s = "Error";
         }
 
         return s;
@@ -78,9 +83,17 @@ public class FoodScriptableObject : ScriptableObject
         {
             s = "Speed";
         }
-        else
+        else if (type == FoodBuffType.Regen)
+        {
+            s = "Regen";
+        }
+        else if (type == FoodBuffType.StaminaConsumption)
         {
             s = "Stamina Consumption";
+        }
+        else
+        {
+            s = "Error";
         }
 
         return s;

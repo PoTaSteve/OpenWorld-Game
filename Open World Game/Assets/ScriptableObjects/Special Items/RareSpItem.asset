@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fbfac8816fb4a748be933bd7bf4953f, type: 3}
+  m_Name: RareSpItem
+  m_EditorClassIdentifier: 
+  specialItemName: Rare Special Item
+  rarity: 3
+  icon: {fileID: 0}
+  description: 'Test item: Rare special item.'
+  numberOfSources: 0
+  sources: []

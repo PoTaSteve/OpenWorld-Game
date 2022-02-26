@@ -23,3 +23,5 @@ MonoBehaviour:
   numberOfSources: 0
   sources: []
   cost: 0
+  Console_Name: food:common_test
+  itemID: 15

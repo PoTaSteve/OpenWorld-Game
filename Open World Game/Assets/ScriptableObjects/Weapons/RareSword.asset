@@ -33,3 +33,5 @@ MonoBehaviour:
   incrementATK: 2.7
   incrementSubStat: 0.0155
   equipPrefab: {fileID: 0}
+  Console_Name: weapon:rare_test
+  itemID: 2

@@ -12,11 +12,21 @@ public class PlayerInputManager : MonoBehaviour
 
     [SerializeField]
     private InventoryManager invMan;
+    [SerializeField]
+    private ConsoleManager consoleMan;
+    [SerializeField]
+    private DebugModeManager debugModeMan;
 
     public GameObject InventoryObj;
     public GameObject GameUIObj;
     public GameObject MapObj;
     public GameObject EscMenuObj;
+    public GameObject ConsoleObj;
+    public GameObject DebugModeObj;
+    public GameObject TempConsoleDebugObj;
+
+    public float debugModeTimer;
+    public bool isInDebugMode;
 
     public GameObject ThirdPersonCam;
 
@@ -51,12 +61,16 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Map.Enable();
         playerControls.EscMenu.Enable();
         playerControls.Dialogues.Enable();
+        playerControls.Console.Enable();
 
         playerControls.Player.Jump.performed += Jump;
         playerControls.Player.OpenInventory.performed += OpenInventory;
         playerControls.Player.Interact.performed += Interact;
         playerControls.Player.OpenMap.performed += OpenMap;
         playerControls.Player.OpenEscMenu.performed += OpenEscMenu;
+        playerControls.Player.OpenConsole.performed += OpenConsole;
+        playerControls.Player.EnterDebugMode.performed += EnterDebugMode;
+        playerControls.Player.ExitDebugMode.performed += ExitDebugMode;
         
         playerControls.Inventory.CloseInventory.performed += CloseInventory;
         playerControls.Inventory.NextInvPage.performed += NextInvPage;
@@ -65,23 +79,33 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Map.CloseMap.performed += CloseMap;
 
         playerControls.EscMenu.CloseEscMenu.performed += CloseEscMenu;
+
+        playerControls.Console.ConfirmInput.performed += ConfirmInput;
+        playerControls.Console.CloseConsole.performed += CloseConsole;
         
         playerControls.Player.Enable();
         playerControls.Inventory.Disable();
         playerControls.Map.Disable();
         playerControls.EscMenu.Disable();
         playerControls.Dialogues.Disable();
+        playerControls.Console.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        debugModeTimer = 0f;
+        isInDebugMode = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isInDebugMode && debugModeTimer <= 1)
+        {
+            debugModeTimer += Time.deltaTime;
+        }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
@@ -235,16 +259,77 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.EscMenu.Disable();
     }
 
+    public void OpenConsole(InputAction.CallbackContext context)
+    {
+        playerControls.Console.Enable();
+
+        GameUIObj.SetActive(false);
+        ConsoleObj.SetActive(true);
+        consoleMan.txtField.ActivateInputField();
+
+        playerControls.Player.Disable();
+    }
+
+    public void ConfirmInput(InputAction.CallbackContext context)
+    {
+        playerControls.Player.Enable();
+
+        GameUIObj.SetActive(true);
+        consoleMan.Console();
+        ConsoleObj.SetActive(false);
+
+        playerControls.Console.Disable();
+    }
+
+    public void CloseConsole(InputAction.CallbackContext context)
+    {
+        playerControls.Player.Enable();
+
+        GameUIObj.SetActive(true);
+        consoleMan.txtField.text = "";
+        ConsoleObj.SetActive(false);
+
+        playerControls.Console.Disable();
+    }
+
+    public void EnterDebugMode(InputAction.CallbackContext context)
+    {
+        Debug.Log("Trying To acces debug mode");
+        if (!isInDebugMode)
+        {
+            Debug.Log("In debug mode");
+            debugModeMan.isInDebugMode = true;
+            isInDebugMode = true;
+            debugModeTimer = 0f;
+            GameUIObj.SetActive(false);
+            DebugModeObj.SetActive(true);
+        }
+    }
+
+    public void ExitDebugMode(InputAction.CallbackContext context)
+    {
+        Debug.Log("Trying to exit debug mode");
+        if (isInDebugMode && debugModeTimer >= 1)
+        {
+            Debug.Log("Out of debug mode");
+            debugModeMan.isInDebugMode = false;
+            isInDebugMode = false;
+            debugModeTimer = 0f;
+            DebugModeObj.SetActive(false);
+            GameUIObj.SetActive(true);
+        }
+    }
+
     public void Interact(InputAction.CallbackContext context)
     {
         if (playerTrColl.InRangeInteractables.Count > 0)
         {
             Interactable interactab = playerTrColl.InRangeInteractables[playerTrColl.currentInteractableIndex].GetComponent<Interactable>();
 
-//---------------------------------------------------------------------- PICK UP -----------------------------------------------------------------
+            //---------------------------------------------------------------------- PICK UP -----------------------------------------------------------------
             if (interactab.type == InteractableType.PickUp)
             {
-//---------------------------------------------------------------------- WEAPON -----------------------------------------------------------------
+                //---------------------------------------------------------------------- WEAPON -----------------------------------------------------------------
                 if (interactab.pickUpType == PickUpType.Weapon)
                 {
                     #region Set Inventory Slot
@@ -301,13 +386,13 @@ public class PlayerInputManager : MonoBehaviour
 
                     #endregion
                 }
-// ------------------------------------------------------------------------ MATERIAL ---------------------------------------------------------------
+                // ------------------------------------------------------------------------ MATERIAL ---------------------------------------------------------------
                 else if (interactab.pickUpType == PickUpType.Material)
                 {
                     MaterialInfo objInfo = interactab.gameObject.GetComponent<MaterialInfo>();
 
                     // Instantiate Slot: MaterialInfo script
-                    
+
                     if (invMan.MaterialsTabStr.Contains(objInfo.MaterialSO.materialName))
                     {
                         // Update the count 
@@ -360,7 +445,7 @@ public class PlayerInputManager : MonoBehaviour
                         newSlot.transform.GetChild(6).gameObject.SetActive(true);
                     }
                 }
-// ------------------------------------------------------------------------------ INGREDIENT -----------------------------------------------------------
+                // ------------------------------------------------------------------------------ INGREDIENT -----------------------------------------------------------
                 else if (interactab.pickUpType == PickUpType.Ingredient)
                 {
                     IngredientInfo objInfo = interactab.gameObject.GetComponent<IngredientInfo>();
@@ -372,7 +457,7 @@ public class PlayerInputManager : MonoBehaviour
                         foreach (Transform t in invMan.TabsContent[2].transform)
                         {
                             IngredientInfo info = t.GetComponent<IngredientInfo>();
-                            if (info.IngredientSO.ingredientName== objInfo.IngredientSO.ingredientName)
+                            if (info.IngredientSO.ingredientName == objInfo.IngredientSO.ingredientName)
                             {
                                 info.count += objInfo.count;
                                 info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -383,7 +468,7 @@ public class PlayerInputManager : MonoBehaviour
                     {
                         // Instantiate slot
                         IngredientInfo newSlot = Instantiate<IngredientInfo>(invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), invMan.TabsContent[2]);
-                        
+
                         invMan.IngredientsTab.Add(newSlot);
                         invMan.IngredientsTabStr.Add(objInfo.IngredientSO.ingredientName);
                         newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateIngredientInvSlotDetails);
@@ -419,7 +504,7 @@ public class PlayerInputManager : MonoBehaviour
                         newSlot.transform.GetChild(6).gameObject.SetActive(true);
                     }
                 }
-// ------------------------------------------------------------------------- FOOD ------------------------------------------------------------------------
+                // ------------------------------------------------------------------------- FOOD ------------------------------------------------------------------------
                 else if (interactab.pickUpType == PickUpType.Food)
                 {
                     FoodInfo objInfo = interactab.gameObject.GetComponent<FoodInfo>();
@@ -431,7 +516,7 @@ public class PlayerInputManager : MonoBehaviour
                         foreach (Transform t in invMan.TabsContent[3].transform)
                         {
                             FoodInfo info = t.GetComponent<FoodInfo>();
-                            if (info.FoodSO.foodName== objInfo.FoodSO.foodName)
+                            if (info.FoodSO.foodName == objInfo.FoodSO.foodName)
                             {
                                 info.count += objInfo.count;
                                 info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -501,7 +586,7 @@ public class PlayerInputManager : MonoBehaviour
                         newSlot.transform.GetChild(6).gameObject.SetActive(true);
                     }
                 }
-// ----------------------------------------------------------------------- SPECIAL ITEM --------------------------------------------------------------
+                // ----------------------------------------------------------------------- SPECIAL ITEM --------------------------------------------------------------
                 else if (interactab.pickUpType == PickUpType.SpecialItem)
                 {
                     SpecialItemInfo objInfo = interactab.gameObject.GetComponent<SpecialItemInfo>();

@@ -143,6 +143,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""be144f32-6a3e-48f6-ab63-b7cd564893cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnterDebugMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd6066ab-4378-4630-aace-4e144fbd9122"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitDebugMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c4a14a6-cd7d-4038-b2cf-27f6ec7b7bd3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -332,6 +359,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""ScrollWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4cdc78b-0a85-494d-b036-114d7d9dd91f"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed4ea7ff-1e6f-462b-9cbe-f09a3fe48d77"",
+                    ""path"": ""<Keyboard>/f3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnterDebugMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d4b9117-ae4e-43fd-a8be-bedd84ddd482"",
+                    ""path"": ""<Keyboard>/f3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitDebugMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -508,6 +568,54 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Console"",
+            ""id"": ""603d602c-3204-4ceb-b793-f08323fdb08b"",
+            ""actions"": [
+                {
+                    ""name"": ""ConfirmInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""e450c977-14c3-4b57-a5dc-fd84e9142756"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""90cfe7cb-ed01-4d4f-b64b-61ae7bbe2ae7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8bb25595-3d85-4868-8009-b6f4f2305ab0"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ConfirmInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""151aa0e2-aa5d-4c4e-ac2c-4039ddaec257"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -527,6 +635,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_OpenMap = m_Player.FindAction("OpenMap", throwIfNotFound: true);
         m_Player_OpenEscMenu = m_Player.FindAction("OpenEscMenu", throwIfNotFound: true);
         m_Player_ScrollWheel = m_Player.FindAction("ScrollWheel", throwIfNotFound: true);
+        m_Player_OpenConsole = m_Player.FindAction("OpenConsole", throwIfNotFound: true);
+        m_Player_EnterDebugMode = m_Player.FindAction("EnterDebugMode", throwIfNotFound: true);
+        m_Player_ExitDebugMode = m_Player.FindAction("ExitDebugMode", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_CloseInventory = m_Inventory.FindAction("CloseInventory", throwIfNotFound: true);
@@ -541,6 +652,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Dialogues
         m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
         m_Dialogues_Newaction = m_Dialogues.FindAction("New action", throwIfNotFound: true);
+        // Console
+        m_Console = asset.FindActionMap("Console", throwIfNotFound: true);
+        m_Console_ConfirmInput = m_Console.FindAction("ConfirmInput", throwIfNotFound: true);
+        m_Console_CloseConsole = m_Console.FindAction("CloseConsole", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -613,6 +728,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_OpenMap;
     private readonly InputAction m_Player_OpenEscMenu;
     private readonly InputAction m_Player_ScrollWheel;
+    private readonly InputAction m_Player_OpenConsole;
+    private readonly InputAction m_Player_EnterDebugMode;
+    private readonly InputAction m_Player_ExitDebugMode;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -630,6 +748,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @OpenMap => m_Wrapper.m_Player_OpenMap;
         public InputAction @OpenEscMenu => m_Wrapper.m_Player_OpenEscMenu;
         public InputAction @ScrollWheel => m_Wrapper.m_Player_ScrollWheel;
+        public InputAction @OpenConsole => m_Wrapper.m_Player_OpenConsole;
+        public InputAction @EnterDebugMode => m_Wrapper.m_Player_EnterDebugMode;
+        public InputAction @ExitDebugMode => m_Wrapper.m_Player_ExitDebugMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -678,6 +799,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ScrollWheel.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
+                @OpenConsole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
+                @OpenConsole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
+                @OpenConsole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
+                @EnterDebugMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
+                @EnterDebugMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
+                @EnterDebugMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
+                @ExitDebugMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
+                @ExitDebugMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
+                @ExitDebugMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -721,6 +851,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ScrollWheel.started += instance.OnScrollWheel;
                 @ScrollWheel.performed += instance.OnScrollWheel;
                 @ScrollWheel.canceled += instance.OnScrollWheel;
+                @OpenConsole.started += instance.OnOpenConsole;
+                @OpenConsole.performed += instance.OnOpenConsole;
+                @OpenConsole.canceled += instance.OnOpenConsole;
+                @EnterDebugMode.started += instance.OnEnterDebugMode;
+                @EnterDebugMode.performed += instance.OnEnterDebugMode;
+                @EnterDebugMode.canceled += instance.OnEnterDebugMode;
+                @ExitDebugMode.started += instance.OnExitDebugMode;
+                @ExitDebugMode.performed += instance.OnExitDebugMode;
+                @ExitDebugMode.canceled += instance.OnExitDebugMode;
             }
         }
     }
@@ -873,6 +1012,47 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public DialoguesActions @Dialogues => new DialoguesActions(this);
+
+    // Console
+    private readonly InputActionMap m_Console;
+    private IConsoleActions m_ConsoleActionsCallbackInterface;
+    private readonly InputAction m_Console_ConfirmInput;
+    private readonly InputAction m_Console_CloseConsole;
+    public struct ConsoleActions
+    {
+        private @PlayerControls m_Wrapper;
+        public ConsoleActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ConfirmInput => m_Wrapper.m_Console_ConfirmInput;
+        public InputAction @CloseConsole => m_Wrapper.m_Console_CloseConsole;
+        public InputActionMap Get() { return m_Wrapper.m_Console; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ConsoleActions set) { return set.Get(); }
+        public void SetCallbacks(IConsoleActions instance)
+        {
+            if (m_Wrapper.m_ConsoleActionsCallbackInterface != null)
+            {
+                @ConfirmInput.started -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnConfirmInput;
+                @ConfirmInput.performed -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnConfirmInput;
+                @ConfirmInput.canceled -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnConfirmInput;
+                @CloseConsole.started -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnCloseConsole;
+                @CloseConsole.performed -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnCloseConsole;
+                @CloseConsole.canceled -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnCloseConsole;
+            }
+            m_Wrapper.m_ConsoleActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ConfirmInput.started += instance.OnConfirmInput;
+                @ConfirmInput.performed += instance.OnConfirmInput;
+                @ConfirmInput.canceled += instance.OnConfirmInput;
+                @CloseConsole.started += instance.OnCloseConsole;
+                @CloseConsole.performed += instance.OnCloseConsole;
+                @CloseConsole.canceled += instance.OnCloseConsole;
+            }
+        }
+    }
+    public ConsoleActions @Console => new ConsoleActions(this);
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -888,6 +1068,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnOpenMap(InputAction.CallbackContext context);
         void OnOpenEscMenu(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
+        void OnOpenConsole(InputAction.CallbackContext context);
+        void OnEnterDebugMode(InputAction.CallbackContext context);
+        void OnExitDebugMode(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {
@@ -906,5 +1089,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IDialoguesActions
     {
         void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IConsoleActions
+    {
+        void OnConfirmInput(InputAction.CallbackContext context);
+        void OnCloseConsole(InputAction.CallbackContext context);
     }
 }

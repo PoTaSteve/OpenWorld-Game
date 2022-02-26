@@ -31,6 +31,9 @@ public class MaterialScriptableObject : ScriptableObject
     // Other
     public int cost;
 
+    public string Console_Name;
+    public int itemID;
+
     public string MaterialTypeEnumToString(MaterialTypeEnum type)
     {
         string s;

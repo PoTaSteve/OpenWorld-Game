@@ -18,4 +18,7 @@ public class SpecialItemScriptableObject : ScriptableObject
     public string description;
     public int numberOfSources;
     public string[] sources;
+
+    public string Console_Name;
+    public int itemID;
 }

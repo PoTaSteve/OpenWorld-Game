@@ -33,3 +33,5 @@ MonoBehaviour:
   incrementATK: 4.2
   incrementSubStat: 0.024
   equipPrefab: {fileID: 0}
+  Console_Name: weapon:legendary_test
+  itemID: 4

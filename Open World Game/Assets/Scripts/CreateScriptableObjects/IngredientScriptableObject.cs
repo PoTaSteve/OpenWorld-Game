@@ -44,6 +44,9 @@ public class IngredientScriptableObject : ScriptableObject
     // Other
     public int cost;
 
+    public string Console_Name;
+    public int itemID;
+
     public string IngredientTypeEnumToString(IngredientType type)
     {
         string s;

@@ -46,6 +46,9 @@ public class WeaponScriptableObject : ScriptableObject
 
     public GameObject equipPrefab;
 
+    public string Console_Name;
+    public int itemID;
+
     //Create a script with all weapon effects. Each weapon will get the function of the effect from there.
 
     public virtual void Effect()

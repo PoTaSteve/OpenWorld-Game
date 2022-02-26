@@ -21,3 +21,5 @@ MonoBehaviour:
   numberOfSources: 0
   sources: []
   cost: 0
+  Console_Name: material:rare_test
+  itemID: 7

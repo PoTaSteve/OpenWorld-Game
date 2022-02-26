@@ -33,3 +33,5 @@ MonoBehaviour:
   incrementATK: 2.9
   incrementSubStat: 0.027
   equipPrefab: {fileID: 0}
+  Console_Name: weapon:epic_test
+  itemID: 3

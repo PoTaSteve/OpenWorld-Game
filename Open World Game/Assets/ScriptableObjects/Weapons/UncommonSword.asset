@@ -33,3 +33,5 @@ MonoBehaviour:
   incrementATK: 2.3
   incrementSubStat: 0
   equipPrefab: {fileID: 0}
+  Console_Name: weapon:uncommon_test
+  itemID: 1

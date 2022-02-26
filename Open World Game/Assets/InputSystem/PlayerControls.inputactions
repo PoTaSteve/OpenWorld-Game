@@ -121,6 +121,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "OpenConsole",
+                    "type": "Button",
+                    "id": "be144f32-6a3e-48f6-ab63-b7cd564893cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EnterDebugMode",
+                    "type": "Button",
+                    "id": "bd6066ab-4378-4630-aace-4e144fbd9122",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ExitDebugMode",
+                    "type": "Button",
+                    "id": "4c4a14a6-cd7d-4038-b2cf-27f6ec7b7bd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -310,6 +337,39 @@
                     "action": "ScrollWheel",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4cdc78b-0a85-494d-b036-114d7d9dd91f",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenConsole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed4ea7ff-1e6f-462b-9cbe-f09a3fe48d77",
+                    "path": "<Keyboard>/f3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnterDebugMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d4b9117-ae4e-43fd-a8be-bedd84ddd482",
+                    "path": "<Keyboard>/f3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitDebugMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -482,6 +542,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Console",
+            "id": "603d602c-3204-4ceb-b793-f08323fdb08b",
+            "actions": [
+                {
+                    "name": "ConfirmInput",
+                    "type": "Button",
+                    "id": "e450c977-14c3-4b57-a5dc-fd84e9142756",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseConsole",
+                    "type": "Button",
+                    "id": "90cfe7cb-ed01-4d4f-b64b-61ae7bbe2ae7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8bb25595-3d85-4868-8009-b6f4f2305ab0",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ConfirmInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "151aa0e2-aa5d-4c4e-ac2c-4039ddaec257",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseConsole",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

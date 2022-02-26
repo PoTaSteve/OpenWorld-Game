@@ -43,6 +43,9 @@ public class FoodScriptableObject : ScriptableObject
     // Other
     public int cost;
 
+    public string Console_Name;
+    public int itemID;
+
     public string FoodTypeEnumToString(FoodType type)
     {
         string s;

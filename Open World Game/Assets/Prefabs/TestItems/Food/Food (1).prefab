@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7753456399404957523}
-  - component: {fileID: 7753456399404957519}
   - component: {fileID: 7753456399404957518}
   - component: {fileID: 7753456399404957521}
   - component: {fileID: 7753456399404957520}
@@ -36,24 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7753456399404957519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7753456399404957522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26e057c72a5e4f46aa7c83facfeff4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  ID: 0
-  index: 0
-  pickUpType: 3
-  icon: {fileID: 21300000, guid: c9d6ed491ae491d4a861b797176d9378, type: 3}
-  interactionType: Uncommon Food
 --- !u!114 &7753456399404957518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ccbf5904afb434fbdcd87204537033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesInteractionDestory: 1
+  ID: 0
+  index: 0
+  icon: {fileID: 0}
+  interactionType: Uncommon Test Food
   FoodSO: {fileID: 11400000, guid: 57f7ec333c814e141a1fb737a2741966, type: 2}
   count: 7
 --- !u!54 &7753456399404957521

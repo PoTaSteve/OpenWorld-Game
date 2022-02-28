@@ -20,13 +20,16 @@ public enum PickUpType
     SpecialItem
 }
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
-    public InteractableType type;
+    // public InteractableType type;
+    public bool doesInteractionDestory;
     public int ID;
     public int index;
-    public PickUpType pickUpType;
+    // public PickUpType pickUpType;
     public Sprite icon;
     [Tooltip("String to display on the UI to interact with the item")]
     public string interactionType;
+
+    public abstract void Interact();
 }

@@ -161,7 +161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1429397797490567473}
-  - component: {fileID: 1429397797490567474}
+  - component: {fileID: 1870810980911309256}
   m_Layer: 5
   m_Name: InteractablePrefab
   m_TagString: Untagged
@@ -194,7 +194,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1429397797490567474
+--- !u!114 &1870810980911309256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,15 +203,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429397797490567472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26e057c72a5e4f46aa7c83facfeff4a, type: 3}
+  m_Script: {fileID: 11500000, guid: faaf79fe88035bd4da15f8c0f4b1adbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  ID: 0
-  index: 0
-  pickUpType: 0
-  icon: {fileID: 0}
-  interactionType: 
 --- !u!1 &1429397798173382235
 GameObject:
   m_ObjectHideFlags: 0

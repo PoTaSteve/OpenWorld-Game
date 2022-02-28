@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5079906633781410964}
-  - component: {fileID: 5079906633781410922}
   - component: {fileID: 5079906633781410923}
   - component: {fileID: 5079906633781410965}
   - component: {fileID: 5079906633781410920}
@@ -119,24 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5079906633781410922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5079906633781410967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26e057c72a5e4f46aa7c83facfeff4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  ID: 0
-  index: 0
-  pickUpType: 0
-  icon: {fileID: 21300000, guid: afece524978d93b4787f0a945565d05f, type: 3}
-  interactionType: Legendary sword
 --- !u!114 &5079906633781410923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254529c88a5f8794ebe568ba4b85d7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesInteractionDestory: 1
+  ID: 0
+  index: 0
+  icon: {fileID: 0}
+  interactionType: Legendary Test Weapon
   SO: {fileID: 11400000, guid: 8b11cb2fe80938541bf3a836d66df8ef, type: 2}
   baseATK: 0
   currentXp: 0

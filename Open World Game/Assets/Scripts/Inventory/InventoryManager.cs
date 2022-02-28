@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
-    //public static InventoryManager Instance;
+    public static InventoryManager Instance;
 
     public int currInvTab;
     [Space]
@@ -82,6 +82,19 @@ public class InventoryManager : MonoBehaviour
     public Color[] DetailsTextColor = new Color[5];
 
     private GameObject LastSelectedSlot;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

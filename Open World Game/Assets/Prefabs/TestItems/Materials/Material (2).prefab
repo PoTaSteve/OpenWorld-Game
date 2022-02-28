@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3878815750911713329}
-  - component: {fileID: 3878815750911713333}
   - component: {fileID: 3878815750911713334}
   - component: {fileID: 3878815750911713335}
   - component: {fileID: 3878815750911713328}
@@ -119,24 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3878815750911713333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3878815750911713330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26e057c72a5e4f46aa7c83facfeff4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  ID: 0
-  index: 0
-  pickUpType: 1
-  icon: {fileID: 21300000, guid: 717718fefdedf6940953a97d99190722, type: 3}
-  interactionType: Rare material
 --- !u!114 &3878815750911713334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8985f351aa705dc42a10d8014993ace7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesInteractionDestory: 1
+  ID: 0
+  index: 0
+  icon: {fileID: 0}
+  interactionType: Rare Test Material
   MaterialSO: {fileID: 11400000, guid: abc09e7d602b416409c2cb3d60acbf53, type: 2}
   count: 3
 --- !u!54 &3878815750911713335

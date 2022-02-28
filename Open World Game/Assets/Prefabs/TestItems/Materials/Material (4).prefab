@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2947403230733493475}
-  - component: {fileID: 2947403230733493479}
   - component: {fileID: 2947403230733493478}
   - component: {fileID: 2947403230733493473}
   - component: {fileID: 2947403230733493472}
@@ -36,24 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2947403230733493479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2947403230733493474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26e057c72a5e4f46aa7c83facfeff4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  ID: 0
-  index: 0
-  pickUpType: 1
-  icon: {fileID: 21300000, guid: 717718fefdedf6940953a97d99190722, type: 3}
-  interactionType: Legendary material
 --- !u!114 &2947403230733493478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8985f351aa705dc42a10d8014993ace7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesInteractionDestory: 1
+  ID: 0
+  index: 0
+  icon: {fileID: 0}
+  interactionType: Legendary Test Material
   MaterialSO: {fileID: 11400000, guid: 477a2fa2f4f736f4b997fc082a9e0410, type: 2}
   count: 1
 --- !u!54 &2947403230733493473

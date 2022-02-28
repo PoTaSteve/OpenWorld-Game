@@ -11,8 +11,6 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerControls playerControls;
 
     [SerializeField]
-    private InventoryManager invMan;
-    [SerializeField]
     private ConsoleManager consoleMan;
     [SerializeField]
     private DebugModeManager debugModeMan;
@@ -175,7 +173,7 @@ public class PlayerInputManager : MonoBehaviour
 
         yield return new WaitForSeconds(openTime);
 
-        invMan.GoToSpecificInvTab(0);
+        InventoryManager.Instance.GoToSpecificInvTab(0);
     }
 
     public void CloseInventory(InputAction.CallbackContext context)
@@ -203,12 +201,12 @@ public class PlayerInputManager : MonoBehaviour
 
     public void NextInvPage(InputAction.CallbackContext context)
     {
-        invMan.GoToNextInvTab();
+        InventoryManager.Instance.GoToNextInvTab();
     }
 
     public void PreviousInvPage(InputAction.CallbackContext context)
     {
-        invMan.GoToPreviousInvTab();
+        InventoryManager.Instance.GoToPreviousInvTab();
     }
 
     public void OpenMap(InputAction.CallbackContext context)
@@ -326,297 +324,10 @@ public class PlayerInputManager : MonoBehaviour
         {
             Interactable interactab = playerTrColl.InRangeInteractables[playerTrColl.currentInteractableIndex].GetComponent<Interactable>();
 
-            //---------------------------------------------------------------------- PICK UP -----------------------------------------------------------------
-            if (interactab.type == InteractableType.PickUp)
+            interactab.Interact();
+
+            if (interactab.doesInteractionDestory)
             {
-                //---------------------------------------------------------------------- WEAPON -----------------------------------------------------------------
-                if (interactab.pickUpType == PickUpType.Weapon)
-                {
-                    #region Set Inventory Slot
-                    WeaponInfo objInfo = interactab.gameObject.GetComponent<WeaponInfo>();
-
-                    // Instantiate Slot: WeaponInfo script
-                    WeaponInfo newSlot = Instantiate<WeaponInfo>(invMan.WeaponInvSlot.GetComponent<WeaponInfo>(), invMan.TabsContent[0]);
-                    invMan.WeaponsTab.Add(newSlot);
-                    invMan.WeaponTabStr.Add(objInfo.SO.weaponName);
-                    newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateWeaponInvSlotDetails);
-
-                    newSlot.SO = objInfo.SO;
-
-                    objInfo.SetAtkFromLevel();
-                    newSlot.baseATK = objInfo.baseATK;
-
-                    newSlot.currentXp = objInfo.currentXp;
-                    objInfo.xpForNextLevel = objInfo.XpForNextLevel(objInfo.currentLevel);
-                    newSlot.xpForNextLevel = objInfo.xpForNextLevel;
-
-                    newSlot.currentLevel = objInfo.currentLevel;
-                    newSlot.currentMaxLevel = objInfo.currentMaxLevel;
-                    newSlot.ascensionLevel = objInfo.ascensionLevel;
-                    newSlot.isLocked = objInfo.isLocked;
-
-                    // Instantiate Slot: Slot UI
-                    newSlot.transform.GetChild(2).gameObject.SetActive(false);
-                    newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + newSlot.currentLevel;
-                    newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.SO.icon;
-
-                    Transform Rarity = newSlot.transform.GetChild(3);
-                    foreach (Transform t in Rarity)
-                    {
-                        t.gameObject.SetActive(false);
-                    }
-                    for (int i = 0; i < newSlot.SO.rarity; i++)
-                    {
-                        Rarity.GetChild(i).gameObject.SetActive(true);
-                    }
-
-                    if (newSlot.isLocked)
-                    {
-                        newSlot.transform.GetChild(5).gameObject.SetActive(true);
-                        newSlot.transform.GetChild(5).GetChild(0).GetComponent<Image>().color = invMan.closedPadlockColBG;
-                        newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.PadlockClosed;
-                        newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().color = invMan.closedPadlockCol;
-                    }
-                    else
-                    {
-                        newSlot.transform.GetChild(5).gameObject.SetActive(false);
-                    }
-
-                    newSlot.transform.GetChild(6).gameObject.SetActive(true);
-
-                    #endregion
-                }
-                // ------------------------------------------------------------------------ MATERIAL ---------------------------------------------------------------
-                else if (interactab.pickUpType == PickUpType.Material)
-                {
-                    MaterialInfo objInfo = interactab.gameObject.GetComponent<MaterialInfo>();
-
-                    // Instantiate Slot: MaterialInfo script
-
-                    if (invMan.MaterialsTabStr.Contains(objInfo.MaterialSO.materialName))
-                    {
-                        // Update the count 
-                        foreach (Transform t in invMan.TabsContent[1].transform)
-                        {
-                            MaterialInfo info = t.GetComponent<MaterialInfo>();
-                            if (info.MaterialSO.materialName == objInfo.MaterialSO.materialName)
-                            {
-                                info.count += objInfo.count;
-                                info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MaterialInfo newSlot = Instantiate<MaterialInfo>(invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), invMan.TabsContent[1]);
-
-                        invMan.MaterialsTab.Add(newSlot);
-                        invMan.MaterialsTabStr.Add(objInfo.MaterialSO.materialName);
-                        newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateMaterialInvSlotDetails);
-
-                        newSlot.MaterialSO = objInfo.MaterialSO;
-                        newSlot.count = objInfo.count;
-
-                        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-                        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = objInfo.MaterialSO.icon;
-
-                        Transform rarity = newSlot.transform.GetChild(3);
-                        foreach (Transform t in rarity)
-                        {
-                            t.gameObject.SetActive(false);
-                        }
-                        for (int i = 0; i < newSlot.MaterialSO.rarity; i++)
-                        {
-                            rarity.GetChild(i).gameObject.SetActive(true);
-                        }
-
-                        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-                        if (newSlot.MaterialSO.materialType == MaterialTypeEnum.CrafingIngredient)
-                        {
-                            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.CraftingIngredientIcon;
-                        }
-                        else
-                        {
-                            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.CraftingResultIcon;
-                        }
-
-                        newSlot.transform.GetChild(6).gameObject.SetActive(true);
-                    }
-                }
-                // ------------------------------------------------------------------------------ INGREDIENT -----------------------------------------------------------
-                else if (interactab.pickUpType == PickUpType.Ingredient)
-                {
-                    IngredientInfo objInfo = interactab.gameObject.GetComponent<IngredientInfo>();
-
-                    // Instantiate Slot: IngredientInfo script
-                    if (invMan.IngredientsTabStr.Contains(objInfo.IngredientSO.ingredientName))
-                    {
-                        // Add the count
-                        foreach (Transform t in invMan.TabsContent[2].transform)
-                        {
-                            IngredientInfo info = t.GetComponent<IngredientInfo>();
-                            if (info.IngredientSO.ingredientName == objInfo.IngredientSO.ingredientName)
-                            {
-                                info.count += objInfo.count;
-                                info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Instantiate slot
-                        IngredientInfo newSlot = Instantiate<IngredientInfo>(invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), invMan.TabsContent[2]);
-
-                        invMan.IngredientsTab.Add(newSlot);
-                        invMan.IngredientsTabStr.Add(objInfo.IngredientSO.ingredientName);
-                        newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateIngredientInvSlotDetails);
-
-                        newSlot.IngredientSO = objInfo.IngredientSO;
-                        newSlot.count = objInfo.count;
-
-                        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-                        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = objInfo.IngredientSO.icon;
-
-                        Transform rarity = newSlot.transform.GetChild(3);
-                        foreach (Transform t in rarity)
-                        {
-                            t.gameObject.SetActive(false);
-                        }
-                        for (int i = 0; i < newSlot.IngredientSO.rarity; i++)
-                        {
-                            rarity.GetChild(i).gameObject.SetActive(true);
-                        }
-
-                        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-                        if (newSlot.IngredientSO.ingredientType == IngredientType.Base)
-                        {
-                            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.BaseIngredientIcon;
-                        }
-                        else if (newSlot.IngredientSO.ingredientType == IngredientType.Specific)
-                        {
-                            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.SpecificIngredientIcon;
-                        }
-
-                        newSlot.transform.GetChild(6).gameObject.SetActive(true);
-                    }
-                }
-                // ------------------------------------------------------------------------- FOOD ------------------------------------------------------------------------
-                else if (interactab.pickUpType == PickUpType.Food)
-                {
-                    FoodInfo objInfo = interactab.gameObject.GetComponent<FoodInfo>();
-
-                    // Instantiate Slot: FoodInfo script
-                    if (invMan.FoodTabStr.Contains(objInfo.FoodSO.foodName))
-                    {
-                        // Add the count
-                        foreach (Transform t in invMan.TabsContent[3].transform)
-                        {
-                            FoodInfo info = t.GetComponent<FoodInfo>();
-                            if (info.FoodSO.foodName == objInfo.FoodSO.foodName)
-                            {
-                                info.count += objInfo.count;
-                                info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Instantiate slot
-                        FoodInfo newSlot = Instantiate<FoodInfo>(invMan.FoodInvSlot.GetComponent<FoodInfo>(), invMan.TabsContent[3]);
-
-                        invMan.FoodTab.Add(newSlot);
-                        invMan.FoodTabStr.Add(objInfo.FoodSO.foodName);
-                        newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateFoodInvSlotDetails);
-
-                        newSlot.FoodSO = objInfo.FoodSO;
-                        newSlot.count = objInfo.count;
-
-                        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-                        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = objInfo.FoodSO.icon;
-
-                        Transform rarity = newSlot.transform.GetChild(3);
-                        foreach (Transform t in rarity)
-                        {
-                            t.gameObject.SetActive(false);
-                        }
-                        for (int i = 0; i < newSlot.FoodSO.rarity; i++)
-                        {
-                            rarity.GetChild(i).gameObject.SetActive(true);
-                        }
-
-                        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-                        if (newSlot.FoodSO.foodType == FoodType.Potion)
-                        {
-                            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.PotionFoodTypeIcon;
-                        }
-                        else if (newSlot.FoodSO.foodType == FoodType.Food)
-                        {
-                            if (newSlot.FoodSO.buffType == FoodBuffType.Attack)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.AttackFoodBuffIcon;
-                            }
-                            else if (newSlot.FoodSO.buffType == FoodBuffType.Defence)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.DefenceFoodBuffIcon;
-                            }
-                            else if (newSlot.FoodSO.buffType == FoodBuffType.Heal)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.HealFoodBuffIcon;
-                            }
-                            else if (newSlot.FoodSO.buffType == FoodBuffType.Regen)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.RegenFoodBuffIcon;
-                            }
-                            else if (newSlot.FoodSO.buffType == FoodBuffType.Speed)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.SpeedFoodBuffIcon;
-                            }
-                            else if (newSlot.FoodSO.buffType == FoodBuffType.StaminaConsumption)
-                            {
-                                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = invMan.StaminaConsumptionFoodBuffIcon;
-                            }
-                        }
-
-                        newSlot.transform.GetChild(6).gameObject.SetActive(true);
-                    }
-                }
-                // ----------------------------------------------------------------------- SPECIAL ITEM --------------------------------------------------------------
-                else if (interactab.pickUpType == PickUpType.SpecialItem)
-                {
-                    SpecialItemInfo objInfo = interactab.gameObject.GetComponent<SpecialItemInfo>();
-
-                    // Instantiate Slot: IngredientInfo script
-                    SpecialItemInfo newSlot = Instantiate<SpecialItemInfo>(invMan.IngredientInvSlot.GetComponent<SpecialItemInfo>(), invMan.TabsContent[4]);
-
-                    invMan.SpecialItemsTab.Add(newSlot);
-                    invMan.SpecialItemsTabStr.Add(objInfo.SpecialItemSO.specialItemName);
-                    newSlot.GetComponent<Button>().onClick.AddListener(invMan.UpdateSpecialItemInvSlotDetails);
-
-                    newSlot.SpecialItemSO = objInfo.SpecialItemSO;
-
-                    newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-                    newSlot.transform.GetChild(1).GetComponent<Image>().sprite = objInfo.SpecialItemSO.icon;
-
-                    Transform rarity = newSlot.transform.GetChild(3);
-                    foreach (Transform t in rarity)
-                    {
-                        t.gameObject.SetActive(false);
-                    }
-                    for (int i = 0; i < newSlot.SpecialItemSO.rarity; i++)
-                    {
-                        rarity.GetChild(i).gameObject.SetActive(true);
-                    }
-
-                    newSlot.transform.GetChild(4).gameObject.SetActive(true);
-                }
-
                 playerTrColl.RemoveInteractabUI(interactab.gameObject);
 
                 Destroy(interactab.gameObject);

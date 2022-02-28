@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class WeaponInfo : MonoBehaviour
+public class WeaponInfo : Interactable
 {
     public WeaponScriptableObject SO;
 
@@ -21,6 +23,62 @@ public class WeaponInfo : MonoBehaviour
     public int refinementLevel;
     public bool isLocked;
     #endregion
+
+    public override void Interact()
+    {
+        #region Set Inventory Slot
+
+        // Instantiate Slot: WeaponInfo script
+        WeaponInfo newSlot = Instantiate<WeaponInfo>(InventoryManager.Instance.WeaponInvSlot.GetComponent<WeaponInfo>(), InventoryManager.Instance.TabsContent[0]);
+        InventoryManager.Instance.WeaponsTab.Add(newSlot);
+        InventoryManager.Instance.WeaponTabStr.Add(SO.weaponName);
+        newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateWeaponInvSlotDetails);
+
+        newSlot.SO = SO;
+
+        SetAtkFromLevel();
+        newSlot.baseATK = baseATK;
+
+        newSlot.currentXp = currentXp;
+        xpForNextLevel = XpForNextLevel(currentLevel);
+        newSlot.xpForNextLevel = xpForNextLevel;
+
+        newSlot.currentLevel = currentLevel;
+        newSlot.currentMaxLevel = currentMaxLevel;
+        newSlot.ascensionLevel = ascensionLevel;
+        newSlot.isLocked = isLocked;
+
+        // Instantiate Slot: Slot UI
+        newSlot.transform.GetChild(2).gameObject.SetActive(false);
+        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + newSlot.currentLevel;
+        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.SO.icon;
+
+        Transform Rarity = newSlot.transform.GetChild(3);
+        foreach (Transform t in Rarity)
+        {
+            t.gameObject.SetActive(false);
+        }
+        for (int i = 0; i < newSlot.SO.rarity; i++)
+        {
+            Rarity.GetChild(i).gameObject.SetActive(true);
+        }
+
+        if (newSlot.isLocked)
+        {
+            newSlot.transform.GetChild(5).gameObject.SetActive(true);
+            newSlot.transform.GetChild(5).GetChild(0).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockColBG;
+            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.PadlockClosed;
+            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockCol;
+        }
+        else
+        {
+            newSlot.transform.GetChild(5).gameObject.SetActive(false);
+        }
+
+        newSlot.transform.GetChild(6).gameObject.SetActive(true);
+
+        #endregion
+    }
 
     public void Start()
     {

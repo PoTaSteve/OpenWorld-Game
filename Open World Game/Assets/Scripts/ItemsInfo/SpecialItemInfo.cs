@@ -15,7 +15,7 @@ public class SpecialItemInfo : Interactable
 
         InventoryManager.Instance.SpecialItemsTab.Add(newSlot);
         InventoryManager.Instance.SpecialItemsTabStr.Add(SpecialItemSO.specialItemName);
-        newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateSpecialItemInvSlotDetails);
+        newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateSpecialItemInvSlotDetails(newSlot.gameObject); });
 
         newSlot.SpecialItemSO = SpecialItemSO;
 

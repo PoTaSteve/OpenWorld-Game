@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f81d3caf975b3e4a92b3448156f1a77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0223b823b324d07458e21662f46d3ab3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1626,7 +1626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f81d3caf975b3e4a92b3448156f1a77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0223b823b324d07458e21662f46d3ab3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1913,7 +1913,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f81d3caf975b3e4a92b3448156f1a77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0223b823b324d07458e21662f46d3ab3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2286,6 +2286,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8985f351aa705dc42a10d8014993ace7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesInteractionDestory: 0
+  ID: 0
+  index: 0
+  icon: {fileID: 0}
+  interactionType: 
   MaterialSO: {fileID: 0}
   count: 0
 --- !u!114 &-2152550740610581747
@@ -2610,7 +2615,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f81d3caf975b3e4a92b3448156f1a77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0223b823b324d07458e21662f46d3ab3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

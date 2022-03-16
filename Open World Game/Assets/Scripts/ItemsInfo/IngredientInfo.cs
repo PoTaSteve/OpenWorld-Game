@@ -33,7 +33,7 @@ public class IngredientInfo : Interactable
 
             InventoryManager.Instance.IngredientsTab.Add(newSlot);
             InventoryManager.Instance.IngredientsTabStr.Add(IngredientSO.ingredientName);
-            newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateIngredientInvSlotDetails);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
 
             newSlot.IngredientSO = IngredientSO;
             newSlot.count = count;

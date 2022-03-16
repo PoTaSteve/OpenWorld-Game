@@ -9,6 +9,20 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
+    public GameObject InventoryObj;
+
+    [Space]
+    public WeaponTab weap;
+    [Space]
+    public MaterialTab mat;
+    [Space]
+    public IngredientTab ingr;
+    [Space]
+    public FoodTab food;
+    [Space]
+    public SpecialItemTab specIt;
+
+    [Space]
     public int currInvTab;
     [Space]
     public List<WeaponInfo> WeaponsTab = new List<WeaponInfo>();
@@ -33,11 +47,11 @@ public class InventoryManager : MonoBehaviour
     public Sprite EpicBG;
     public Sprite LegendaryBG;
     [Space]
-    private Color CommonNameSpace = new Color(144f / 255f, 144f / 255f, 144f / 255f);
-    private Color NotCommonNameSpace = new Color(24f / 255f, 126f / 255f, 24f / 255f);
-    private Color RareNameSpace = new Color(31f / 255f, 84f / 255f, 255f / 169f);
-    private Color EpicNameSpace = new Color(146f / 255f, 38f / 255f, 197f / 255f);
-    private Color LegendaryNameSpace = new Color(217f / 255f, 130f / 255f, 0f / 255f);
+    //private Color CommonNameSpace = new Color(144f / 255f, 144f / 255f, 144f / 255f);
+    //private Color NotCommonNameSpace = new Color(24f / 255f, 126f / 255f, 24f / 255f);
+    //private Color RareNameSpace = new Color(31f / 255f, 84f / 255f, 255f / 169f);
+    //private Color EpicNameSpace = new Color(146f / 255f, 38f / 255f, 197f / 255f);
+    //private Color LegendaryNameSpace = new Color(217f / 255f, 130f / 255f, 0f / 255f);
     [Space]
     public Sprite PadlockOpen;
     public Sprite PadlockClosed;
@@ -81,7 +95,11 @@ public class InventoryManager : MonoBehaviour
     public Color[] DetailsBorderColor = new Color[5];
     public Color[] DetailsTextColor = new Color[5];
 
-    private GameObject LastSelectedSlot;
+    public GameObject BottomButton;
+
+    public GameObject LastSelectedSlot;
+
+    public GameObject WeaponEnhanceObj;
 
     private void Awake()
     {
@@ -100,7 +118,6 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         Windows[0].SetActive(true);
-        Tabs[0].GetComponent<Animator>().SetTrigger("Selected");
     }
 
     // Update is called once per frame
@@ -112,7 +129,6 @@ public class InventoryManager : MonoBehaviour
     public void GoToNextInvTab()
     {
         Windows[currInvTab].SetActive(false);
-        Tabs[currInvTab].GetComponent<Animator>().SetTrigger("BackToNormal");
 
         if (currInvTab == 4)
         {
@@ -124,13 +140,11 @@ public class InventoryManager : MonoBehaviour
         }
 
         Windows[currInvTab].SetActive(true);
-        Tabs[currInvTab].GetComponent<Animator>().SetTrigger("Selected");
 
         if (TabsContent[currInvTab].transform.childCount > 0)
         {
             InvDetails[currInvTab].SetActive(true);
-            EventSystem.current.SetSelectedGameObject(TabsContent[currInvTab].transform.GetChild(0).gameObject);
-            UpdateInvSlotDetails();
+            UpdateInvSlotDetails(TabsContent[currInvTab].transform.GetChild(0).gameObject);
         }
         else
         {
@@ -141,7 +155,6 @@ public class InventoryManager : MonoBehaviour
     public void GoToPreviousInvTab()
     {
         Windows[currInvTab].SetActive(false);
-        Tabs[currInvTab].GetComponent<Animator>().SetTrigger("BackToNormal");
 
         if (currInvTab == 0)
         {
@@ -153,13 +166,11 @@ public class InventoryManager : MonoBehaviour
         }
 
         Windows[currInvTab].SetActive(true);
-        Tabs[currInvTab].GetComponent<Animator>().SetTrigger("Selected");
 
         if (TabsContent[currInvTab].transform.childCount > 0)
         {
             InvDetails[currInvTab].SetActive(true);
-            EventSystem.current.SetSelectedGameObject(TabsContent[currInvTab].transform.GetChild(0).gameObject);
-            UpdateInvSlotDetails();
+            UpdateInvSlotDetails(TabsContent[currInvTab].transform.GetChild(0).gameObject);
         }
         else
         {
@@ -169,52 +180,117 @@ public class InventoryManager : MonoBehaviour
 
     public void GoToSpecificInvTab(int tab)
     {
-        if (tab!= currInvTab)
+        if (tab < 0 || tab > 4)
         {
-            if (currInvTab != -1)
-            {
-                Windows[currInvTab].SetActive(false);
-                Tabs[currInvTab].GetComponent<Animator>().SetTrigger("BackToNormal");
-            }
+            GoToSpecificInvTab(0);
 
-            Windows[tab].SetActive(true);
-            Tabs[tab].GetComponent<Animator>().SetTrigger("Selected");
+            return;
+        }
+
+        if (tab != currInvTab)
+        {
+            int prevTab = currInvTab;
             currInvTab = tab;
 
             if (TabsContent[currInvTab].transform.childCount > 0)
             {
                 InvDetails[currInvTab].SetActive(true);
-                EventSystem.current.SetSelectedGameObject(TabsContent[currInvTab].transform.GetChild(0).gameObject);
-                UpdateInvSlotDetails();
+                UpdateInvSlotDetails(TabsContent[currInvTab].transform.GetChild(0).gameObject);
             }
             else
             {
                 InvDetails[currInvTab].SetActive(false);
             }
+
+            if (prevTab != -1)
+            {
+                Windows[prevTab].SetActive(false);
+            }
+
+            Windows[currInvTab].SetActive(true);
         }
     }
 
-    public void UpdateInvSlotDetails()
+    public void OpenInventory()
+    {
+        if (currInvTab < 0 || currInvTab > 4)
+        {
+            currInvTab = 0;
+        }
+
+        if (TabsContent[currInvTab].transform.childCount > 0)
+        {
+            InvDetails[currInvTab].SetActive(true);
+            UpdateInvSlotDetails(TabsContent[currInvTab].transform.GetChild(0).gameObject);
+        }
+        else
+        {
+            InvDetails[currInvTab].SetActive(false);
+        }
+
+        Windows[currInvTab].SetActive(true);
+    }
+
+    public void BottomButtonFunc()
     {
         if (currInvTab == 0)
         {
-            UpdateWeaponInvSlotDetails();
-        }
-        else if (currInvTab == 1)
-        {
-            UpdateMaterialInvSlotDetails();
-        }
-        else if (currInvTab == 2)
-        {
-            UpdateIngredientInvSlotDetails();
+            // Open Weapon Details
+            WeaponEnhanceObj.SetActive(true);
+            WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().OpenWeaponDetails();
+            InventoryObj.SetActive(false);
         }
         else if (currInvTab == 3)
         {
-            UpdateFoodInvSlotDetails();
+            // Use Food
+        }
+    }
+
+    public void LockWeapon()
+    {
+        WeaponInfo weapInfo = LastSelectedSlot.GetComponent<WeaponInfo>();
+
+        weapInfo.isLocked = !weapInfo.isLocked;
+
+        if (weapInfo.isLocked)
+        {
+            weap.PadlockBG.color = closedPadlockColBG;
+            weap.PadlockIcon.sprite = PadlockClosed;
+            weap.PadlockIcon.color = closedPadlockCol;
+
+            LastSelectedSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            weap.PadlockBG.color = openPadlockColBG;
+            weap.PadlockIcon.sprite = PadlockOpen;
+            weap.PadlockIcon.color = openPadlockCol;
+
+            LastSelectedSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
+    public void UpdateInvSlotDetails(GameObject obj)
+    {
+        if (currInvTab == 0)
+        {
+            UpdateWeaponInvSlotDetails(obj);
+        }
+        else if (currInvTab == 1)
+        {
+            UpdateMaterialInvSlotDetails(obj);
+        }
+        else if (currInvTab == 2)
+        {
+            UpdateIngredientInvSlotDetails(obj);
+        }
+        else if (currInvTab == 3)
+        {
+            UpdateFoodInvSlotDetails(obj);
         }
         else if (currInvTab == 4)
         {
-            UpdateSpecialItemInvSlotDetails();
+            UpdateSpecialItemInvSlotDetails(obj);
         }
         else
         {
@@ -222,11 +298,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void UpdateWeaponInvSlotDetails()
+    public void UpdateWeaponInvSlotDetails(GameObject obj)
     {
-        WeaponInfo weapInfo = EventSystem.current.currentSelectedGameObject.GetComponent<WeaponInfo>();
+        Debug.Log("Updating Weapon Inv");
 
-        GameObject Content = InvDetails[0].transform.GetChild(0).GetChild(2).gameObject;
+        WeaponInfo weapInfo = obj.GetComponent<WeaponInfo>();
 
         // Deactivate "NEW" message
         weapInfo.gameObject.transform.GetChild(6).gameObject.SetActive(false);
@@ -239,106 +315,102 @@ public class InventoryManager : MonoBehaviour
 
         weapInfo.gameObject.transform.GetChild(2).gameObject.SetActive(true);
 
-        LastSelectedSlot = weapInfo.gameObject;
+        LastSelectedSlot = obj;
 
         // Top
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = weapInfo.SO.weaponName;
-        Content.transform.GetChild(1).GetComponent<Image>().sprite = weapInfo.SO.icon;
+        weap.NameText.text = weapInfo.SO.weaponName;
+        weap.Icon.sprite = weapInfo.SO.icon;
 
-        Content.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = weapInfo.StringWeaponType();
+        weap.WeaponTypeText.text = weapInfo.StringWeaponType();
 
-        Content.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = Mathf.RoundToInt(weapInfo.baseATK).ToString();
+        weap.BaseAtkText.text = Mathf.RoundToInt(weapInfo.baseATK).ToString();
 
         if (weapInfo.SO.rarity <= 2)
         {
-            Content.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "";
-            Content.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = "";
+            weap.SubstatTypeText.text = "";
+            weap.SubstatText.text = "";
         }
         else
         {
-            Content.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = weapInfo.SO.subStatType;
+            weap.SubstatTypeText.text = weapInfo.SO.subStatType;
             if (weapInfo.SO.isSubStatPercentage)
             {
-                Content.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = (weapInfo.SO.subStat * 100).ToString() + "%";
+                weap.SubstatText.text = (weapInfo.SO.subStat * 100).ToString() + "%";
             }
             else
             {
-                Content.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = weapInfo.SO.subStat.ToString();
+                weap.SubstatText.text = weapInfo.SO.subStat.ToString();
             }
         }
 
         // Rarity
-        Transform rarity = Content.transform.GetChild(7);
-        foreach (Transform t in rarity)
+        foreach (Transform t in weap.Rarity)
         {
             t.gameObject.SetActive(false);
         }
         for (int i = 0; i < weapInfo.SO.rarity; i++)
         {
-            rarity.GetChild(i).gameObject.SetActive(true);
+            weap.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
         // Add level references
         // Add refinement references
-        Transform MoreDet = Content.transform.GetChild(8);
 
-        MoreDet.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Lv. " + weapInfo.currentLevel + "/" + weapInfo.currentMaxLevel;
-        MoreDet.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Refinement level " + weapInfo.refinementLevel;
+        weap.LevelText.text = "Lv. " + weapInfo.currentLevel + "/" + weapInfo.currentMaxLevel;
+        weap.RefinementText.text = "Refinement level " + weapInfo.refinementLevel;
 
         // Add is locked references
         if (weapInfo.isLocked)
         {
-            MoreDet.GetChild(2).GetChild(0).GetComponent<Image>().color = closedPadlockColBG;
-            MoreDet.GetChild(2).GetChild(2).GetComponent<Image>().sprite = PadlockClosed;
-            MoreDet.GetChild(2).GetChild(2).GetComponent<Image>().color = closedPadlockCol;
+            weap.PadlockBG.color = closedPadlockColBG;
+            weap.PadlockIcon.sprite = PadlockClosed;
+            weap.PadlockIcon.color = closedPadlockCol;
         }
         else
         {
-            MoreDet.GetChild(2).GetChild(0).GetComponent<Image>().color = openPadlockColBG;
-            MoreDet.GetChild(2).GetChild(2).GetComponent<Image>().sprite = PadlockOpen;
-            MoreDet.GetChild(2).GetChild(2).GetComponent<Image>().color = openPadlockCol;
+            weap.PadlockBG.color = openPadlockColBG;
+            weap.PadlockIcon.sprite = PadlockOpen;
+            weap.PadlockIcon.color = openPadlockCol;
         }
 
         if (weapInfo.SO.rarity <= 2)
         {
             // Only set the description
-            Content.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = "<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description;
+            weap.DescriptionText.text = "<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description;
         }
         else
         {
             // Set the description and the effect
-            Content.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text =
+            weap.DescriptionText.text =
                 "<b>Effect</b>\n<size=14> </size>\n" + weapInfo.SO.effectName + "\n" + weapInfo.SO.effect + "\n\n<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description;
         }
 
         // Fix Colors
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(3).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(4).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(5).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(6).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.NameText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.WeaponTypeText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.BaseATKFixedText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.BaseAtkText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.SubstatTypeText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.SubstatText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
 
-        Content.transform.GetChild(8).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        Content.transform.GetChild(8).GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.LevelText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.RefinementText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
 
-        Content.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.DescriptionText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
 
-        InvDetails[0].transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>().color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
-        InvDetails[0].transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>().color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
+        weap.SymbolIconBG[0].color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
+        weap.SymbolIconBG[1].color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
 
-        InvDetails[0].transform.GetChild(0).GetChild(3).GetComponent<Image>().color = DetailsBorderColor[weapInfo.SO.rarity - 1];
+        weap.Border.color = DetailsBorderColor[weapInfo.SO.rarity - 1];
 
         // Fix UI Height and position
-        Content.transform.GetChild(9).GetChild(0).GetComponent<FixHeight>().UpdateHeight();
-        InvDetails[0].transform.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+        weap.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
+        weap.Content.GetComponent<FixHeight>().UpdateHeight();
     }
 
-    public void UpdateMaterialInvSlotDetails()
+    public void UpdateMaterialInvSlotDetails(GameObject obj)
     {
-        MaterialInfo matInfo = EventSystem.current.currentSelectedGameObject.GetComponent<MaterialInfo>();
-
-        GameObject Content = InvDetails[1].transform.GetChild(0).GetChild(2).gameObject;
+        MaterialInfo matInfo = obj.GetComponent<MaterialInfo>();
 
         // Deactivate "NEW" message
         matInfo.gameObject.transform.GetChild(6).gameObject.SetActive(false);
@@ -351,47 +423,40 @@ public class InventoryManager : MonoBehaviour
 
         matInfo.gameObject.transform.GetChild(2).gameObject.SetActive(true);
 
-        LastSelectedSlot = matInfo.gameObject;
+        LastSelectedSlot = obj;
 
         // Update UI
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = matInfo.MaterialSO.materialName;
-        Content.transform.GetChild(1).GetComponent<Image>().sprite = matInfo.MaterialSO.icon;
+        mat.NameText.text = matInfo.MaterialSO.materialName;
+        mat.Icon.sprite = matInfo.MaterialSO.icon;
 
-        Transform rarity = Content.transform.GetChild(2);
-
-        foreach (Transform t in rarity)
+        foreach (Transform t in mat.Rarity)
         {
             t.gameObject.SetActive(false);
         }
         for (int i = 0; i < matInfo.MaterialSO.rarity; i++)
         {
-            rarity.GetChild(i).gameObject.SetActive(true);
+            mat.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = matInfo.MaterialSO.description;
+        mat.DescriptionText.text = matInfo.MaterialSO.description;
 
         //Fix UI Height and position
-        Content.transform.GetChild(3).GetChild(0).GetComponent<FixHeight>().UpdateHeight();
-        InvDetails[1].transform.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+        mat.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
+        mat.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        InvDetails[1].transform.GetChild(0).GetChild(3).GetComponent<Image>().color = DetailsBorderColor[matInfo.MaterialSO.rarity - 1];
+        mat.Border.color = DetailsBorderColor[matInfo.MaterialSO.rarity - 1];
 
-        Transform BGMask = InvDetails[1].transform.GetChild(0).GetChild(1);
-        foreach (Transform t in BGMask)
-        {
-            t.gameObject.GetComponent<Image>().color = DetailsSymboloColor[matInfo.MaterialSO.rarity - 1];
-        }
+        mat.SymbolIconBG[0].color = DetailsSymboloColor[matInfo.MaterialSO.rarity - 1];
+        mat.SymbolIconBG[1].color = DetailsSymboloColor[matInfo.MaterialSO.rarity - 1];
 
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
+        mat.NameText.color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
+        mat.DescriptionText.color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
     }
 
-    public void UpdateIngredientInvSlotDetails()
+    public void UpdateIngredientInvSlotDetails(GameObject obj)
     {
-        IngredientInfo ingrInfo = EventSystem.current.currentSelectedGameObject.GetComponent<IngredientInfo>();
-
-        GameObject Content = InvDetails[2].transform.GetChild(0).GetChild(2).gameObject;
+        IngredientInfo ingrInfo = obj.GetComponent<IngredientInfo>();
 
         // Deactivate "NEW" message
         ingrInfo.gameObject.transform.GetChild(6).gameObject.SetActive(false);
@@ -404,47 +469,40 @@ public class InventoryManager : MonoBehaviour
 
         ingrInfo.gameObject.transform.GetChild(2).gameObject.SetActive(true);
 
-        LastSelectedSlot = ingrInfo.gameObject;
+        LastSelectedSlot = obj;
 
         // Update UI
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ingrInfo.IngredientSO.ingredientName;
-        Content.transform.GetChild(1).GetComponent<Image>().sprite = ingrInfo.IngredientSO.icon;
+        ingr.NameText.text = ingrInfo.IngredientSO.ingredientName;
+        ingr.Icon.sprite = ingrInfo.IngredientSO.icon;
 
-        Transform rarity = Content.transform.GetChild(2);
-
-        foreach (Transform t in rarity)
+        foreach (Transform t in ingr.Rarity)
         {
             t.gameObject.SetActive(false);
         }
         for (int i = 0; i < ingrInfo.IngredientSO.rarity; i++)
         {
-            rarity.GetChild(i).gameObject.SetActive(true);
+            ingr.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = ingrInfo.IngredientSO.description;
+        ingr.DescriptionText.text = ingrInfo.IngredientSO.description;
 
         //Fix UI Height and position
-        Content.transform.GetChild(3).GetChild(0).GetComponent<FixHeight>().UpdateHeight();
-        InvDetails[2].transform.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+        ingr.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
+        ingr.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        InvDetails[2].transform.GetChild(0).GetChild(3).GetComponent<Image>().color = DetailsBorderColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.Border.color = DetailsBorderColor[ingrInfo.IngredientSO.rarity - 1];
 
-        Transform BGMask = InvDetails[2].transform.GetChild(0).GetChild(1);
-        foreach (Transform t in BGMask)
-        {
-            t.gameObject.GetComponent<Image>().color = DetailsSymboloColor[ingrInfo.IngredientSO.rarity - 1];
-        }
+        ingr.SymbolIconBG[0].color = DetailsSymboloColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.SymbolIconBG[1].color = DetailsSymboloColor[ingrInfo.IngredientSO.rarity - 1];
 
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.NameText.color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.DescriptionText.color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
     }
 
-    public void UpdateFoodInvSlotDetails()
+    public void UpdateFoodInvSlotDetails(GameObject obj)
     {
-        FoodInfo foodInfo = EventSystem.current.currentSelectedGameObject.GetComponent<FoodInfo>();
-
-        GameObject Content = InvDetails[3].transform.GetChild(0).GetChild(2).gameObject;
+        FoodInfo foodInfo = obj.GetComponent<FoodInfo>();
 
         // Deactivate "NEW" message
         foodInfo.gameObject.transform.GetChild(6).gameObject.SetActive(false);
@@ -457,66 +515,159 @@ public class InventoryManager : MonoBehaviour
 
         foodInfo.gameObject.transform.GetChild(2).gameObject.SetActive(true);
 
-        LastSelectedSlot = foodInfo.gameObject;
+        LastSelectedSlot = obj;
 
         // Update UI
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = foodInfo.FoodSO.foodName;
-        Content.transform.GetChild(1).GetComponent<Image>().sprite = foodInfo.FoodSO.icon;
+        food.NameText.text = foodInfo.FoodSO.foodName;
+        food.Icon.sprite = foodInfo.FoodSO.icon;
 
-        Transform rarity = Content.transform.GetChild(2);
-
-        foreach (Transform t in rarity)
+        foreach (Transform t in food.Rarity)
         {
             t.gameObject.SetActive(false);
         }
         for (int i = 0; i < foodInfo.FoodSO.rarity; i++)
         {
-            rarity.GetChild(i).gameObject.SetActive(true);
+            food.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = foodInfo.FoodSO.description;
+        food.DescriptionText.text = foodInfo.FoodSO.description;
 
         //Fix UI Height and position
-        Content.transform.GetChild(3).GetChild(0).GetComponent<FixHeight>().UpdateHeight();
-        InvDetails[3].transform.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+        food.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
+        food.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        InvDetails[3].transform.GetChild(0).GetChild(3).GetComponent<Image>().color = DetailsBorderColor[foodInfo.FoodSO.rarity - 1];
+        food.Border.color = DetailsBorderColor[foodInfo.FoodSO.rarity - 1];
 
-        Transform BGMask = InvDetails[3].transform.GetChild(0).GetChild(1);
-        foreach (Transform t in BGMask)
-        {
-            t.gameObject.GetComponent<Image>().color = DetailsSymboloColor[foodInfo.FoodSO.rarity - 1];
-        }
+        food.SymbolIconBG[0].color = DetailsSymboloColor[foodInfo.FoodSO.rarity - 1];
+        food.SymbolIconBG[1].color = DetailsSymboloColor[foodInfo.FoodSO.rarity - 1];
 
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
+        food.NameText.color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
+        food.DescriptionText.color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
     }
 
-    public void UpdateSpecialItemInvSlotDetails()
+    public void UpdateSpecialItemInvSlotDetails(GameObject obj)
     {
-        SpecialItemInfo specItemInfo = EventSystem.current.currentSelectedGameObject.GetComponent<SpecialItemInfo>();
+        SpecialItemInfo specItemInfo = obj.GetComponent<SpecialItemInfo>();
 
-        GameObject Content = InvDetails[4].transform.GetChild(0).GetChild(3).gameObject;
+        // Deactivate "NEW" message
+        specItemInfo.gameObject.transform.GetChild(6).gameObject.SetActive(false);
 
-        Content.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = specItemInfo.SpecialItemSO.specialItemName;
-        Content.transform.GetChild(1).GetComponent<Image>().sprite = specItemInfo.SpecialItemSO.icon;
+        // Highlight Border
+        if (LastSelectedSlot != null)
+        {
+            LastSelectedSlot.transform.GetChild(2).gameObject.SetActive(false);
+        }
 
-        Transform rarity = Content.transform.GetChild(2);
+        specItemInfo.gameObject.transform.GetChild(2).gameObject.SetActive(true);
 
-        foreach (Transform t in rarity)
+        LastSelectedSlot = obj;
+
+        // Update UI
+        specIt.NameText.text = specItemInfo.SpecialItemSO.specialItemName;
+        specIt.Icon.sprite = specItemInfo.SpecialItemSO.icon;
+
+        foreach (Transform t in specIt.Rarity)
         {
             t.gameObject.SetActive(false);
         }
         for (int i = 0; i < specItemInfo.SpecialItemSO.rarity; i++)
         {
-            rarity.GetChild(i).gameObject.SetActive(true);
+            specIt.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        Content.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = specItemInfo.SpecialItemSO.description;
+        specIt.DescriptionText.text = specItemInfo.SpecialItemSO.description;
 
         //Fix UI Height and position
-        Content.transform.GetChild(3).GetChild(0).GetComponent<FixHeight>().UpdateHeight();
-        InvDetails[4].transform.GetChild(0).GetComponent<FixHeight>().UpdateHeight();
+        specIt.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
+        specIt.Content.GetComponent<FixHeight>().UpdateHeight();
     }
+}
+
+[System.Serializable]
+public class WeaponTab
+{
+    public GameObject DetailsObj;
+    public GameObject Content;
+
+    public Image[] SymbolIconBG = new Image[2];
+    public TextMeshProUGUI NameText;
+    public Image Icon;
+    public TextMeshProUGUI WeaponTypeText;
+    public TextMeshProUGUI BaseATKFixedText;
+    public TextMeshProUGUI BaseAtkText;
+    public TextMeshProUGUI SubstatTypeText;
+    public TextMeshProUGUI SubstatText;
+
+    public Transform Rarity;
+
+    public TextMeshProUGUI LevelText;
+    public TextMeshProUGUI RefinementText;
+
+    public Image PadlockBG;
+    public Image PadlockIcon;
+
+    public TextMeshProUGUI DescriptionText;
+
+    public Image Border;
+}
+
+[System.Serializable]
+public class MaterialTab
+{
+    public GameObject DetailsObj;
+    public GameObject Content;
+
+    public Image[] SymbolIconBG = new Image[2];
+    public TextMeshProUGUI NameText;
+    public Image Icon;
+    public Transform Rarity;
+    public TextMeshProUGUI DescriptionText;
+
+    public Image Border;
+}
+
+[System.Serializable]
+public class IngredientTab
+{
+    public GameObject DetailsObj;
+    public GameObject Content;
+
+    public Image[] SymbolIconBG = new Image[2];
+    public TextMeshProUGUI NameText;
+    public Image Icon;
+    public Transform Rarity;
+    public TextMeshProUGUI DescriptionText;
+
+    public Image Border;
+}
+
+[System.Serializable]
+public class FoodTab
+{
+    public GameObject DetailsObj;
+    public GameObject Content;
+
+    public Image[] SymbolIconBG = new Image[2];
+    public TextMeshProUGUI NameText;
+    public Image Icon;
+    public Transform Rarity;
+    public TextMeshProUGUI DescriptionText;
+
+    public Image Border;
+}
+
+[System.Serializable]
+public class SpecialItemTab
+{
+    public GameObject DetailsObj;
+    public GameObject Content;
+
+    public Image[] SymbolIconBG = new Image[2];
+    public TextMeshProUGUI NameText;
+    public Image Icon;
+    public Transform Rarity;
+    public TextMeshProUGUI DescriptionText;
+
+    public Image Border;
 }

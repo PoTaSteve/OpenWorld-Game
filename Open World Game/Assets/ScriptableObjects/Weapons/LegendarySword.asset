@@ -35,3 +35,6 @@ MonoBehaviour:
   equipPrefab: {fileID: 0}
   Console_Name: weapon:legendary_test
   itemID: 4
+  buyCost: 0
+  sellCost: 0
+  enhanceXp: 500

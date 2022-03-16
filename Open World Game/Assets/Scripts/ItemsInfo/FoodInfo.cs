@@ -33,7 +33,7 @@ public class FoodInfo : Interactable
 
             InventoryManager.Instance.FoodTab.Add(newSlot);
             InventoryManager.Instance.FoodTabStr.Add(FoodSO.foodName);
-            newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateFoodInvSlotDetails);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateFoodInvSlotDetails(newSlot.gameObject); });
 
             newSlot.FoodSO = FoodSO;
             newSlot.count = count;

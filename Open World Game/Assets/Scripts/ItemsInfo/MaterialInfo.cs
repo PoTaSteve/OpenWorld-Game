@@ -33,7 +33,7 @@ public class MaterialInfo : Interactable
 
             InventoryManager.Instance.MaterialsTab.Add(newSlot);
             InventoryManager.Instance.MaterialsTabStr.Add(MaterialSO.materialName);
-            newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateMaterialInvSlotDetails);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
 
             newSlot.MaterialSO = MaterialSO;
             newSlot.count = count;

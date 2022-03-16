@@ -12,6 +12,7 @@ public class WeaponInfo : Interactable
     //Top
 
     public float baseATK;
+    public float currentSubstat;
 
     // Middle
 
@@ -32,12 +33,12 @@ public class WeaponInfo : Interactable
         WeaponInfo newSlot = Instantiate<WeaponInfo>(InventoryManager.Instance.WeaponInvSlot.GetComponent<WeaponInfo>(), InventoryManager.Instance.TabsContent[0]);
         InventoryManager.Instance.WeaponsTab.Add(newSlot);
         InventoryManager.Instance.WeaponTabStr.Add(SO.weaponName);
-        newSlot.GetComponent<Button>().onClick.AddListener(InventoryManager.Instance.UpdateWeaponInvSlotDetails);
+        newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateWeaponInvSlotDetails(newSlot.gameObject); });
 
         newSlot.SO = SO;
 
-        SetAtkFromLevel();
-        newSlot.baseATK = baseATK;
+        newSlot.baseATK = SetAtkFromLevel(currentLevel);
+        newSlot.currentSubstat = SetSecondaryStatFromLevel(currentLevel);
 
         newSlot.currentXp = currentXp;
         xpForNextLevel = XpForNextLevel(currentLevel);
@@ -46,6 +47,7 @@ public class WeaponInfo : Interactable
         newSlot.currentLevel = currentLevel;
         newSlot.currentMaxLevel = currentMaxLevel;
         newSlot.ascensionLevel = ascensionLevel;
+        newSlot.refinementLevel = refinementLevel;
         newSlot.isLocked = isLocked;
 
         // Instantiate Slot: Slot UI
@@ -65,15 +67,17 @@ public class WeaponInfo : Interactable
 
         if (newSlot.isLocked)
         {
-            newSlot.transform.GetChild(5).gameObject.SetActive(true);
-            newSlot.transform.GetChild(5).GetChild(0).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockColBG;
-            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.PadlockClosed;
-            newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockCol;
+            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockColBG;
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.PadlockClosed;
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockCol;
         }
         else
         {
-            newSlot.transform.GetChild(5).gameObject.SetActive(false);
+            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
         }
+
+        newSlot.transform.GetChild(5).GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.refinementLevel.ToString();
 
         newSlot.transform.GetChild(6).gameObject.SetActive(true);
 
@@ -82,56 +86,114 @@ public class WeaponInfo : Interactable
 
     public void Start()
     {
-        SetAtkFromLevel();
+        baseATK = SetAtkFromLevel(currentLevel);
         xpForNextLevel = XpForNextLevel(currentLevel);
+        currentSubstat = SetSecondaryStatFromLevel(currentLevel);
     }
 
-    public void SetAtkFromLevel()
+    public float SetAtkFromLevel(int level)
     {
-        if (currentLevel <= 20 && ascensionLevel == 0)
+        float atk;
+
+        if (level <= 20 && ascensionLevel == 0)
         {
-            baseATK = SO.BaseATK1 + SO.incrementATK * (currentLevel - 1);
+            atk = SO.BaseATKs[0] + SO.incrementATK * (level - 1);
         }
-        else if (currentLevel >= 20 && currentLevel <= 40 && ascensionLevel == 1)
+        else if (level >= 20 && level <= 40 && ascensionLevel == 1)
         {
-            baseATK = SO.BaseATK20 + SO.incrementATK * (currentLevel - 20);
+            atk = SO.BaseATKs[1] + SO.incrementATK * (level - 20);
         }
-        else if (currentLevel >= 40 && currentLevel <= 60 && ascensionLevel == 2)
+        else if (level >= 40 && level <= 60 && ascensionLevel == 2)
         {
-            baseATK = SO.BaseATK40 + SO.incrementATK * (currentLevel - 40);
+            atk = SO.BaseATKs[2] + SO.incrementATK * (level - 40);
         }
-        else if (currentLevel >= 60 && currentLevel <= 70 && ascensionLevel == 3)
+        else if (level >= 60 && level <= 70 && ascensionLevel == 3)
         {
-            baseATK = SO.BaseATK60 + SO.incrementATK * (currentLevel - 60);
+            atk = SO.BaseATKs[3] + SO.incrementATK * (level - 60);
         }
-        else if (currentLevel >= 70 && currentLevel <= 80 && ascensionLevel == 4)
+        else if (level >= 70 && level <= 80 && ascensionLevel == 4)
         {
-            baseATK = SO.BaseATK70 + SO.incrementATK * (currentLevel - 70);
+            atk = SO.BaseATKs[4] + SO.incrementATK * (level - 70);
         }
-        else if (currentLevel >= 80 && currentLevel <= 90 && ascensionLevel == 5)
+        else if (level >= 80 && level <= 90 && ascensionLevel == 5)
         {
-            baseATK = SO.BaseATK80 + SO.incrementATK * (currentLevel - 80);
+            atk = SO.BaseATKs[5] + SO.incrementATK * (level - 80);
         }
-        else if (currentLevel >= 90 && currentLevel < 100 && ascensionLevel == 6)
+        else if (level >= 90 && level < 100 && ascensionLevel == 6)
         {
-            baseATK = SO.BaseATK90 + SO.incrementATK * (currentLevel - 90);
+            atk = SO.BaseATKs[6] + SO.incrementATK * (level - 90);
         }
-        else if (currentLevel == 100 && ascensionLevel == 6)
+        else if (level == 100 && ascensionLevel == 7)
         {
-            baseATK = SO.BaseATK100;
+            atk = SO.BaseATKs[7];
         }
+        else
+        {
+            atk = 0;
+            Debug.Log("Error: level out of range. Attack set to 0.");
+        }
+
+        return atk;
     }
 
-    public void SetSecondaryStatFromLevel()
+    public float SetSecondaryStatFromLevel(int level)
     {
-        // To implement
+        float substat = (level / 5) * SO.incrementSubStat + SO.subStat;
+
+        return substat;
     }
 
     public int XpForNextLevel(int level) // Xp to get from a level to the next. Parameter level is the lower level
     {
-        int xp = (int)(Mathf.Pow((5f / 2f) * level + 5, 2f) + 100); // Common
-        //int xp2 = (int)(Mathf.Pow((14f / 5f) * level + 5, 2f) + 150); // Uncommon
-        // Hypotesis of integral
+        int xp;
+        level++;
+
+        if (SO.rarity == 1)
+        {
+            xp = Mathf.RoundToInt(6 * Mathf.Pow(level, 2)) + 200;
+        }
+        else if (SO.rarity == 2)
+        {
+            xp = Mathf.RoundToInt(10 * Mathf.Pow(level, 2)) + 300;
+        }
+        else if (SO.rarity == 3)
+        {
+            if (level < 80)
+            {
+                xp = Mathf.RoundToInt(15 * Mathf.Pow(level, 2)) + 400;
+            }
+            else // level >= 80
+            {
+                xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(50 * Mathf.Pow(level, 2)) - 14000 * level - 384400;
+            }
+        }
+        else if (SO.rarity == 4)
+        {
+            if (level < 80)
+            {
+                xp = Mathf.RoundToInt(22 * Mathf.Pow(level, 2)) + 500;
+            }
+            else // level >= 80
+            {
+                xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(150 * Mathf.Pow(level, 2)) - 16620 * level - 1100;
+            }
+        }
+        else if (SO.rarity == 5)
+        {
+            if (level < 80)
+            {
+                xp = Mathf.RoundToInt(34 * Mathf.Pow(level, 2)) + 600;
+            }
+            else // level >= 80
+            {
+                xp = Mathf.RoundToInt(2 * Mathf.Pow(level, 3)) - 3900 * level - 499400;
+            }
+        }
+        else
+        {
+            xp = 0;
+            Debug.Log("Error: Rarity int out of range. Xp for next level set to 0.");
+        }
 
         return xp;
     }
@@ -146,6 +208,43 @@ public class WeaponInfo : Interactable
         }
 
         return totXp;
+    }
+
+    public int NextMaxLevel(int level)
+    {
+        int nextLevel;
+
+        if (level == 20)
+        {
+            nextLevel = 40;
+        }
+        else if (level == 40)
+        {
+            nextLevel = 60;
+        }
+        else if (level == 60)
+        {
+            nextLevel = 70;
+        }
+        else if (level == 70)
+        {
+            nextLevel = 80;
+        }
+        else if (level == 80)
+        {
+            nextLevel = 90;
+        }
+        else if (level == 90)
+        {
+            nextLevel = 100;
+        }
+        else
+        {
+            nextLevel = 0;
+            Debug.Log("Error: trying to get unknown next max level");
+        }
+
+        return nextLevel;
     }
 
     public string StringWeaponType()

@@ -30,14 +30,7 @@ public class WeaponScriptableObject : ScriptableObject
     public string description;
 
     //These ATK values are for the weapon ascension
-    public float BaseATK1;
-    public float BaseATK20;
-    public float BaseATK40;
-    public float BaseATK60;
-    public float BaseATK70;
-    public float BaseATK80;
-    public float BaseATK90;
-    public float BaseATK100;
+    public float[] BaseATKs = new float[7];
 
     public float incrementATK;
 
@@ -48,6 +41,10 @@ public class WeaponScriptableObject : ScriptableObject
 
     public string Console_Name;
     public int itemID;
+
+    public int buyCost;
+    public int sellCost;
+    public int enhanceXp;
 
     //Create a script with all weapon effects. Each weapon will get the function of the effect from there.
 

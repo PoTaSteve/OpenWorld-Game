@@ -9,20 +9,25 @@ public class SceneManager : MonoBehaviour
     public GameObject ConsoleObj;
     public GameObject DebugModeObj;
     public GameObject TempConsoleDebugObj;
+    public GameObject WeaponInfoWindow;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         InventoryObj.SetActive(false);
         ConsoleObj.SetActive(false);
         DebugModeObj.SetActive(false);
         GameUIObj.SetActive(true);
         TempConsoleDebugObj.SetActive(false);
+        WeaponInfoWindow.SetActive(false);
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

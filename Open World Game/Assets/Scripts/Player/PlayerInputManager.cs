@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class PlayerInputManager : MonoBehaviour
 {
@@ -50,6 +51,14 @@ public class PlayerInputManager : MonoBehaviour
     private PlayerTriggerCollision playerTrColl;
     public float scrollWheel;
 
+
+    GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
+    public Canvas canvas;
+    public List<GameObject> HitObjs;
+
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -94,6 +103,12 @@ public class PlayerInputManager : MonoBehaviour
     {
         debugModeTimer = 0f;
         isInDebugMode = false;
+
+
+        //Fetch the Raycaster from the GameObject (the Canvas)
+        m_Raycaster = canvas.GetComponent<GraphicRaycaster>();
+        //Fetch the Event System from the Scene
+        m_EventSystem = EventSystem.current;
     }
 
     // Update is called once per frame
@@ -146,6 +161,27 @@ public class PlayerInputManager : MonoBehaviour
         }
         #endregion
 
+        // Raycast UI test
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            //Set up the new Pointer Event
+            m_PointerEventData = new PointerEventData(m_EventSystem);
+            //Set the Pointer Event Position to that of the mouse position
+            m_PointerEventData.position = Input.mousePosition;
+
+            //Create a list of Raycast Results
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);
+
+            HitObjs.Clear();
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+                HitObjs.Add(result.gameObject);
+            }
+        }
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -158,11 +194,6 @@ public class PlayerInputManager : MonoBehaviour
 
     public void OpenInventory(InputAction.CallbackContext context)
     {
-        StartCoroutine(OpenInventoryCoroutine(1f));
-    }
-
-    public IEnumerator OpenInventoryCoroutine(float openTime)
-    {
         playerControls.Inventory.Enable();
         InventoryObj.SetActive(true);
         GameUIObj.SetActive(false);
@@ -171,22 +202,10 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Player.Disable();
 
-        yield return new WaitForSeconds(openTime);
-
-        InventoryManager.Instance.GoToSpecificInvTab(0);
+        InventoryManager.Instance.OpenInventory();
     }
 
     public void CloseInventory(InputAction.CallbackContext context)
-    {
-        StartCoroutine(CloseInventoryCoroutine(5f / 6f));
-    }
-
-    public void CloseInventoryForButton()
-    {
-        StartCoroutine(CloseInventoryCoroutine(5f / 6f));
-    }
-
-    public IEnumerator CloseInventoryCoroutine(float closeTime)
     {
         playerControls.Player.Enable();
         InventoryObj.SetActive(false);
@@ -195,8 +214,17 @@ public class PlayerInputManager : MonoBehaviour
         ThirdPersonCam.SetActive(true);
 
         playerControls.Inventory.Disable();
+    }
 
-        yield return new WaitForSeconds(closeTime);
+    public void CloseInventoryForButton()
+    {
+        playerControls.Player.Enable();
+        InventoryObj.SetActive(false);
+        GameUIObj.SetActive(true);
+
+        ThirdPersonCam.SetActive(true);
+
+        playerControls.Inventory.Disable();
     }
 
     public void NextInvPage(InputAction.CallbackContext context)

@@ -35,3 +35,6 @@ MonoBehaviour:
   equipPrefab: {fileID: 0}
   Console_Name: weapon:uncommon_test
   itemID: 1
+  buyCost: 0
+  sellCost: 0
+  enhanceXp: 120

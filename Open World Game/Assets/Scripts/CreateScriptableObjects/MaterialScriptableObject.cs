@@ -5,7 +5,8 @@ using UnityEngine;
 public enum MaterialTypeEnum
 {
     CrafingIngredient,
-    CrafingResult
+    CrafingResult,
+    EnhanceMaterial
 }
 
 [CreateAssetMenu(fileName = "New Material", menuName = "Material Item")]
@@ -29,10 +30,12 @@ public class MaterialScriptableObject : ScriptableObject
     public string[] sources;
 
     // Other
-    public int cost;
+    public int buyCost;
+    public int sellCost;
 
     public string Console_Name;
     public int itemID;
+    public int enhanceXp;
 
     public string MaterialTypeEnumToString(MaterialTypeEnum type)
     {
@@ -42,9 +45,14 @@ public class MaterialScriptableObject : ScriptableObject
         {
             s = "Crafting Ingredient";
         }
-        else
+        else if (type == MaterialTypeEnum.CrafingResult)
         {
             s = "Crafting Result";
+        }
+        else
+        {
+
+            s = "Enhance Material";
         }
 
         return s;

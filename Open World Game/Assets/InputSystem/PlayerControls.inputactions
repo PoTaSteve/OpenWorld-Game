@@ -6,24 +6,6 @@
             "id": "4a564af1-33e2-458e-a006-b7be607df500",
             "actions": [
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "7c71c59f-d245-4960-8b45-d212b50cfd65",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Movement",
-                    "type": "Value",
-                    "id": "6f424814-9c1d-4c99-b8a7-75bf63a69fc2",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Look",
                     "type": "Value",
                     "id": "de851836-f28e-4fa6-8859-76fd81b6eacf",
@@ -151,72 +133,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "52f5c8c2-3f53-4488-b5f6-767b317d6ba2",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "f59ee9db-7650-43f5-a208-dd8ac422a2fe",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "91947390-8464-4270-866f-52f960bb7423",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "88dae536-cce4-4eb4-b469-3d19d37e2ad6",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "31ce9ab3-e49a-4dad-bab7-be3ed1274fef",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "f1751572-2db4-4417-8363-255671979b91",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "",
                     "id": "a320dc5b-03bd-4fd1-80ca-d905d1d2adfe",
@@ -524,7 +440,7 @@
             "id": "13693169-fd64-4564-8cb3-22f3f1eaf564",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Continue",
                     "type": "Button",
                     "id": "8f338682-d054-4015-bdd1-e1abfb8c4b8f",
                     "expectedControlType": "Button",
@@ -537,11 +453,33 @@
                 {
                     "name": "",
                     "id": "45d51a7b-f33d-42dc-9eeb-100fc6e623fc",
-                    "path": "",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e76799b-ed76-4fcc-ad24-ca380db3bf78",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c3eeb8c-021d-4d44-9602-268ceb191ae4",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -590,6 +528,62 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseConsole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "WeaponEnhance",
+            "id": "786a271a-798c-4dea-bf7e-fa0a52a6fcfa",
+            "actions": [
+                {
+                    "name": "CloseWeapDetails",
+                    "type": "Button",
+                    "id": "20b44d29-2430-402b-876c-c04b394bd141",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8417ed63-a2e6-41d4-96f1-3c9ac7b24062",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseWeapDetails",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Shop",
+            "id": "564fdde7-9f9e-4373-9fde-06e56d97f720",
+            "actions": [
+                {
+                    "name": "CloseShop",
+                    "type": "Button",
+                    "id": "c1f86ba7-376b-4482-bdff-b93eaab5c9a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6a4cc679-c675-4c67-bf86-082b26262723",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseShop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

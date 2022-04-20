@@ -72,7 +72,7 @@ public class ConsoleManager : MonoBehaviour
     public string ConsoleSpawn(string[] funcParams)
     {
         string debug = "No Item spawned";
-
+        /*
         int count;
         string type;
         Vector3 pos;
@@ -110,13 +110,13 @@ public class ConsoleManager : MonoBehaviour
         {
             if (type == "weapon")
             {
-                foreach (GameObject obj in ItemManager.Instance.AllWeapons)
+                foreach (WeaponScriptableObject obj in GameManager.Instance.itemMan.AllWeapons)
                 {
-                    if (obj.GetComponent<WeaponInfo>().SO.Console_Name == objName)
+                    if (obj.Console_Name == objName)
                     {
                         for (int i = 0; i < count; i++)
                         {
-                            GameObject newObj = Instantiate(obj, pos, Quaternion.identity, ItemManager.Instance.itemsParent);
+                            GameObject newObj = Instantiate(obj, pos, Quaternion.identity, GameManager.Instance.itemMan.itemsParent);
 
                             debug = "Weapon spawned at: (" + pos.x + ", " + pos.y + ", " + pos.z + ")";
                         }
@@ -125,11 +125,11 @@ public class ConsoleManager : MonoBehaviour
             }
             else if (type == "material")
             {
-                foreach (GameObject obj in ItemManager.Instance.AllMaterials)
+                foreach (GameObject obj in GameManager.Instance.itemMan.AllMaterials)
                 {
                     if (obj.GetComponent<MaterialInfo>().MaterialSO.Console_Name == objName)
                     {
-                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, ItemManager.Instance.itemsParent);
+                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, GameManager.Instance.itemMan.itemsParent);
 
                         newObj.GetComponent<MaterialInfo>().count = count;
 
@@ -139,11 +139,11 @@ public class ConsoleManager : MonoBehaviour
             }
             else if (type == "ingredient")
             {
-                foreach (GameObject obj in ItemManager.Instance.AllIngredients)
+                foreach (GameObject obj in GameManager.Instance.itemMan.AllIngredients)
                 {
                     if (obj.GetComponent<IngredientInfo>().IngredientSO.Console_Name == objName)
                     {
-                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, ItemManager.Instance.itemsParent);
+                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, GameManager.Instance.itemMan.itemsParent);
 
                         newObj.GetComponent<IngredientInfo>().count = count;
 
@@ -153,11 +153,11 @@ public class ConsoleManager : MonoBehaviour
             }
             else if (type == "food")
             {
-                foreach (GameObject obj in ItemManager.Instance.AllFood)
+                foreach (GameObject obj in GameManager.Instance.itemMan.AllFood)
                 {
                     if (obj.GetComponent<FoodInfo>().FoodSO.Console_Name == objName)
                     {
-                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, ItemManager.Instance.itemsParent);
+                        GameObject newObj = Instantiate(obj, pos, Quaternion.identity, GameManager.Instance.itemMan.itemsParent);
 
                         newObj.GetComponent<FoodInfo>().count = count;
 
@@ -170,7 +170,7 @@ public class ConsoleManager : MonoBehaviour
                 debug = "Error: invalid spawn type";
             }
         }
-
+        */
         return debug;
     }
 

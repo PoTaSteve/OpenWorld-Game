@@ -12,6 +12,8 @@ public enum MaterialTypeEnum
 [CreateAssetMenu(fileName = "New Material", menuName = "Material Item")]
 public class MaterialScriptableObject : ScriptableObject
 {
+    public int TypeID;
+
     //Top
 
     public string materialName;
@@ -34,7 +36,6 @@ public class MaterialScriptableObject : ScriptableObject
     public int sellCost;
 
     public string Console_Name;
-    public int itemID;
     public int enhanceXp;
 
     public string MaterialTypeEnumToString(MaterialTypeEnum type)

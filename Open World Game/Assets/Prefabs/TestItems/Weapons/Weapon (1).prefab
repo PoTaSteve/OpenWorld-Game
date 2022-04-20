@@ -52,8 +52,10 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Uncommon Test Weapon
-  SO: {fileID: 11400000, guid: 9bdf6e3aec2127549b94c60cb220f982, type: 2}
+  scrObj: {fileID: 11400000, guid: 9bdf6e3aec2127549b94c60cb220f982, type: 2}
+  UniqueID: 
   baseATK: 0
+  currentSubstat: 0
   currentXp: 0
   xpForNextLevel: 0
   currentLevel: 20

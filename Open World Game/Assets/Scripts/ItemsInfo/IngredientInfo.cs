@@ -6,20 +6,20 @@ using TMPro;
 
 public class IngredientInfo : Interactable
 {
-    public IngredientScriptableObject IngredientSO;
+    public IngredientScriptableObject scrObj;
 
     public int count;
 
     public override void Interact()
     {
         // Instantiate Slot: IngredientInfo script
-        if (InventoryManager.Instance.IngredientsTabStr.Contains(IngredientSO.ingredientName))
+        if (GameManager.Instance.invMan.IngredientsTab.Contains(scrObj.TypeID))
         {
             // Add the count
-            foreach (Transform t in InventoryManager.Instance.TabsContent[2].transform)
+            foreach (Transform t in GameManager.Instance.invMan.TabsContent[2].transform)
             {
                 IngredientInfo info = t.GetComponent<IngredientInfo>();
-                if (info.IngredientSO.ingredientName == IngredientSO.ingredientName)
+                if (info.scrObj.ingredientName == scrObj.ingredientName)
                 {
                     info.count += count;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -29,53 +29,54 @@ public class IngredientInfo : Interactable
         else
         {
             // Instantiate slot
-            IngredientInfo newSlot = Instantiate<IngredientInfo>(InventoryManager.Instance.IngredientInvSlot.GetComponent<IngredientInfo>(), InventoryManager.Instance.TabsContent[2]);
+            IngredientInfo newSlot = Instantiate<IngredientInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), GameManager.Instance.invMan.TabsContent[2]);
 
-            InventoryManager.Instance.IngredientsTab.Add(newSlot);
-            InventoryManager.Instance.IngredientsTabStr.Add(IngredientSO.ingredientName);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
+            GameManager.Instance.invMan.IngredientsTab.Add(scrObj.TypeID);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
 
-            newSlot.IngredientSO = IngredientSO;
+            newSlot.scrObj = scrObj;
             newSlot.count = count;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = IngredientSO.icon;
+            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = scrObj.icon;
 
             Transform rarity = newSlot.transform.GetChild(3);
             foreach (Transform t in rarity)
             {
                 t.gameObject.SetActive(false);
             }
-            for (int i = 0; i < newSlot.IngredientSO.rarity; i++)
+            for (int i = 0; i < newSlot.scrObj.rarity; i++)
             {
                 rarity.GetChild(i).gameObject.SetActive(true);
             }
 
             newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
 
-            if (newSlot.IngredientSO.ingredientType == IngredientType.Base)
+            if (newSlot.scrObj.ingredientType == IngredientType.Base)
             {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.BaseIngredientIcon;
+                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.BaseIngredientIcon;
             }
-            else if (newSlot.IngredientSO.ingredientType == IngredientType.Specific)
+            else if (newSlot.scrObj.ingredientType == IngredientType.Specific)
             {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.SpecificIngredientIcon;
+                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.SpecificIngredientIcon;
             }
 
             newSlot.transform.GetChild(6).gameObject.SetActive(true);
         }
+
+        Destroy(gameObject);
     }
 
     public string StringIngredientType()
     {
         string type;
 
-        if (IngredientSO.ingredientType == IngredientType.Base)
+        if (scrObj.ingredientType == IngredientType.Base)
         {
             type = "Base";
         }
-        else if (IngredientSO.ingredientType == IngredientType.Specific)
+        else if (scrObj.ingredientType == IngredientType.Specific)
         {
             type = "Specific";
         }

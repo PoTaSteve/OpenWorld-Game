@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Special Item", menuName = "Special Item")]
 public class SpecialItemScriptableObject : ScriptableObject
 {
+    public int TypeID;
+
     //Top
 
     public string specialItemName;
@@ -20,5 +22,6 @@ public class SpecialItemScriptableObject : ScriptableObject
     public string[] sources;
 
     public string Console_Name;
-    public int itemID;
+
+    public int buyCost;
 }

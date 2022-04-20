@@ -167,7 +167,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Uncommon Test Ingredient
-  IngredientSO: {fileID: 11400000, guid: 46c2c270800a01740878e1ceee227333, type: 2}
+  scrObj: {fileID: 11400000, guid: 46c2c270800a01740878e1ceee227333, type: 2}
   count: 5
 --- !u!54 &3397435803268999280
 Rigidbody:

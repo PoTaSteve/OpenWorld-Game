@@ -16,8 +16,6 @@ public class PlayerTriggerCollision : MonoBehaviour
     [Space]
     public int InstantiatedInteractablesUI;
     public int currentInteractableIndex;
-    [SerializeField]
-    private PlayerInputManager PlInpMan;
     public List<GameObject> InRangeInteractables = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -37,12 +35,10 @@ public class PlayerTriggerCollision : MonoBehaviour
             InRangeInteractables.Add(other.gameObject);
 
             interactab.ID = GenerateRandomID();
-            //interactab.index = InstantiatedInteractablesUI;
 
             GameObject InteractabUIObj = Instantiate(InteractableUIPrefab, InteractableUIContent.transform);
 
             InteractabUIObj.GetComponent<Interactable>().ID = interactab.ID;
-            //InteractabUIObj.GetComponent<Interactable>().index = interactab.index;
 
             InteractabUIObj.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = interactab.interactionType;
             InteractabUIObj.transform.GetChild(4).GetComponent<Image>().sprite = interactab.icon;

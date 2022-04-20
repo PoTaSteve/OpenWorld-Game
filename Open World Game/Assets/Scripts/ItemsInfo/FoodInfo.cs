@@ -6,20 +6,20 @@ using TMPro;
 
 public class FoodInfo : Interactable
 {
-    public FoodScriptableObject FoodSO;
+    public FoodScriptableObject scrObj;
 
     public int count;
 
     public override void Interact()
     {
         // Instantiate Slot: FoodInfo script
-        if (InventoryManager.Instance.FoodTabStr.Contains(FoodSO.foodName))
+        if (GameManager.Instance.invMan.FoodTab.Contains(scrObj.TypeID))
         {
             // Add the count
-            foreach (Transform t in InventoryManager.Instance.TabsContent[3].transform)
+            foreach (Transform t in GameManager.Instance.invMan.TabsContent[3].transform)
             {
                 FoodInfo info = t.GetComponent<FoodInfo>();
-                if (info.FoodSO.foodName == FoodSO.foodName)
+                if (info.scrObj.foodName == scrObj.foodName)
                 {
                     info.count += count;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -29,64 +29,65 @@ public class FoodInfo : Interactable
         else
         {
             // Instantiate slot
-            FoodInfo newSlot = Instantiate<FoodInfo>(InventoryManager.Instance.FoodInvSlot.GetComponent<FoodInfo>(), InventoryManager.Instance.TabsContent[3]);
+            FoodInfo newSlot = Instantiate<FoodInfo>(GameManager.Instance.invMan.FoodInvSlot.GetComponent<FoodInfo>(), GameManager.Instance.invMan.TabsContent[3]);
 
-            InventoryManager.Instance.FoodTab.Add(newSlot);
-            InventoryManager.Instance.FoodTabStr.Add(FoodSO.foodName);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateFoodInvSlotDetails(newSlot.gameObject); });
+            GameManager.Instance.invMan.FoodTab.Add(scrObj.TypeID);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateFoodInvSlotDetails(newSlot.gameObject); });
 
-            newSlot.FoodSO = FoodSO;
+            newSlot.scrObj = scrObj;
             newSlot.count = count;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = FoodSO.icon;
+            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = scrObj.icon;
 
             Transform rarity = newSlot.transform.GetChild(3);
             foreach (Transform t in rarity)
             {
                 t.gameObject.SetActive(false);
             }
-            for (int i = 0; i < newSlot.FoodSO.rarity; i++)
+            for (int i = 0; i < newSlot.scrObj.rarity; i++)
             {
                 rarity.GetChild(i).gameObject.SetActive(true);
             }
 
             newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
 
-            if (newSlot.FoodSO.foodType == FoodType.Potion)
+            if (newSlot.scrObj.foodType == FoodType.Potion)
             {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.PotionFoodTypeIcon;
+                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.PotionFoodTypeIcon;
             }
-            else if (newSlot.FoodSO.foodType == FoodType.Food)
+            else if (newSlot.scrObj.foodType == FoodType.Food)
             {
-                if (newSlot.FoodSO.buffType == FoodBuffType.Attack)
+                if (newSlot.scrObj.buffType == FoodBuffType.Attack)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.AttackFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.AttackFoodBuffIcon;
                 }
-                else if (newSlot.FoodSO.buffType == FoodBuffType.Defence)
+                else if (newSlot.scrObj.buffType == FoodBuffType.Defence)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.DefenceFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.DefenceFoodBuffIcon;
                 }
-                else if (newSlot.FoodSO.buffType == FoodBuffType.Heal)
+                else if (newSlot.scrObj.buffType == FoodBuffType.Heal)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.HealFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.HealFoodBuffIcon;
                 }
-                else if (newSlot.FoodSO.buffType == FoodBuffType.Regen)
+                else if (newSlot.scrObj.buffType == FoodBuffType.Regen)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.RegenFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.RegenFoodBuffIcon;
                 }
-                else if (newSlot.FoodSO.buffType == FoodBuffType.Speed)
+                else if (newSlot.scrObj.buffType == FoodBuffType.Speed)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.SpeedFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.SpeedFoodBuffIcon;
                 }
-                else if (newSlot.FoodSO.buffType == FoodBuffType.StaminaConsumption)
+                else if (newSlot.scrObj.buffType == FoodBuffType.StaminaConsumption)
                 {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.StaminaConsumptionFoodBuffIcon;
+                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.StaminaConsumptionFoodBuffIcon;
                 }
             }
 
             newSlot.transform.GetChild(6).gameObject.SetActive(true);
         }
+
+        Destroy(gameObject);
     }
 }

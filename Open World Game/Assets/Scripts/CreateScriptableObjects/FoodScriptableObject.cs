@@ -21,6 +21,8 @@ public enum FoodBuffType
 [CreateAssetMenu(fileName = "New Food", menuName = "Food")]
 public class FoodScriptableObject : ScriptableObject
 {
+    public int TypeID;
+
     //Top
 
     public string foodName;
@@ -41,10 +43,10 @@ public class FoodScriptableObject : ScriptableObject
     public string[] sources;
 
     // Other
-    public int cost;
+    public int buyCost;
+    public int sellCost;
 
     public string Console_Name;
-    public int itemID;
 
     public string FoodTypeEnumToString(FoodType type)
     {

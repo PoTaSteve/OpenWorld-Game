@@ -6,7 +6,9 @@ using TMPro;
 
 public class WeaponInfo : Interactable
 {
-    public WeaponScriptableObject SO;
+    public WeaponScriptableObject scrObj;
+
+    public string UniqueID;
 
     #region InventoryInfos
     //Top
@@ -30,12 +32,11 @@ public class WeaponInfo : Interactable
         #region Set Inventory Slot
 
         // Instantiate Slot: WeaponInfo script
-        WeaponInfo newSlot = Instantiate<WeaponInfo>(InventoryManager.Instance.WeaponInvSlot.GetComponent<WeaponInfo>(), InventoryManager.Instance.TabsContent[0]);
-        InventoryManager.Instance.WeaponsTab.Add(newSlot);
-        InventoryManager.Instance.WeaponTabStr.Add(SO.weaponName);
-        newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateWeaponInvSlotDetails(newSlot.gameObject); });
+        WeaponInfo newSlot = Instantiate<WeaponInfo>(GameManager.Instance.invMan.WeaponInvSlot.GetComponent<WeaponInfo>(), GameManager.Instance.invMan.TabsContent[0]);
+        GameManager.Instance.invMan.WeaponsTab.Add(GetIdentificationString());
+        newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateWeaponInvSlotDetails(newSlot.gameObject); });
 
-        newSlot.SO = SO;
+        newSlot.scrObj = scrObj;
 
         newSlot.baseATK = SetAtkFromLevel(currentLevel);
         newSlot.currentSubstat = SetSecondaryStatFromLevel(currentLevel);
@@ -50,17 +51,19 @@ public class WeaponInfo : Interactable
         newSlot.refinementLevel = refinementLevel;
         newSlot.isLocked = isLocked;
 
+        newSlot.UniqueID = newSlot.GetIdentificationString();
+
         // Instantiate Slot: Slot UI
         newSlot.transform.GetChild(2).gameObject.SetActive(false);
         newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + newSlot.currentLevel;
-        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.SO.icon;
+        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.scrObj.icon;
 
         Transform Rarity = newSlot.transform.GetChild(3);
         foreach (Transform t in Rarity)
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < newSlot.SO.rarity; i++)
+        for (int i = 0; i < newSlot.scrObj.rarity; i++)
         {
             Rarity.GetChild(i).gameObject.SetActive(true);
         }
@@ -68,9 +71,9 @@ public class WeaponInfo : Interactable
         if (newSlot.isLocked)
         {
             newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockColBG;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.PadlockClosed;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().color = InventoryManager.Instance.closedPadlockCol;
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockColBG;
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.PadlockClosed;
+            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockCol;
         }
         else
         {
@@ -82,6 +85,8 @@ public class WeaponInfo : Interactable
         newSlot.transform.GetChild(6).gameObject.SetActive(true);
 
         #endregion
+
+        Destroy(gameObject);
     }
 
     public void Start()
@@ -97,35 +102,35 @@ public class WeaponInfo : Interactable
 
         if (level <= 20 && ascensionLevel == 0)
         {
-            atk = SO.BaseATKs[0] + SO.incrementATK * (level - 1);
+            atk = scrObj.BaseATKs[0] + scrObj.incrementATK * (level - 1);
         }
         else if (level >= 20 && level <= 40 && ascensionLevel == 1)
         {
-            atk = SO.BaseATKs[1] + SO.incrementATK * (level - 20);
+            atk = scrObj.BaseATKs[1] + scrObj.incrementATK * (level - 20);
         }
         else if (level >= 40 && level <= 60 && ascensionLevel == 2)
         {
-            atk = SO.BaseATKs[2] + SO.incrementATK * (level - 40);
+            atk = scrObj.BaseATKs[2] + scrObj.incrementATK * (level - 40);
         }
         else if (level >= 60 && level <= 70 && ascensionLevel == 3)
         {
-            atk = SO.BaseATKs[3] + SO.incrementATK * (level - 60);
+            atk = scrObj.BaseATKs[3] + scrObj.incrementATK * (level - 60);
         }
         else if (level >= 70 && level <= 80 && ascensionLevel == 4)
         {
-            atk = SO.BaseATKs[4] + SO.incrementATK * (level - 70);
+            atk = scrObj.BaseATKs[4] + scrObj.incrementATK * (level - 70);
         }
         else if (level >= 80 && level <= 90 && ascensionLevel == 5)
         {
-            atk = SO.BaseATKs[5] + SO.incrementATK * (level - 80);
+            atk = scrObj.BaseATKs[5] + scrObj.incrementATK * (level - 80);
         }
         else if (level >= 90 && level < 100 && ascensionLevel == 6)
         {
-            atk = SO.BaseATKs[6] + SO.incrementATK * (level - 90);
+            atk = scrObj.BaseATKs[6] + scrObj.incrementATK * (level - 90);
         }
         else if (level == 100 && ascensionLevel == 7)
         {
-            atk = SO.BaseATKs[7];
+            atk = scrObj.BaseATKs[7];
         }
         else
         {
@@ -138,7 +143,7 @@ public class WeaponInfo : Interactable
 
     public float SetSecondaryStatFromLevel(int level)
     {
-        float substat = (level / 5) * SO.incrementSubStat + SO.subStat;
+        float substat = (level / 5) * scrObj.incrementSubStat + scrObj.subStat;
 
         return substat;
     }
@@ -148,15 +153,15 @@ public class WeaponInfo : Interactable
         int xp;
         level++;
 
-        if (SO.rarity == 1)
+        if (scrObj.rarity == 1)
         {
             xp = Mathf.RoundToInt(6 * Mathf.Pow(level, 2)) + 200;
         }
-        else if (SO.rarity == 2)
+        else if (scrObj.rarity == 2)
         {
             xp = Mathf.RoundToInt(10 * Mathf.Pow(level, 2)) + 300;
         }
-        else if (SO.rarity == 3)
+        else if (scrObj.rarity == 3)
         {
             if (level < 80)
             {
@@ -167,7 +172,7 @@ public class WeaponInfo : Interactable
                 xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(50 * Mathf.Pow(level, 2)) - 14000 * level - 384400;
             }
         }
-        else if (SO.rarity == 4)
+        else if (scrObj.rarity == 4)
         {
             if (level < 80)
             {
@@ -178,7 +183,7 @@ public class WeaponInfo : Interactable
                 xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(150 * Mathf.Pow(level, 2)) - 16620 * level - 1100;
             }
         }
-        else if (SO.rarity == 5)
+        else if (scrObj.rarity == 5)
         {
             if (level < 80)
             {
@@ -251,23 +256,23 @@ public class WeaponInfo : Interactable
     {
         string type;
 
-        if (SO.weaponType == WeaponType.Sword)
+        if (scrObj.weaponType == WeaponType.Sword)
         {
             type = "Sword";
         }
-        else if (SO.weaponType == WeaponType.Bow)
+        else if (scrObj.weaponType == WeaponType.Bow)
         {
             type = "Bow";
         }
-        else if (SO.weaponType == WeaponType.Claymore)
+        else if (scrObj.weaponType == WeaponType.Claymore)
         {
             type = "Claymore";
         }
-        else if (SO.weaponType == WeaponType.Staff)
+        else if (scrObj.weaponType == WeaponType.Staff)
         {
             type = "Staff";
         }
-        else if (SO.weaponType == WeaponType.Polearm)
+        else if (scrObj.weaponType == WeaponType.Polearm)
         {
             type = "Polearm";
         }
@@ -277,5 +282,24 @@ public class WeaponInfo : Interactable
         }
 
         return type;
+    }
+
+    public string GetIdentificationString()
+    {
+        string ID;
+
+        string locked;
+        if (isLocked)
+        {
+            locked = "1";
+        }
+        else
+        {
+            locked = "0";
+        }
+
+        ID = scrObj.TypeID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString() + "_" + locked;
+
+        return ID;
     }
 }

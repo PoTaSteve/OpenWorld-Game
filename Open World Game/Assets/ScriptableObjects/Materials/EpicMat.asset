@@ -20,6 +20,8 @@ MonoBehaviour:
   description: 'Test item: Epic material. Crafting ingredient.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 40
+  sellCost: 20
   Console_Name: material:epic_test
   itemID: 8
+  enhanceXp: 0

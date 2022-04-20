@@ -28,24 +28,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""id"": ""4a564af1-33e2-458e-a006-b7be607df500"",
             ""actions"": [
                 {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""7c71c59f-d245-4960-8b45-d212b50cfd65"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Movement"",
-                    ""type"": ""Value"",
-                    ""id"": ""6f424814-9c1d-4c99-b8a7-75bf63a69fc2"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""de851836-f28e-4fa6-8859-76fd81b6eacf"",
@@ -173,72 +155,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""52f5c8c2-3f53-4488-b5f6-767b317d6ba2"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""f59ee9db-7650-43f5-a208-dd8ac422a2fe"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""91947390-8464-4270-866f-52f960bb7423"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""88dae536-cce4-4eb4-b469-3d19d37e2ad6"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""31ce9ab3-e49a-4dad-bab7-be3ed1274fef"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""f1751572-2db4-4417-8363-255671979b91"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""a320dc5b-03bd-4fd1-80ca-d905d1d2adfe"",
@@ -546,7 +462,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""id"": ""13693169-fd64-4564-8cb3-22f3f1eaf564"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Continue"",
                     ""type"": ""Button"",
                     ""id"": ""8f338682-d054-4015-bdd1-e1abfb8c4b8f"",
                     ""expectedControlType"": ""Button"",
@@ -559,11 +475,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""45d51a7b-f33d-42dc-9eeb-100fc6e623fc"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e76799b-ed76-4fcc-ad24-ca380db3bf78"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c3eeb8c-021d-4d44-9602-268ceb191ae4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -616,14 +554,68 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""WeaponEnhance"",
+            ""id"": ""786a271a-798c-4dea-bf7e-fa0a52a6fcfa"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseWeapDetails"",
+                    ""type"": ""Button"",
+                    ""id"": ""20b44d29-2430-402b-876c-c04b394bd141"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8417ed63-a2e6-41d4-96f1-3c9ac7b24062"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseWeapDetails"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Shop"",
+            ""id"": ""564fdde7-9f9e-4373-9fde-06e56d97f720"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseShop"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1f86ba7-376b-4482-bdff-b93eaab5c9a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6a4cc679-c675-4c67-bf86-082b26262723"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseShop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_NormalAttack = m_Player.FindAction("NormalAttack", throwIfNotFound: true);
@@ -651,11 +643,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_EscMenu_CloseEscMenu = m_EscMenu.FindAction("CloseEscMenu", throwIfNotFound: true);
         // Dialogues
         m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
-        m_Dialogues_Newaction = m_Dialogues.FindAction("New action", throwIfNotFound: true);
+        m_Dialogues_Continue = m_Dialogues.FindAction("Continue", throwIfNotFound: true);
         // Console
         m_Console = asset.FindActionMap("Console", throwIfNotFound: true);
         m_Console_ConfirmInput = m_Console.FindAction("ConfirmInput", throwIfNotFound: true);
         m_Console_CloseConsole = m_Console.FindAction("CloseConsole", throwIfNotFound: true);
+        // WeaponEnhance
+        m_WeaponEnhance = asset.FindActionMap("WeaponEnhance", throwIfNotFound: true);
+        m_WeaponEnhance_CloseWeapDetails = m_WeaponEnhance.FindAction("CloseWeapDetails", throwIfNotFound: true);
+        // Shop
+        m_Shop = asset.FindActionMap("Shop", throwIfNotFound: true);
+        m_Shop_CloseShop = m_Shop.FindAction("CloseShop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -715,8 +713,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_NormalAttack;
@@ -735,8 +731,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @NormalAttack => m_Wrapper.m_Player_NormalAttack;
@@ -760,12 +754,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
@@ -812,12 +800,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @Movement.started += instance.OnMovement;
-                @Movement.performed += instance.OnMovement;
-                @Movement.canceled += instance.OnMovement;
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
@@ -983,12 +965,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     // Dialogues
     private readonly InputActionMap m_Dialogues;
     private IDialoguesActions m_DialoguesActionsCallbackInterface;
-    private readonly InputAction m_Dialogues_Newaction;
+    private readonly InputAction m_Dialogues_Continue;
     public struct DialoguesActions
     {
         private @PlayerControls m_Wrapper;
         public DialoguesActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Dialogues_Newaction;
+        public InputAction @Continue => m_Wrapper.m_Dialogues_Continue;
         public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -998,16 +980,16 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_DialoguesActionsCallbackInterface != null)
             {
-                @Newaction.started -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnNewaction;
+                @Continue.started -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnContinue;
+                @Continue.performed -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnContinue;
+                @Continue.canceled -= m_Wrapper.m_DialoguesActionsCallbackInterface.OnContinue;
             }
             m_Wrapper.m_DialoguesActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
+                @Continue.started += instance.OnContinue;
+                @Continue.performed += instance.OnContinue;
+                @Continue.canceled += instance.OnContinue;
             }
         }
     }
@@ -1053,10 +1035,74 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public ConsoleActions @Console => new ConsoleActions(this);
+
+    // WeaponEnhance
+    private readonly InputActionMap m_WeaponEnhance;
+    private IWeaponEnhanceActions m_WeaponEnhanceActionsCallbackInterface;
+    private readonly InputAction m_WeaponEnhance_CloseWeapDetails;
+    public struct WeaponEnhanceActions
+    {
+        private @PlayerControls m_Wrapper;
+        public WeaponEnhanceActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseWeapDetails => m_Wrapper.m_WeaponEnhance_CloseWeapDetails;
+        public InputActionMap Get() { return m_Wrapper.m_WeaponEnhance; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponEnhanceActions set) { return set.Get(); }
+        public void SetCallbacks(IWeaponEnhanceActions instance)
+        {
+            if (m_Wrapper.m_WeaponEnhanceActionsCallbackInterface != null)
+            {
+                @CloseWeapDetails.started -= m_Wrapper.m_WeaponEnhanceActionsCallbackInterface.OnCloseWeapDetails;
+                @CloseWeapDetails.performed -= m_Wrapper.m_WeaponEnhanceActionsCallbackInterface.OnCloseWeapDetails;
+                @CloseWeapDetails.canceled -= m_Wrapper.m_WeaponEnhanceActionsCallbackInterface.OnCloseWeapDetails;
+            }
+            m_Wrapper.m_WeaponEnhanceActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @CloseWeapDetails.started += instance.OnCloseWeapDetails;
+                @CloseWeapDetails.performed += instance.OnCloseWeapDetails;
+                @CloseWeapDetails.canceled += instance.OnCloseWeapDetails;
+            }
+        }
+    }
+    public WeaponEnhanceActions @WeaponEnhance => new WeaponEnhanceActions(this);
+
+    // Shop
+    private readonly InputActionMap m_Shop;
+    private IShopActions m_ShopActionsCallbackInterface;
+    private readonly InputAction m_Shop_CloseShop;
+    public struct ShopActions
+    {
+        private @PlayerControls m_Wrapper;
+        public ShopActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseShop => m_Wrapper.m_Shop_CloseShop;
+        public InputActionMap Get() { return m_Wrapper.m_Shop; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ShopActions set) { return set.Get(); }
+        public void SetCallbacks(IShopActions instance)
+        {
+            if (m_Wrapper.m_ShopActionsCallbackInterface != null)
+            {
+                @CloseShop.started -= m_Wrapper.m_ShopActionsCallbackInterface.OnCloseShop;
+                @CloseShop.performed -= m_Wrapper.m_ShopActionsCallbackInterface.OnCloseShop;
+                @CloseShop.canceled -= m_Wrapper.m_ShopActionsCallbackInterface.OnCloseShop;
+            }
+            m_Wrapper.m_ShopActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @CloseShop.started += instance.OnCloseShop;
+                @CloseShop.performed += instance.OnCloseShop;
+                @CloseShop.canceled += instance.OnCloseShop;
+            }
+        }
+    }
+    public ShopActions @Shop => new ShopActions(this);
     public interface IPlayerActions
     {
-        void OnJump(InputAction.CallbackContext context);
-        void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnNormalAttack(InputAction.CallbackContext context);
@@ -1088,11 +1134,19 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     }
     public interface IDialoguesActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnContinue(InputAction.CallbackContext context);
     }
     public interface IConsoleActions
     {
         void OnConfirmInput(InputAction.CallbackContext context);
         void OnCloseConsole(InputAction.CallbackContext context);
+    }
+    public interface IWeaponEnhanceActions
+    {
+        void OnCloseWeapDetails(InputAction.CallbackContext context);
+    }
+    public interface IShopActions
+    {
+        void OnCloseShop(InputAction.CallbackContext context);
     }
 }

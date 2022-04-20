@@ -135,7 +135,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Epic Test Ingredient
-  IngredientSO: {fileID: 11400000, guid: 3d969ba152901f643be1cedf774186ce, type: 2}
+  scrObj: {fileID: 11400000, guid: 3d969ba152901f643be1cedf774186ce, type: 2}
   count: 5
 --- !u!54 &5849014653186871263
 Rigidbody:

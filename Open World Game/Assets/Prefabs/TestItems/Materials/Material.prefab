@@ -167,7 +167,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Common Test Material
-  MaterialSO: {fileID: 11400000, guid: 9578788d4b072c145ba4f489f5639d7b, type: 2}
+  scrObj: {fileID: 11400000, guid: 9578788d4b072c145ba4f489f5639d7b, type: 2}
   count: 8
 --- !u!54 &2403667167914751085
 Rigidbody:

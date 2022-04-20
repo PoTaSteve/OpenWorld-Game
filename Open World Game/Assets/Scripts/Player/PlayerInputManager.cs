@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] CharacterController cc;
+    [SerializeField] PlayerControllerRB plContrRB;
     private PlayerControls playerControls;
 
     [SerializeField]
@@ -16,34 +16,21 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField]
     private DebugModeManager debugModeMan;
 
-    public GameObject InventoryObj;
-    public GameObject GameUIObj;
-    public GameObject MapObj;
-    public GameObject EscMenuObj;
-    public GameObject ConsoleObj;
-    public GameObject DebugModeObj;
-    public GameObject TempConsoleDebugObj;
+    public GameObject InventoryObj = default;
+    public GameObject GameUIObj = default;
+    public GameObject MapObj = default;
+    public GameObject EscMenuObj = default;
+    public GameObject ConsoleObj = default;
+    public GameObject DebugModeObj = default;
+    public GameObject TempConsoleDebugObj = default;
+    public GameObject DialogueObj = default;
+    public GameObject WeaponEnhanceObj = default;
+    public GameObject ShopObj = default;
 
     public float debugModeTimer;
     public bool isInDebugMode;
 
-    public GameObject ThirdPersonCam;
-
-    public Transform cam;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
-    Vector3 velocity;
-    bool isGrounded;
-
-    public float gravity = -19.62f;
-    public float jumpHeight = 1;
-
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-
-    public float speed = 5f;
+    public OrbitCamera orbitCam;
 
     public float animationSpeedPercent;
 
@@ -61,6 +48,10 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
+        ToWorldState();
+
+        // Movement and Jump in PlayerControllerRB
+
         playerControls = new PlayerControls();
 
         playerControls.Player.Enable();
@@ -69,8 +60,9 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.EscMenu.Enable();
         playerControls.Dialogues.Enable();
         playerControls.Console.Enable();
-
-        playerControls.Player.Jump.performed += Jump;
+        playerControls.WeaponEnhance.Enable();
+        playerControls.Shop.Enable();
+        
         playerControls.Player.OpenInventory.performed += OpenInventory;
         playerControls.Player.Interact.performed += Interact;
         playerControls.Player.OpenMap.performed += OpenMap;
@@ -89,6 +81,12 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Console.ConfirmInput.performed += ConfirmInput;
         playerControls.Console.CloseConsole.performed += CloseConsole;
+
+        playerControls.WeaponEnhance.CloseWeapDetails.performed += CloseWeapDetails;
+
+        playerControls.Dialogues.Continue.performed += ContinueDialogue;
+
+        playerControls.Shop.CloseShop.performed += CloseShop;
         
         playerControls.Player.Enable();
         playerControls.Inventory.Disable();
@@ -96,6 +94,8 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.EscMenu.Disable();
         playerControls.Dialogues.Disable();
         playerControls.Console.Disable();
+        playerControls.WeaponEnhance.Disable();
+        playerControls.Shop.Disable();
     }
 
     // Start is called before the first frame update
@@ -103,9 +103,9 @@ public class PlayerInputManager : MonoBehaviour
     {
         debugModeTimer = 0f;
         isInDebugMode = false;
+        orbitCam.canUpdateCam = true;
 
-
-        //Fetch the Raycaster from the GameObject (the Canvas)
+        //Fetch the Raycaster from the GameObject(the Canvas)
         m_Raycaster = canvas.GetComponent<GraphicRaycaster>();
         //Fetch the Event System from the Scene
         m_EventSystem = EventSystem.current;
@@ -117,29 +117,6 @@ public class PlayerInputManager : MonoBehaviour
         if (isInDebugMode && debugModeTimer <= 1)
         {
             debugModeTimer += Time.deltaTime;
-        }
-
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
-        Vector2 inputDir = playerControls.Player.Movement.ReadValue<Vector2>();
-        Vector3 direction = new Vector3(inputDir.x, 0f, inputDir.y).normalized;
-
-        velocity.y += gravity * Time.deltaTime;
-        cc.Move(velocity * Time.deltaTime);
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            cc.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
         #region Read ScrollWheel Input
@@ -184,109 +161,139 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    public void Jump(InputAction.CallbackContext context)
-    {
-        if (isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        }
-    }
-
     public void OpenInventory(InputAction.CallbackContext context)
     {
+        ToUIState();
+
         playerControls.Inventory.Enable();
         InventoryObj.SetActive(true);
         GameUIObj.SetActive(false);
 
-        ThirdPersonCam.SetActive(false);
-
         playerControls.Player.Disable();
 
-        InventoryManager.Instance.OpenInventory();
+        GameManager.Instance.invMan.OpenInventory();
     }
 
     public void CloseInventory(InputAction.CallbackContext context)
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
         InventoryObj.SetActive(false);
         GameUIObj.SetActive(true);
-
-        ThirdPersonCam.SetActive(true);
 
         playerControls.Inventory.Disable();
     }
 
     public void CloseInventoryForButton()
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
         InventoryObj.SetActive(false);
         GameUIObj.SetActive(true);
-
-        ThirdPersonCam.SetActive(true);
 
         playerControls.Inventory.Disable();
     }
 
     public void NextInvPage(InputAction.CallbackContext context)
     {
-        InventoryManager.Instance.GoToNextInvTab();
+        GameManager.Instance.invMan.GoToNextInvTab();
     }
 
     public void PreviousInvPage(InputAction.CallbackContext context)
     {
-        InventoryManager.Instance.GoToPreviousInvTab();
+        GameManager.Instance.invMan.GoToPreviousInvTab();
+    }
+
+    public void CloseWeapDetails(InputAction.CallbackContext context)
+    {
+        playerControls.Inventory.Enable();
+
+        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().CloseWeaponDetails();
+
+        InventoryObj.SetActive(true);
+        WeaponEnhanceObj.SetActive(false);
+
+        playerControls.WeaponEnhance.Disable();
+    }
+
+    public void CloseWeapDetailsForButton()
+    {
+        playerControls.Inventory.Enable();
+
+        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().CloseWeaponDetails();
+
+        InventoryObj.SetActive(true);
+        WeaponEnhanceObj.SetActive(false);
+
+        playerControls.WeaponEnhance.Disable();
+    }
+
+    public void OpenWeapDetails()
+    {
+        playerControls.WeaponEnhance.Enable();
+
+        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().OpenWeaponDetails();
+
+        WeaponEnhanceObj.SetActive(true);
+        InventoryObj.SetActive(false);
+
+        playerControls.Inventory.Disable();
     }
 
     public void OpenMap(InputAction.CallbackContext context)
     {
+        ToUIState();
+
         playerControls.Map.Enable();
 
         MapObj.SetActive(true);
         GameUIObj.SetActive(false);
-
-        ThirdPersonCam.SetActive(false);
 
         playerControls.Player.Disable();
     }
 
     public void CloseMap(InputAction.CallbackContext context)
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
 
         MapObj.SetActive(false);
         GameUIObj.SetActive(true);
-
-        ThirdPersonCam.SetActive(true);
 
         playerControls.Map.Disable();
     }
 
     public void OpenEscMenu(InputAction.CallbackContext context)
     {
+        ToUIState();
+
         playerControls.EscMenu.Enable();
 
         EscMenuObj.SetActive(true);
         GameUIObj.SetActive(false);
-
-        ThirdPersonCam.SetActive(false);
 
         playerControls.Player.Disable();
     }
 
     public void CloseEscMenu(InputAction.CallbackContext context)
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
 
         EscMenuObj.SetActive(false);
         GameUIObj.SetActive(true);
-
-        ThirdPersonCam.SetActive(true);
 
         playerControls.EscMenu.Disable();
     }
 
     public void OpenConsole(InputAction.CallbackContext context)
     {
+        ToUIState();
+
         playerControls.Console.Enable();
 
         GameUIObj.SetActive(false);
@@ -298,6 +305,8 @@ public class PlayerInputManager : MonoBehaviour
 
     public void ConfirmInput(InputAction.CallbackContext context)
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
 
         GameUIObj.SetActive(true);
@@ -309,6 +318,8 @@ public class PlayerInputManager : MonoBehaviour
 
     public void CloseConsole(InputAction.CallbackContext context)
     {
+        ToWorldState();
+
         playerControls.Player.Enable();
 
         GameUIObj.SetActive(true);
@@ -358,8 +369,78 @@ public class PlayerInputManager : MonoBehaviour
             {
                 playerTrColl.RemoveInteractabUI(interactab.gameObject);
 
-                Destroy(interactab.gameObject);
+                // Destroy(interactab.gameObject); Destroy handled in the object class
             }
         }
+    }
+
+    public void StartDialogue()
+    {
+        ToUIState();
+
+        playerControls.Dialogues.Enable();
+
+        DialogueObj.SetActive(true);
+        GameUIObj.SetActive(false);
+
+        playerControls.Player.Disable();
+    }
+
+    public void ContinueDialogue(InputAction.CallbackContext context)
+    {
+        GameManager.Instance.dialMan.ContinueDialogue();
+    }
+
+    public void ExitDialogueSequence()
+    {
+        ToWorldState();
+
+        playerControls.Player.Enable();
+
+        GameUIObj.SetActive(true);
+        DialogueObj.SetActive(false);
+
+        playerControls.Dialogues.Disable();
+    }
+
+    public void OpenShop()
+    {
+        ToUIState();
+
+        playerControls.Shop.Enable();
+
+        ShopObj.SetActive(true);
+        GameUIObj.SetActive(false);
+
+        playerControls.Player.Disable();
+    }
+
+    public void CloseShop(InputAction.CallbackContext context)
+    {
+        ToWorldState();
+
+        playerControls.Player.Enable();
+
+        GameUIObj.SetActive(true);
+        ShopObj.SetActive(false);
+
+        playerControls.Shop.Disable();
+    }
+
+
+    public void ToWorldState()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        orbitCam.canUpdateCam = true;
+        plContrRB.canUpdateMovement = true;
+    }
+
+    public void ToUIState()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        orbitCam.canUpdateCam = false;
+        plContrRB.canUpdateMovement = false;
     }
 }

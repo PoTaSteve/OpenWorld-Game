@@ -20,6 +20,8 @@ MonoBehaviour:
   description: 'Test item: Rare material. Crafting ingredient.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 30
+  sellCost: 15
   Console_Name: material:rare_test
   itemID: 7
+  enhanceXp: 0

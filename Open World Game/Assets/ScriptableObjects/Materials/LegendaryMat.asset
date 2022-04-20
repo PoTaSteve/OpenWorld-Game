@@ -20,6 +20,8 @@ MonoBehaviour:
   description: 'Test item: Legendary material. Crafting ingredient.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 50
+  sellCost: 25
   Console_Name: material:legendary_test
   itemID: 9
+  enhanceXp: 0

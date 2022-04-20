@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance;
-
     public GameObject InventoryObj;
+
+    public int currency;
 
     [Space]
     public WeaponTab weap;
@@ -25,17 +25,17 @@ public class InventoryManager : MonoBehaviour
     [Space]
     public int currInvTab;
     [Space]
-    public List<WeaponInfo> WeaponsTab = new List<WeaponInfo>();
-    public List<MaterialInfo> MaterialsTab = new List<MaterialInfo>();
-    public List<IngredientInfo> IngredientsTab = new List<IngredientInfo>();
-    public List<FoodInfo> FoodTab = new List<FoodInfo>();
-    public List<SpecialItemInfo> SpecialItemsTab = new List<SpecialItemInfo>();
+    public List<string> WeaponsTab = new List<string>();
+    public List<int> MaterialsTab = new List<int>();
+    public List<int> IngredientsTab = new List<int>();
+    public List<int> FoodTab = new List<int>();
+    public List<int> SpecialItemsTab = new List<int>();
     [Space]
-    public List<string> WeaponTabStr = new List<string>();
-    public List<string> MaterialsTabStr = new List<string>();
-    public List<string> IngredientsTabStr = new List<string>();
-    public List<string> FoodTabStr = new List<string>();
-    public List<string> SpecialItemsTabStr = new List<string>();
+    public List<WeaponScriptableObject> WeaponsTabObj = new List<WeaponScriptableObject>();
+    public List<MaterialScriptableObject> MaterialsTabObj = new List<MaterialScriptableObject>();
+    public List<IngredientScriptableObject> IngredientsTabObj = new List<IngredientScriptableObject>();
+    public List<FoodScriptableObject> FoodTabObj = new List<FoodScriptableObject>();
+    public List<SpecialItemScriptableObject> SpecialItemsTabObj = new List<SpecialItemScriptableObject>();
     [Space]
     public GameObject[] Windows = new GameObject[5]; // Windows containing the items of the tab
     public GameObject[] Tabs = new GameObject[5]; // Buttons to go to a specific tab (use for animations)
@@ -46,12 +46,6 @@ public class InventoryManager : MonoBehaviour
     public Sprite RareBG;
     public Sprite EpicBG;
     public Sprite LegendaryBG;
-    [Space]
-    //private Color CommonNameSpace = new Color(144f / 255f, 144f / 255f, 144f / 255f);
-    //private Color NotCommonNameSpace = new Color(24f / 255f, 126f / 255f, 24f / 255f);
-    //private Color RareNameSpace = new Color(31f / 255f, 84f / 255f, 255f / 169f);
-    //private Color EpicNameSpace = new Color(146f / 255f, 38f / 255f, 197f / 255f);
-    //private Color LegendaryNameSpace = new Color(217f / 255f, 130f / 255f, 0f / 255f);
     [Space]
     public Sprite PadlockOpen;
     public Sprite PadlockClosed;
@@ -100,19 +94,6 @@ public class InventoryManager : MonoBehaviour
     public GameObject LastSelectedSlot;
 
     public GameObject WeaponEnhanceObj;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -236,9 +217,7 @@ public class InventoryManager : MonoBehaviour
         if (currInvTab == 0)
         {
             // Open Weapon Details
-            WeaponEnhanceObj.SetActive(true);
-            WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().OpenWeaponDetails();
-            InventoryObj.SetActive(false);
+            GameManager.Instance.plInMan.OpenWeapDetails();
         }
         else if (currInvTab == 3)
         {
@@ -300,8 +279,6 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateWeaponInvSlotDetails(GameObject obj)
     {
-        Debug.Log("Updating Weapon Inv");
-
         WeaponInfo weapInfo = obj.GetComponent<WeaponInfo>();
 
         // Deactivate "NEW" message
@@ -318,28 +295,28 @@ public class InventoryManager : MonoBehaviour
         LastSelectedSlot = obj;
 
         // Top
-        weap.NameText.text = weapInfo.SO.weaponName;
-        weap.Icon.sprite = weapInfo.SO.icon;
+        weap.NameText.text = weapInfo.scrObj.weaponName;
+        weap.Icon.sprite = weapInfo.scrObj.icon;
 
         weap.WeaponTypeText.text = weapInfo.StringWeaponType();
 
         weap.BaseAtkText.text = Mathf.RoundToInt(weapInfo.baseATK).ToString();
 
-        if (weapInfo.SO.rarity <= 2)
+        if (weapInfo.scrObj.rarity <= 2)
         {
             weap.SubstatTypeText.text = "";
             weap.SubstatText.text = "";
         }
         else
         {
-            weap.SubstatTypeText.text = weapInfo.SO.subStatType;
-            if (weapInfo.SO.isSubStatPercentage)
+            weap.SubstatTypeText.text = weapInfo.scrObj.subStatType;
+            if (weapInfo.scrObj.isSubStatPercentage)
             {
-                weap.SubstatText.text = (weapInfo.SO.subStat * 100).ToString() + "%";
+                weap.SubstatText.text = (weapInfo.currentSubstat * 100).ToString() + "%";
             }
             else
             {
-                weap.SubstatText.text = weapInfo.SO.subStat.ToString();
+                weap.SubstatText.text = weapInfo.currentSubstat.ToString();
             }
         }
 
@@ -348,7 +325,7 @@ public class InventoryManager : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < weapInfo.SO.rarity; i++)
+        for (int i = 0; i < weapInfo.scrObj.rarity; i++)
         {
             weap.Rarity.GetChild(i).gameObject.SetActive(true);
         }
@@ -373,35 +350,35 @@ public class InventoryManager : MonoBehaviour
             weap.PadlockIcon.color = openPadlockCol;
         }
 
-        if (weapInfo.SO.rarity <= 2)
+        if (weapInfo.scrObj.rarity <= 2)
         {
             // Only set the description
-            weap.DescriptionText.text = "<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description;
+            weap.DescriptionText.text = "<b>Description</b>\n<size=14> </size>\n" + weapInfo.scrObj.description;
         }
         else
         {
             // Set the description and the effect
             weap.DescriptionText.text =
-                "<b>Effect</b>\n<size=14> </size>\n" + weapInfo.SO.effectName + "\n" + weapInfo.SO.effect + "\n\n<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description;
+                "<b>Effect</b>\n<size=14> </size>\n" + weapInfo.scrObj.effectName + "\n" + weapInfo.scrObj.effect + "\n\n<b>Description</b>\n<size=14> </size>\n" + weapInfo.scrObj.description;
         }
 
         // Fix Colors
-        weap.NameText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.WeaponTypeText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.BaseATKFixedText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.BaseAtkText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.SubstatTypeText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.SubstatText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.NameText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.WeaponTypeText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.BaseATKFixedText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.BaseAtkText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.SubstatTypeText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.SubstatText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        weap.LevelText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
-        weap.RefinementText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.LevelText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
+        weap.RefinementText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        weap.DescriptionText.color = DetailsTextColor[weapInfo.SO.rarity - 1];
+        weap.DescriptionText.color = DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        weap.SymbolIconBG[0].color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
-        weap.SymbolIconBG[1].color = DetailsSymboloColor[weapInfo.SO.rarity - 1];
+        weap.SymbolIconBG[0].color = DetailsSymboloColor[weapInfo.scrObj.rarity - 1];
+        weap.SymbolIconBG[1].color = DetailsSymboloColor[weapInfo.scrObj.rarity - 1];
 
-        weap.Border.color = DetailsBorderColor[weapInfo.SO.rarity - 1];
+        weap.Border.color = DetailsBorderColor[weapInfo.scrObj.rarity - 1];
 
         // Fix UI Height and position
         weap.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
@@ -426,32 +403,32 @@ public class InventoryManager : MonoBehaviour
         LastSelectedSlot = obj;
 
         // Update UI
-        mat.NameText.text = matInfo.MaterialSO.materialName;
-        mat.Icon.sprite = matInfo.MaterialSO.icon;
+        mat.NameText.text = matInfo.scrObj.materialName;
+        mat.Icon.sprite = matInfo.scrObj.icon;
 
         foreach (Transform t in mat.Rarity)
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < matInfo.MaterialSO.rarity; i++)
+        for (int i = 0; i < matInfo.scrObj.rarity; i++)
         {
             mat.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        mat.DescriptionText.text = matInfo.MaterialSO.description;
+        mat.DescriptionText.text = matInfo.scrObj.description;
 
         //Fix UI Height and position
         mat.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
         mat.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        mat.Border.color = DetailsBorderColor[matInfo.MaterialSO.rarity - 1];
+        mat.Border.color = DetailsBorderColor[matInfo.scrObj.rarity - 1];
 
-        mat.SymbolIconBG[0].color = DetailsSymboloColor[matInfo.MaterialSO.rarity - 1];
-        mat.SymbolIconBG[1].color = DetailsSymboloColor[matInfo.MaterialSO.rarity - 1];
+        mat.SymbolIconBG[0].color = DetailsSymboloColor[matInfo.scrObj.rarity - 1];
+        mat.SymbolIconBG[1].color = DetailsSymboloColor[matInfo.scrObj.rarity - 1];
 
-        mat.NameText.color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
-        mat.DescriptionText.color = DetailsTextColor[matInfo.MaterialSO.rarity - 1];
+        mat.NameText.color = DetailsTextColor[matInfo.scrObj.rarity - 1];
+        mat.DescriptionText.color = DetailsTextColor[matInfo.scrObj.rarity - 1];
     }
 
     public void UpdateIngredientInvSlotDetails(GameObject obj)
@@ -472,32 +449,32 @@ public class InventoryManager : MonoBehaviour
         LastSelectedSlot = obj;
 
         // Update UI
-        ingr.NameText.text = ingrInfo.IngredientSO.ingredientName;
-        ingr.Icon.sprite = ingrInfo.IngredientSO.icon;
+        ingr.NameText.text = ingrInfo.scrObj.ingredientName;
+        ingr.Icon.sprite = ingrInfo.scrObj.icon;
 
         foreach (Transform t in ingr.Rarity)
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < ingrInfo.IngredientSO.rarity; i++)
+        for (int i = 0; i < ingrInfo.scrObj.rarity; i++)
         {
             ingr.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        ingr.DescriptionText.text = ingrInfo.IngredientSO.description;
+        ingr.DescriptionText.text = ingrInfo.scrObj.description;
 
         //Fix UI Height and position
         ingr.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
         ingr.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        ingr.Border.color = DetailsBorderColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.Border.color = DetailsBorderColor[ingrInfo.scrObj.rarity - 1];
 
-        ingr.SymbolIconBG[0].color = DetailsSymboloColor[ingrInfo.IngredientSO.rarity - 1];
-        ingr.SymbolIconBG[1].color = DetailsSymboloColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.SymbolIconBG[0].color = DetailsSymboloColor[ingrInfo.scrObj.rarity - 1];
+        ingr.SymbolIconBG[1].color = DetailsSymboloColor[ingrInfo.scrObj.rarity - 1];
 
-        ingr.NameText.color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
-        ingr.DescriptionText.color = DetailsTextColor[ingrInfo.IngredientSO.rarity - 1];
+        ingr.NameText.color = DetailsTextColor[ingrInfo.scrObj.rarity - 1];
+        ingr.DescriptionText.color = DetailsTextColor[ingrInfo.scrObj.rarity - 1];
     }
 
     public void UpdateFoodInvSlotDetails(GameObject obj)
@@ -518,32 +495,32 @@ public class InventoryManager : MonoBehaviour
         LastSelectedSlot = obj;
 
         // Update UI
-        food.NameText.text = foodInfo.FoodSO.foodName;
-        food.Icon.sprite = foodInfo.FoodSO.icon;
+        food.NameText.text = foodInfo.scrObj.foodName;
+        food.Icon.sprite = foodInfo.scrObj.icon;
 
         foreach (Transform t in food.Rarity)
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < foodInfo.FoodSO.rarity; i++)
+        for (int i = 0; i < foodInfo.scrObj.rarity; i++)
         {
             food.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        food.DescriptionText.text = foodInfo.FoodSO.description;
+        food.DescriptionText.text = foodInfo.scrObj.description;
 
         //Fix UI Height and position
         food.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
         food.Content.GetComponent<FixHeight>().UpdateHeight();
 
         // Update rarity colors
-        food.Border.color = DetailsBorderColor[foodInfo.FoodSO.rarity - 1];
+        food.Border.color = DetailsBorderColor[foodInfo.scrObj.rarity - 1];
 
-        food.SymbolIconBG[0].color = DetailsSymboloColor[foodInfo.FoodSO.rarity - 1];
-        food.SymbolIconBG[1].color = DetailsSymboloColor[foodInfo.FoodSO.rarity - 1];
+        food.SymbolIconBG[0].color = DetailsSymboloColor[foodInfo.scrObj.rarity - 1];
+        food.SymbolIconBG[1].color = DetailsSymboloColor[foodInfo.scrObj.rarity - 1];
 
-        food.NameText.color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
-        food.DescriptionText.color = DetailsTextColor[foodInfo.FoodSO.rarity - 1];
+        food.NameText.color = DetailsTextColor[foodInfo.scrObj.rarity - 1];
+        food.DescriptionText.color = DetailsTextColor[foodInfo.scrObj.rarity - 1];
     }
 
     public void UpdateSpecialItemInvSlotDetails(GameObject obj)
@@ -564,19 +541,19 @@ public class InventoryManager : MonoBehaviour
         LastSelectedSlot = obj;
 
         // Update UI
-        specIt.NameText.text = specItemInfo.SpecialItemSO.specialItemName;
-        specIt.Icon.sprite = specItemInfo.SpecialItemSO.icon;
+        specIt.NameText.text = specItemInfo.scrObj.specialItemName;
+        specIt.Icon.sprite = specItemInfo.scrObj.icon;
 
         foreach (Transform t in specIt.Rarity)
         {
             t.gameObject.SetActive(false);
         }
-        for (int i = 0; i < specItemInfo.SpecialItemSO.rarity; i++)
+        for (int i = 0; i < specItemInfo.scrObj.rarity; i++)
         {
             specIt.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
-        specIt.DescriptionText.text = specItemInfo.SpecialItemSO.description;
+        specIt.DescriptionText.text = specItemInfo.scrObj.description;
 
         //Fix UI Height and position
         specIt.DescriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();

@@ -21,6 +21,8 @@ public enum IngrSpecificType
 [CreateAssetMenu(fileName = "New Ingredient", menuName = "Ingredient")]
 public class IngredientScriptableObject : ScriptableObject
 {
+    public int TypeID;
+
     //Top
 
     public string ingredientName;
@@ -42,10 +44,10 @@ public class IngredientScriptableObject : ScriptableObject
     public string[] sources;
 
     // Other
-    public int cost;
+    public int buyCost;
+    public int sellCost;
 
     public string Console_Name;
-    public int itemID;
 
     public string IngredientTypeEnumToString(IngredientType type)
     {

@@ -6,7 +6,7 @@ using TMPro;
 
 public class MaterialInfo : Interactable
 {
-    public MaterialScriptableObject MaterialSO;
+    public MaterialScriptableObject scrObj;
 
     public int count;
 
@@ -14,13 +14,13 @@ public class MaterialInfo : Interactable
     {
         // Instantiate Slot: MaterialInfo script
 
-        if (InventoryManager.Instance.MaterialsTabStr.Contains(MaterialSO.materialName))
+        if (GameManager.Instance.invMan.MaterialsTab.Contains(scrObj.TypeID))
         {
             // Update the count 
-            foreach (Transform t in InventoryManager.Instance.TabsContent[1].transform)
+            foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
             {
                 MaterialInfo info = t.GetComponent<MaterialInfo>();
-                if (info.MaterialSO.materialName == MaterialSO.materialName)
+                if (info.scrObj.materialName == scrObj.materialName)
                 {
                     info.count += count;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -29,53 +29,54 @@ public class MaterialInfo : Interactable
         }
         else
         {
-            MaterialInfo newSlot = Instantiate<MaterialInfo>(InventoryManager.Instance.MaterialInvSlot.GetComponent<MaterialInfo>(), InventoryManager.Instance.TabsContent[1]);
+            MaterialInfo newSlot = Instantiate<MaterialInfo>(GameManager.Instance.invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), GameManager.Instance.invMan.TabsContent[1]);
 
-            InventoryManager.Instance.MaterialsTab.Add(newSlot);
-            InventoryManager.Instance.MaterialsTabStr.Add(MaterialSO.materialName);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { InventoryManager.Instance.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
+            GameManager.Instance.invMan.MaterialsTab.Add(scrObj.TypeID);
+            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
 
-            newSlot.MaterialSO = MaterialSO;
+            newSlot.scrObj = scrObj;
             newSlot.count = count;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = MaterialSO.icon;
+            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = scrObj.icon;
 
             Transform rarity = newSlot.transform.GetChild(3);
             foreach (Transform t in rarity)
             {
                 t.gameObject.SetActive(false);
             }
-            for (int i = 0; i < newSlot.MaterialSO.rarity; i++)
+            for (int i = 0; i < newSlot.scrObj.rarity; i++)
             {
                 rarity.GetChild(i).gameObject.SetActive(true);
             }
 
             newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
 
-            if (newSlot.MaterialSO.materialType == MaterialTypeEnum.CrafingIngredient)
+            if (newSlot.scrObj.materialType == MaterialTypeEnum.CrafingIngredient)
             {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.CraftingIngredientIcon;
+                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingIngredientIcon;
             }
             else
             {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = InventoryManager.Instance.CraftingResultIcon;
+                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingResultIcon;
             }
 
             newSlot.transform.GetChild(6).gameObject.SetActive(true);
         }
+
+        Destroy(gameObject);
     }
 
     public string StringMaterialType()
     {
         string type;
 
-        if (MaterialSO.materialType == MaterialTypeEnum.CrafingIngredient)
+        if (scrObj.materialType == MaterialTypeEnum.CrafingIngredient)
         {
             type = "Ingredient";
         }
-        else if (MaterialSO.materialType == MaterialTypeEnum.CrafingResult)
+        else if (scrObj.materialType == MaterialTypeEnum.CrafingResult)
         {
             type = "Result";
         }

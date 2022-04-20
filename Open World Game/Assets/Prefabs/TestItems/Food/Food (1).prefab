@@ -52,7 +52,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Uncommon Test Food
-  FoodSO: {fileID: 11400000, guid: 57f7ec333c814e141a1fb737a2741966, type: 2}
+  scrObj: {fileID: 11400000, guid: 57f7ec333c814e141a1fb737a2741966, type: 2}
   count: 7
 --- !u!54 &7753456399404957521
 Rigidbody:

@@ -52,7 +52,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Epic Test Material
-  MaterialSO: {fileID: 11400000, guid: 0c4eb15e24d28ef4fbaa69da7c92005f, type: 2}
+  scrObj: {fileID: 11400000, guid: 0c4eb15e24d28ef4fbaa69da7c92005f, type: 2}
   count: 2
 --- !u!54 &6687855756895575928
 Rigidbody:

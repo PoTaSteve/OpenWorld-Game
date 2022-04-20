@@ -52,7 +52,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Legendary Test Material
-  MaterialSO: {fileID: 11400000, guid: 477a2fa2f4f736f4b997fc082a9e0410, type: 2}
+  scrObj: {fileID: 11400000, guid: 477a2fa2f4f736f4b997fc082a9e0410, type: 2}
   count: 1
 --- !u!54 &2947403230733493473
 Rigidbody:

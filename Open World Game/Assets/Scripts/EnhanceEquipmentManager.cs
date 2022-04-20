@@ -8,7 +8,8 @@ using UnityEditor;
 
 public class EnhanceEquipmentManager : MonoBehaviour
 {
-    public WeaponInfo weapInfo;
+    private WeaponInfo weapInfo;
+    private GameObject weaponSlot;
 
     [Space]
     public GameObject Enh_Asc_MaxLvlSection;
@@ -36,7 +37,8 @@ public class EnhanceEquipmentManager : MonoBehaviour
 
     public void OpenWeaponDetails()
     {
-        weapInfo = InventoryManager.Instance.LastSelectedSlot.GetComponent<WeaponInfo>();
+        weaponSlot = GameManager.Instance.invMan.LastSelectedSlot;
+        weapInfo = weaponSlot.GetComponent<WeaponInfo>();
 
         if (weapInfo.currentLevel == weapInfo.currentMaxLevel)
         {
@@ -56,15 +58,12 @@ public class EnhanceEquipmentManager : MonoBehaviour
 
     public void CloseWeaponDetails()
     {
-        EventSystem.current.SetSelectedGameObject(weapInfo.gameObject);
-        InventoryManager.Instance.UpdateWeaponInvSlotDetails(InventoryManager.Instance.TabsContent[InventoryManager.Instance.currInvTab].transform.GetChild(0).gameObject);
-
-        InventoryManager.Instance.InventoryObj.SetActive(true);
-        gameObject.SetActive(false);
-
+        EventSystem.current.SetSelectedGameObject(weaponSlot);
+        GameManager.Instance.invMan.UpdateWeaponInvSlotDetails(weaponSlot);  // ??  GameManager.Instance.invMan.TabsContent[GameManager.Instance.invMan.currInvTab].transform.GetChild(0).gameObject
+        
         // Need to update the slot UI (level)
-        InventoryManager.Instance.LastSelectedSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + weapInfo.currentLevel;
-        InventoryManager.Instance.LastSelectedSlot.transform.GetChild(5).GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = weapInfo.refinementLevel.ToString();
+        weaponSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + weapInfo.currentLevel;
+        weaponSlot.transform.GetChild(5).GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = weapInfo.refinementLevel.ToString();
     }
 
     public void ActivateDetailsSection()
@@ -79,33 +78,33 @@ public class EnhanceEquipmentManager : MonoBehaviour
             t.gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < weapInfo.SO.rarity; i++)
+        for (int i = 0; i < weapInfo.scrObj.rarity; i++)
         {
             det.Rarity.GetChild(i).gameObject.SetActive(true);
         }
 
         foreach (Image image in det.SymbolIcons)
         {
-            image.color = InventoryManager.Instance.DetailsSymboloColor[weapInfo.SO.rarity - 1];
+            image.color = GameManager.Instance.invMan.DetailsSymboloColor[weapInfo.scrObj.rarity - 1];
         }
 
-        det.Border.color = InventoryManager.Instance.DetailsBorderColor[weapInfo.SO.rarity - 1];
+        det.Border.color = GameManager.Instance.invMan.DetailsBorderColor[weapInfo.scrObj.rarity - 1];
 
-        det.icon.sprite = weapInfo.SO.icon;
+        det.icon.sprite = weapInfo.scrObj.icon;
 
-        det.weaponNameText.text = weapInfo.SO.weaponName;
-        det.weaponNameText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.weaponNameText.text = weapInfo.scrObj.weaponName;
+        det.weaponNameText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
         det.weaponTypeText.text = weapInfo.StringWeaponType();
-        det.weaponTypeText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.weaponTypeText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
         det.baseAtkText.text = Mathf.RoundToInt(weapInfo.baseATK).ToString();
-        det.baseAtkText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.baseAtkText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        det.substatTypeText.text = weapInfo.SO.subStatType;
-        det.substatTypeText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.substatTypeText.text = weapInfo.scrObj.subStatType;
+        det.substatTypeText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        if (weapInfo.SO.isSubStatPercentage)
+        if (weapInfo.scrObj.isSubStatPercentage)
         {
             det.substatText.text = (weapInfo.currentSubstat * 100).ToString() + "%";
         }
@@ -113,16 +112,16 @@ public class EnhanceEquipmentManager : MonoBehaviour
         {
             det.substatText.text = weapInfo.currentSubstat.ToString();
         }        
-        det.substatText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.substatText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
         det.currentLevelText.text = "Lv. " + weapInfo.currentLevel.ToString() + "/" + weapInfo.currentMaxLevel;
-        det.currentLevelText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.currentLevelText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
         det.refinementLevelText.text = "Refinement level: " + weapInfo.refinementLevel.ToString();
-        det.refinementLevelText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.refinementLevelText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
-        det.descriptionText.text = "<b>Effect</b>\n<size=14> </size>\n" + weapInfo.SO.effectName + "\n" + weapInfo.SO.effect + "\n\n<b>Description</b>\n<size=14> </size>\n" + weapInfo.SO.description; ;
-        det.descriptionText.color = InventoryManager.Instance.DetailsTextColor[weapInfo.SO.rarity - 1];
+        det.descriptionText.text = "<b>Effect</b>\n<size=14> </size>\n" + weapInfo.scrObj.effectName + "\n" + weapInfo.scrObj.effect + "\n\n<b>Description</b>\n<size=14> </size>\n" + weapInfo.scrObj.description; ;
+        det.descriptionText.color = GameManager.Instance.invMan.DetailsTextColor[weapInfo.scrObj.rarity - 1];
 
         // Need to fix UI position and height
         det.descriptionText.gameObject.GetComponent<FixHeight>().UpdateHeight();
@@ -191,14 +190,14 @@ public class EnhanceEquipmentManager : MonoBehaviour
         enh.Enh_currentLevelText.text = "Lv. " + weapInfo.currentLevel;
         enh.Enh_currentAttackText.text = (Mathf.RoundToInt(weapInfo.baseATK)).ToString();
         enh.Enh_currentXpText.text = weapInfo.currentXp.ToString() + " / " + weapInfo.xpForNextLevel.ToString();
-        enh.Enh_substatTypeText.text = weapInfo.SO.subStatType;
+        enh.Enh_substatTypeText.text = weapInfo.scrObj.subStatType;
 
         enh.Enh_addingXpText.text = "";
         enh.Enh_addingLevelText.text = "";
 
-        if (weapInfo.SO.rarity > 2)
+        if (weapInfo.scrObj.rarity > 2)
         {
-            if (weapInfo.SO.isSubStatPercentage)
+            if (weapInfo.scrObj.isSubStatPercentage)
             {
                 enh.Enh_currentSubstatText.text = (weapInfo.currentSubstat * 100).ToString() + "%";
             }
@@ -258,12 +257,12 @@ public class EnhanceEquipmentManager : MonoBehaviour
             asc.EnhancedAscension.GetChild(i).GetChild(0).GetChild(0).gameObject.SetActive(true);
         }
 
-        asc.enhancedAttack = weapInfo.SO.BaseATKs[weapInfo.ascensionLevel + 1];
+        asc.enhancedAttack = weapInfo.scrObj.BaseATKs[weapInfo.ascensionLevel + 1];
         asc.Asc_currentAttackText.text = Mathf.RoundToInt(weapInfo.baseATK).ToString();
         asc.Asc_enhacedAttackText.text = Mathf.RoundToInt(asc.enhancedAttack).ToString();
 
-        asc.Asc_substatTypeText.text = weapInfo.SO.subStatType;
-        if (weapInfo.SO.isSubStatPercentage)
+        asc.Asc_substatTypeText.text = weapInfo.scrObj.subStatType;
+        if (weapInfo.scrObj.isSubStatPercentage)
         {
             asc.Asc_currentSubstatText.text = (weapInfo.currentSubstat * 100).ToString() + "%";
         }
@@ -308,7 +307,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
         enh.Enh_currentXpText.text = enh.spareXp.ToString() + "/" + enh.xpForNextLevel.ToString();
 
         weapInfo.currentSubstat = weapInfo.SetSecondaryStatFromLevel(weapInfo.currentLevel);
-        if (weapInfo.SO.isSubStatPercentage)
+        if (weapInfo.scrObj.isSubStatPercentage)
         {
             enh.Enh_currentSubstatText.text = (weapInfo.currentSubstat * 100).ToString() + "%";
         }
@@ -332,7 +331,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
             {
                 if (enhMatInfo.selectedCount >= enhMatInfo.count)
                 {
-                    InventoryManager.Instance.MaterialsTabStr.Remove(enhMatInfo.matInfo.MaterialSO.materialName);
+                    GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.matInfo.scrObj.TypeID);
 
                     Destroy(enhMatInfo.matInfo.gameObject);
                 }
@@ -343,7 +342,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
             }
             else if (enhMatInfo.type == EnhanceMaterialType.Weapon)
             {
-                InventoryManager.Instance.MaterialsTabStr.Remove(enhMatInfo.weapInfo.SO.weaponName);
+                GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.weapInfo.scrObj.TypeID);
 
                 Destroy(enhMatInfo.weapInfo.gameObject);
             }
@@ -483,7 +482,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
                         enh.Enh_enhancedAttackText.text = Mathf.RoundToInt(weapInfo.SetAtkFromLevel(weapInfo.currentLevel + enh.levelJump)).ToString();
                         enh.Enh_addingLevelText.text = "+" + enh.levelJump.ToString();
 
-                        if (weapInfo.SO.isSubStatPercentage)
+                        if (weapInfo.scrObj.isSubStatPercentage)
                         {
                             enh.Enh_enhancedSubstatText.text = (weapInfo.SetSecondaryStatFromLevel(weapInfo.currentLevel + enh.levelJump) * 100).ToString() + "%";
                         }
@@ -608,7 +607,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
 
                 enh.Enh_enhancedAttackText.text = Mathf.RoundToInt(weapInfo.SetAtkFromLevel(weapInfo.currentLevel + enh.levelJump)).ToString();
 
-                if (weapInfo.SO.isSubStatPercentage)
+                if (weapInfo.scrObj.isSubStatPercentage)
                 {
                     enh.Enh_enhancedSubstatText.text = (weapInfo.SetSecondaryStatFromLevel(weapInfo.currentLevel + enh.levelJump) * 100).ToString() + "%";
                 }
@@ -658,10 +657,10 @@ public class EnhanceEquipmentManager : MonoBehaviour
         }
 
         // Go through these two inventory tabs and search for the slots satifying the requirements
-        foreach (Transform t in InventoryManager.Instance.TabsContent[1].transform)
+        foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
         {
             MaterialInfo matInfo = t.gameObject.GetComponent<MaterialInfo>();
-            if (matInfo.MaterialSO.materialType == MaterialTypeEnum.EnhanceMaterial)
+            if (matInfo.scrObj.materialType == MaterialTypeEnum.EnhanceMaterial)
             {
                 GameObject newSlot = Instantiate(enh.Mat_EnhanceMatSlotPrefab, enh.EnhanceMatContent);
 
@@ -669,9 +668,9 @@ public class EnhanceEquipmentManager : MonoBehaviour
 
                 newSlot.GetComponent<EnhanceMaterialInfo>().selectedCount = 0;
                 newSlot.GetComponent<EnhanceMaterialInfo>().count = matInfo.count;
-                newSlot.GetComponent<EnhanceMaterialInfo>().rarity = matInfo.MaterialSO.rarity;
-                newSlot.GetComponent<EnhanceMaterialInfo>().Xp = matInfo.MaterialSO.enhanceXp;
-                newSlot.GetComponent<EnhanceMaterialInfo>().icon = matInfo.MaterialSO.icon;
+                newSlot.GetComponent<EnhanceMaterialInfo>().rarity = matInfo.scrObj.rarity;
+                newSlot.GetComponent<EnhanceMaterialInfo>().Xp = matInfo.scrObj.enhanceXp;
+                newSlot.GetComponent<EnhanceMaterialInfo>().icon = matInfo.scrObj.icon;
 
                 newSlot.GetComponent<EnhanceMaterialInfo>().type = EnhanceMaterialType.EnhanceMaterial;
 
@@ -681,14 +680,14 @@ public class EnhanceEquipmentManager : MonoBehaviour
                 newSlot.transform.GetChild(3).gameObject.SetActive(false);
                 newSlot.transform.GetChild(6).gameObject.SetActive(false);
 
-                newSlot.transform.GetChild(1).GetComponent<Image>().sprite = matInfo.MaterialSO.icon;
+                newSlot.transform.GetChild(1).GetComponent<Image>().sprite = matInfo.scrObj.icon;
 
                 Transform rarity = newSlot.transform.GetChild(4);
                 foreach (Transform tr in rarity)
                 {
                     tr.gameObject.SetActive(false);
                 }
-                for (int i = 0; i < matInfo.MaterialSO.rarity; i++)
+                for (int i = 0; i < matInfo.scrObj.rarity; i++)
                 {
                     rarity.GetChild(i).gameObject.SetActive(true);
                 }
@@ -697,7 +696,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
             }
         }
 
-        foreach (Transform t in InventoryManager.Instance.TabsContent[0].transform)
+        foreach (Transform t in GameManager.Instance.invMan.TabsContent[0].transform)
         {
             WeaponInfo weapInfo = t.gameObject.GetComponent<WeaponInfo>();
             if (!weapInfo.isLocked)
@@ -708,9 +707,9 @@ public class EnhanceEquipmentManager : MonoBehaviour
 
                 newSlot.GetComponent<EnhanceMaterialInfo>().selectedCount = 0;
                 newSlot.GetComponent<EnhanceMaterialInfo>().count = 1;
-                newSlot.GetComponent<EnhanceMaterialInfo>().rarity = weapInfo.SO.rarity;
-                newSlot.GetComponent<EnhanceMaterialInfo>().Xp = weapInfo.SO.enhanceXp;
-                newSlot.GetComponent<EnhanceMaterialInfo>().icon = weapInfo.SO.icon;
+                newSlot.GetComponent<EnhanceMaterialInfo>().rarity = weapInfo.scrObj.rarity;
+                newSlot.GetComponent<EnhanceMaterialInfo>().Xp = weapInfo.scrObj.enhanceXp;
+                newSlot.GetComponent<EnhanceMaterialInfo>().icon = weapInfo.scrObj.icon;
                 newSlot.GetComponent<EnhanceMaterialInfo>().level = weapInfo.currentLevel;
 
                 newSlot.GetComponent<EnhanceMaterialInfo>().type = EnhanceMaterialType.Weapon;
@@ -721,14 +720,14 @@ public class EnhanceEquipmentManager : MonoBehaviour
                 newSlot.transform.GetChild(3).gameObject.SetActive(false);
                 newSlot.transform.GetChild(6).gameObject.SetActive(false);
 
-                newSlot.transform.GetChild(1).GetComponent<Image>().sprite = weapInfo.SO.icon;
+                newSlot.transform.GetChild(1).GetComponent<Image>().sprite = weapInfo.scrObj.icon;
 
                 Transform rarity = newSlot.transform.GetChild(4);
                 foreach (Transform tr in rarity)
                 {
                     tr.gameObject.SetActive(false);
                 }
-                for (int i = 0; i < weapInfo.SO.rarity; i++)
+                for (int i = 0; i < weapInfo.scrObj.rarity; i++)
                 {
                     rarity.GetChild(i).gameObject.SetActive(true);
                 }

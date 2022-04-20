@@ -14,6 +14,8 @@ public enum WeaponType
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class WeaponScriptableObject : ScriptableObject
 {
+    public int TypeID;
+
     public string weaponName;
     public WeaponType weaponType;
     public string subStatType;
@@ -40,7 +42,6 @@ public class WeaponScriptableObject : ScriptableObject
     public GameObject equipPrefab;
 
     public string Console_Name;
-    public int itemID;
 
     public int buyCost;
     public int sellCost;

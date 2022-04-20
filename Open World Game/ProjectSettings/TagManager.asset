@@ -3,21 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Water
+  - InventoryManager
+  - ItemManager
+  - DialogueManager
+  - ShopManager
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Post Process
   - Water
   - UI
   - MiniMap
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Agent
+  - Detailed
+  - Stairs
+  - Unclimbable
+  - See-Through
   - 
   - 
   - 

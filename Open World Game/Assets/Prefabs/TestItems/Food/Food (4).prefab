@@ -52,7 +52,7 @@ MonoBehaviour:
   index: 0
   icon: {fileID: 0}
   interactionType: Legendary Test Food
-  FoodSO: {fileID: 11400000, guid: 44b5bfff410b7cf458fd023b533c386c, type: 2}
+  scrObj: {fileID: 11400000, guid: 44b5bfff410b7cf458fd023b533c386c, type: 2}
   count: 1
 --- !u!54 &1857013086420837349
 Rigidbody:

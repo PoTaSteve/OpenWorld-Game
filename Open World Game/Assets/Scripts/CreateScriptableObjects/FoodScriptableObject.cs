@@ -21,7 +21,7 @@ public enum FoodBuffType
 [CreateAssetMenu(fileName = "New Food", menuName = "Food")]
 public class FoodScriptableObject : ScriptableObject
 {
-    public int TypeID;
+    public int ItemID;
 
     //Top
 

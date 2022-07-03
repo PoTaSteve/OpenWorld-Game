@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dbda1851652cb4980ec9af23d66304, type: 3}
   m_Name: CommonSword
   m_EditorClassIdentifier: 
+  ItemID: 400001
   weaponName: Common Sword
   weaponType: 0
   subStatType: 
@@ -22,19 +23,18 @@ MonoBehaviour:
   effectName: Sword Effect
   effect: 'Test Item: Common sword effect.'
   description: 'Test Item: Common sword description.'
-  BaseATK1: 33
-  BaseATK20: 92
-  BaseATK40: 151
-  BaseATK60: 220
-  BaseATK70: 0
-  BaseATK80: 0
-  BaseATK90: 0
-  BaseATK100: 0
+  BaseATKs:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   incrementATK: 1.7
   incrementSubStat: 0
   equipPrefab: {fileID: 0}
   Console_Name: weapon:common_test
-  itemID: 0
   buyCost: 0
   sellCost: 0
   enhanceXp: 100

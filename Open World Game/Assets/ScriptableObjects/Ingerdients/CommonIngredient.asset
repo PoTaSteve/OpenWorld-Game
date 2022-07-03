@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7086ba8127e755a488df3dab72da0704, type: 3}
   m_Name: CommonIngredient
   m_EditorClassIdentifier: 
+  ItemID: 200001
   ingredientName: Common ingredient
   ingredientType: 0
   rarity: 1
@@ -22,6 +23,6 @@ MonoBehaviour:
   description: 'Test item: Common ingredient. Base ingredient.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 0
+  sellCost: 0
   Console_Name: ingredient:common_test
-  itemID: 10

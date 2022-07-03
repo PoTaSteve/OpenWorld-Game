@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7086ba8127e755a488df3dab72da0704, type: 3}
   m_Name: LegendaryIngredient
   m_EditorClassIdentifier: 
+  ItemID: 200005
   ingredientName: Legendary ingredient
   ingredientType: 0
   rarity: 5
@@ -22,6 +23,6 @@ MonoBehaviour:
   description: 'Test item: Legendary ingredient. Base ingredient.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 0
+  sellCost: 0
   Console_Name: ingredient:legendary_test
-  itemID: 14

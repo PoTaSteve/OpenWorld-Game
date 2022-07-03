@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbfac8816fb4a748be933bd7bf4953f, type: 3}
   m_Name: CommonSpItem 1
   m_EditorClassIdentifier: 
+  ItemID: 1
   specialItemName: Common Special Item
   rarity: 1
   icon: {fileID: 0}
   description: 'Test item: Common special item.'
   numberOfSources: 0
   sources: []
+  Console_Name: 
+  buyCost: 0

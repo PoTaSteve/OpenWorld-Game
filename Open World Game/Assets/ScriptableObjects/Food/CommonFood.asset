@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e6a2e298ecfea48a1021eeafa1fe49, type: 3}
   m_Name: CommonFood
   m_EditorClassIdentifier: 
+  ItemID: 100001
   foodName: Common food
   foodType: 0
   rarity: 1
@@ -22,6 +23,6 @@ MonoBehaviour:
   description: 'Test item: Common food description.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 0
+  sellCost: 0
   Console_Name: food:common_test
-  itemID: 15

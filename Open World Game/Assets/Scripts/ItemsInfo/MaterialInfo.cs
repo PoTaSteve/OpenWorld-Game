@@ -14,13 +14,13 @@ public class MaterialInfo : Interactable
     {
         // Instantiate Slot: MaterialInfo script
 
-        if (GameManager.Instance.invMan.MaterialsTab.Contains(scrObj.TypeID))
+        if (GameManager.Instance.invMan.MaterialsTab.Contains(scrObj.ItemID))
         {
             // Update the count 
             foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
             {
                 MaterialInfo info = t.GetComponent<MaterialInfo>();
-                if (info.scrObj.materialName == scrObj.materialName)
+                if (info.scrObj.ItemID == scrObj.ItemID)
                 {
                     info.count += count;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -31,7 +31,7 @@ public class MaterialInfo : Interactable
         {
             MaterialInfo newSlot = Instantiate<MaterialInfo>(GameManager.Instance.invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), GameManager.Instance.invMan.TabsContent[1]);
 
-            GameManager.Instance.invMan.MaterialsTab.Add(scrObj.TypeID);
+            GameManager.Instance.invMan.MaterialsTab.Add(scrObj.ItemID);
             newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
 
             newSlot.scrObj = scrObj;

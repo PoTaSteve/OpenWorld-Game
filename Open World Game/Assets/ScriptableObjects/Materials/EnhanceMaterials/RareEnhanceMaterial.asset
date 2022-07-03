@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26c35d9ddd69214d9c7eb03110e47ee, type: 3}
   m_Name: RareEnhanceMaterial
   m_EditorClassIdentifier: 
+  ItemID: 300013
   materialName: Rare Enhance Material
   materialType: 2
   rarity: 3
@@ -23,5 +24,4 @@ MonoBehaviour:
   buyCost: 0
   sellCost: 0
   Console_Name: enhmat:rare_test
-  itemID: 0
   enhanceXp: 10000

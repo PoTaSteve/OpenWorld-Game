@@ -12,7 +12,7 @@ public enum MaterialTypeEnum
 [CreateAssetMenu(fileName = "New Material", menuName = "Material Item")]
 public class MaterialScriptableObject : ScriptableObject
 {
-    public int TypeID;
+    public int ItemID;
 
     //Top
 

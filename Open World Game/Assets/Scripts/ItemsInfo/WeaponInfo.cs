@@ -71,9 +71,6 @@ public class WeaponInfo : Interactable
         if (newSlot.isLocked)
         {
             newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockColBG;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.PadlockClosed;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockCol;
         }
         else
         {
@@ -298,7 +295,7 @@ public class WeaponInfo : Interactable
             locked = "0";
         }
 
-        ID = scrObj.TypeID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString() + "_" + locked;
+        ID = scrObj.ItemID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString() + "_" + locked;
 
         return ID;
     }

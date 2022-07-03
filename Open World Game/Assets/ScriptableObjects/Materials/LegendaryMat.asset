@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26c35d9ddd69214d9c7eb03110e47ee, type: 3}
   m_Name: LegendaryMat
   m_EditorClassIdentifier: 
+  ItemID: 300005
   materialName: Legendary material
   materialType: 0
   rarity: 5
@@ -23,5 +24,4 @@ MonoBehaviour:
   buyCost: 50
   sellCost: 25
   Console_Name: material:legendary_test
-  itemID: 9
   enhanceXp: 0

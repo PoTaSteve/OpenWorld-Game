@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26c35d9ddd69214d9c7eb03110e47ee, type: 3}
   m_Name: RareMat
   m_EditorClassIdentifier: 
+  ItemID: 300003
   materialName: Rare material
   materialType: 0
   rarity: 3
@@ -23,5 +24,4 @@ MonoBehaviour:
   buyCost: 30
   sellCost: 15
   Console_Name: material:rare_test
-  itemID: 7
   enhanceXp: 0

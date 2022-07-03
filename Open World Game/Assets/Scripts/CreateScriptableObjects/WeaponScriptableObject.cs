@@ -14,7 +14,7 @@ public enum WeaponType
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class WeaponScriptableObject : ScriptableObject
 {
-    public int TypeID;
+    public int ItemID;
 
     public string weaponName;
     public WeaponType weaponType;

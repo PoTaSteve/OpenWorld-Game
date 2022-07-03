@@ -45,13 +45,8 @@ public class PlayerInputManager : MonoBehaviour
     public Canvas canvas;
     public List<GameObject> HitObjs;
 
-
     private void Awake()
     {
-        ToWorldState();
-
-        // Movement and Jump in PlayerControllerRB
-
         playerControls = new PlayerControls();
 
         playerControls.Player.Enable();
@@ -62,7 +57,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Console.Enable();
         playerControls.WeaponEnhance.Enable();
         playerControls.Shop.Enable();
-        
+
         playerControls.Player.OpenInventory.performed += OpenInventory;
         playerControls.Player.Interact.performed += Interact;
         playerControls.Player.OpenMap.performed += OpenMap;
@@ -70,11 +65,11 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Player.OpenConsole.performed += OpenConsole;
         playerControls.Player.EnterDebugMode.performed += EnterDebugMode;
         playerControls.Player.ExitDebugMode.performed += ExitDebugMode;
-        
+
         playerControls.Inventory.CloseInventory.performed += CloseInventory;
         playerControls.Inventory.NextInvPage.performed += NextInvPage;
         playerControls.Inventory.PreviousInvPage.performed += PreviousInvPage;
-        
+
         playerControls.Map.CloseMap.performed += CloseMap;
 
         playerControls.EscMenu.CloseEscMenu.performed += CloseEscMenu;
@@ -87,7 +82,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Dialogues.Continue.performed += ContinueDialogue;
 
         playerControls.Shop.CloseShop.performed += CloseShop;
-        
+
         playerControls.Player.Enable();
         playerControls.Inventory.Disable();
         playerControls.Map.Disable();
@@ -96,7 +91,10 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Console.Disable();
         playerControls.WeaponEnhance.Disable();
         playerControls.Shop.Disable();
-    }
+
+
+        ToWorldState();
+    }    
 
     // Start is called before the first frame update
     void Start()
@@ -420,6 +418,8 @@ public class PlayerInputManager : MonoBehaviour
         ToWorldState();
 
         playerControls.Player.Enable();
+
+        GameManager.Instance.shopMan.currentShop = null;
 
         GameUIObj.SetActive(true);
         ShopObj.SetActive(false);

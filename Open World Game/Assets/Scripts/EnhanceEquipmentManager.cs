@@ -331,7 +331,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
             {
                 if (enhMatInfo.selectedCount >= enhMatInfo.count)
                 {
-                    GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.matInfo.scrObj.TypeID);
+                    GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.matInfo.scrObj.ItemID);
 
                     Destroy(enhMatInfo.matInfo.gameObject);
                 }
@@ -342,7 +342,7 @@ public class EnhanceEquipmentManager : MonoBehaviour
             }
             else if (enhMatInfo.type == EnhanceMaterialType.Weapon)
             {
-                GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.weapInfo.scrObj.TypeID);
+                GameManager.Instance.invMan.MaterialsTab.Remove(enhMatInfo.weapInfo.scrObj.ItemID);
 
                 Destroy(enhMatInfo.weapInfo.gameObject);
             }

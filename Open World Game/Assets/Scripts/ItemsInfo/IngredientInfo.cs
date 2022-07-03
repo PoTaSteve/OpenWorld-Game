@@ -13,13 +13,13 @@ public class IngredientInfo : Interactable
     public override void Interact()
     {
         // Instantiate Slot: IngredientInfo script
-        if (GameManager.Instance.invMan.IngredientsTab.Contains(scrObj.TypeID))
+        if (GameManager.Instance.invMan.IngredientsTab.Contains(scrObj.ItemID))
         {
             // Add the count
             foreach (Transform t in GameManager.Instance.invMan.TabsContent[2].transform)
             {
                 IngredientInfo info = t.GetComponent<IngredientInfo>();
-                if (info.scrObj.ingredientName == scrObj.ingredientName)
+                if (info.scrObj.ItemID == scrObj.ItemID)
                 {
                     info.count += count;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
@@ -31,7 +31,7 @@ public class IngredientInfo : Interactable
             // Instantiate slot
             IngredientInfo newSlot = Instantiate<IngredientInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), GameManager.Instance.invMan.TabsContent[2]);
 
-            GameManager.Instance.invMan.IngredientsTab.Add(scrObj.TypeID);
+            GameManager.Instance.invMan.IngredientsTab.Add(scrObj.ItemID);
             newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
 
             newSlot.scrObj = scrObj;

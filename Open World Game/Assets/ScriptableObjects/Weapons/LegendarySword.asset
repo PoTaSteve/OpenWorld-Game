@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dbda1851652cb4980ec9af23d66304, type: 3}
   m_Name: LegendarySword
   m_EditorClassIdentifier: 
+  ItemID: 400005
   weaponName: Legendary Sword
   weaponType: 0
   subStatType: En Rech
@@ -22,19 +23,18 @@ MonoBehaviour:
   effectName: Sword Effect
   effect: 'Test Item: Common sword effect.'
   description: 'Test Item: Common sword description.'
-  BaseATK1: 46
-  BaseATK20: 152
-  BaseATK40: 266
-  BaseATK60: 414
-  BaseATK70: 489
-  BaseATK80: 566
-  BaseATK90: 642
-  BaseATK100: 720
+  BaseATKs:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   incrementATK: 4.2
   incrementSubStat: 0.024
   equipPrefab: {fileID: 0}
   Console_Name: weapon:legendary_test
-  itemID: 4
   buyCost: 0
   sellCost: 0
   enhanceXp: 500

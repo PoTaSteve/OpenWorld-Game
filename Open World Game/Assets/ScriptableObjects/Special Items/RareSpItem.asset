@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbfac8816fb4a748be933bd7bf4953f, type: 3}
   m_Name: RareSpItem
   m_EditorClassIdentifier: 
+  ItemID: 3
   specialItemName: Rare Special Item
   rarity: 3
   icon: {fileID: 0}
   description: 'Test item: Rare special item.'
   numberOfSources: 0
   sources: []
+  Console_Name: 
+  buyCost: 0

@@ -17,14 +17,14 @@ public class MiniMapCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FollowPlayer();
+        UpdateTransform();
     }
 
-    public void FollowPlayer()
+    public void UpdateTransform()
     {
         Vector3 pos = Player.position;
 
-        gameObject.transform.position = new Vector3(pos.x, height, pos.z);
+        gameObject.transform.position = pos;
     }
 
     public void ChangeCameraZoom(float zoom)

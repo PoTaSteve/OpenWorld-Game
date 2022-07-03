@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Special Item", menuName = "Special Item")]
 public class SpecialItemScriptableObject : ScriptableObject
 {
-    public int TypeID;
+    public int ItemID;
 
     //Top
 

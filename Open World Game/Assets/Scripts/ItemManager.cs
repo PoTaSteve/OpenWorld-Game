@@ -26,7 +26,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in AllWeaponsObj)
             {
-                if (item.GetComponent<WeaponInfo>().scrObj.TypeID == ID)
+                if (item.GetComponent<WeaponInfo>().scrObj.ItemID == ID)
                 {
                     return item;
                 }
@@ -36,7 +36,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in AllMaterialsObj)
             {
-                if (item.GetComponent<MaterialInfo>().scrObj.TypeID == ID)
+                if (item.GetComponent<MaterialInfo>().scrObj.ItemID == ID)
                 {
                     return item;
                 }
@@ -46,7 +46,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in AllIngredientsObj)
             {
-                if (item.GetComponent<IngredientInfo>().scrObj.TypeID == ID)
+                if (item.GetComponent<IngredientInfo>().scrObj.ItemID == ID)
                 {
                     return item;
                 }
@@ -56,7 +56,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in AllFoodObj)
             {
-                if (item.GetComponent<FoodInfo>().scrObj.TypeID == ID)
+                if (item.GetComponent<FoodInfo>().scrObj.ItemID == ID)
                 {
                     return item;
                 }
@@ -66,7 +66,7 @@ public class ItemManager : MonoBehaviour
         {
             foreach (GameObject item in AllSpecialItemObj)
             {
-                if (item.GetComponent<SpecialItemInfo>().scrObj.TypeID == ID)
+                if (item.GetComponent<SpecialItemInfo>().scrObj.ItemID == ID)
                 {
                     return item;
                 }

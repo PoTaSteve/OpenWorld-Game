@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ShopProduct : MonoBehaviour
 {
-    public int count;
+    public int startCount;
+    public int currCount;
     public int cost;
+    public int index;
 
     public Sprite icon;
     public string itemName;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26c35d9ddd69214d9c7eb03110e47ee, type: 3}
   m_Name: CommonMat
   m_EditorClassIdentifier: 
+  ItemID: 300001
   materialName: Common material
   materialType: 0
   rarity: 1
@@ -23,5 +24,4 @@ MonoBehaviour:
   buyCost: 10
   sellCost: 5
   Console_Name: material:common_test
-  itemID: 5
   enhanceXp: 0

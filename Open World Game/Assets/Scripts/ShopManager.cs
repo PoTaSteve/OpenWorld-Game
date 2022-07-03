@@ -20,10 +20,12 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private Transform ProductContent;
 
-    [HideInInspector]
+    //[HideInInspector]
     public List<GameObject> products;
-    [HideInInspector]
-    public List<int> counts;
+    //[HideInInspector]
+    public List<int> CurrCounts;
+    //[HideInInspector]
+    public List<int> StartCounts;
 
     [HideInInspector]
     public Shop currentShop;
@@ -31,14 +33,19 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private GameObject ItemDetails;
 
-    private GameObject selectedProduct;
-    private int selectedCount;
+    public GameObject selectedProduct;
+    public int selectedCount;
 
     [SerializeField]
     private GameObject buyPopUp;
 
     public void CreateShop()
     {
+        foreach (Transform t in ProductContent)
+        {
+            Destroy(t.gameObject);
+        }
+
         for (int i = 0; i < products.Count; i++)
         {
             GameObject newProduct = Instantiate(ProductPrefab, ProductContent);
@@ -47,7 +54,9 @@ public class ShopManager : MonoBehaviour
 
             ShopProduct prod = newProduct.GetComponent<ShopProduct>();
 
-            prod.count = counts[i];
+            prod.startCount = StartCounts[i];
+            prod.currCount = CurrCounts[i];
+            prod.index = i;
 
             if (products[i].TryGetComponent(out WeaponInfo weapInfo))
             {
@@ -65,9 +74,9 @@ public class ShopManager : MonoBehaviour
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text= weapInfo.scrObj.weaponName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text= weapInfo.scrObj.buyCost.ToString();
-                if (counts[i] > 0)
+                if (CurrCounts[i] > 0)
                 {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + counts[i] + "/" + counts[i];
+                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
                 }
                 else
                 {
@@ -90,9 +99,9 @@ public class ShopManager : MonoBehaviour
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = matInfo.scrObj.materialName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = matInfo.scrObj.buyCost.ToString();
-                if (counts[i] > 0)
+                if (CurrCounts[i] > 0)
                 {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + counts[i] + "/" + counts[i];
+                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
                 }
                 else
                 {
@@ -115,9 +124,9 @@ public class ShopManager : MonoBehaviour
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = ingrInfo.scrObj.ingredientName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = ingrInfo.scrObj.buyCost.ToString();
-                if (counts[i] > 0)
+                if (CurrCounts[i] > 0)
                 {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + counts[i] + "/" + counts[i];
+                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
                 }
                 else
                 {
@@ -140,9 +149,9 @@ public class ShopManager : MonoBehaviour
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = foodInfo.scrObj.foodName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = foodInfo.scrObj.buyCost.ToString();
-                if (counts[i] > 0)
+                if (CurrCounts[i] > 0)
                 {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + counts[i] + "/" + counts[i];
+                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
                 }
                 else
                 {
@@ -165,9 +174,9 @@ public class ShopManager : MonoBehaviour
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = specItemInfo.scrObj.specialItemName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = specItemInfo.scrObj.buyCost.ToString();
-                if (counts[i] > 0)
+                if (CurrCounts[i] > 0)
                 {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + counts[i] + "/" + counts[i];
+                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
                 }
                 else
                 {
@@ -194,10 +203,10 @@ public class ShopManager : MonoBehaviour
         Transform window = buyPopUp.transform.GetChild(1);
 
         window.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>().text = "1"; // Min
-        window.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedProduct.GetComponent<ShopProduct>().count.ToString(); // Max
+        window.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedProduct.GetComponent<ShopProduct>().currCount.ToString(); // Max
 
         window.GetChild(6).GetComponent<Slider>().minValue = 1;
-        window.GetChild(6).GetComponent<Slider>().maxValue = selectedProduct.GetComponent<ShopProduct>().count;
+        window.GetChild(6).GetComponent<Slider>().maxValue = selectedProduct.GetComponent<ShopProduct>().currCount;
         window.GetChild(6).GetComponent<Slider>().value = 1;
 
         window.GetChild(5).GetComponent<TextMeshProUGUI>().text = "1";
@@ -221,27 +230,45 @@ public class ShopManager : MonoBehaviour
         {
             if (prod.itemType == ItemType.Weapon)
             {
-                BuyWeapon(prod, selectedCount);
+                BuyWeapon(prod);
             }
             else if (prod.itemType == ItemType.Material)
             {
-                BuyMaterial(prod, selectedCount);
+                BuyMaterial(prod);
             }
             else if (prod.itemType == ItemType.Ingredient)
             {
-                BuyIngredient(prod, selectedCount);
+                BuyIngredient(prod);
             }
             else if (prod.itemType == ItemType.Food)
             {
-                BuyFood(prod, selectedCount);
+                BuyFood(prod);
             }
             else if (prod.itemType == ItemType.SpecialItem)
             {
-                BuySpecialItem(prod, selectedCount);
+                BuySpecialItem(prod);
             }
             else
             {
                 Debug.Log("Error: Trying to buy an invalid item");
+
+                return;
+            }
+
+            buyPopUp.SetActive(false);
+
+            prod.currCount -= selectedCount;
+            currentShop.CurrCounts[prod.index] -= selectedCount;
+
+            GameManager.Instance.invMan.currency -= prod.cost * selectedCount;
+
+            if (CurrCounts[prod.index] > 0)
+            {
+                prod.gameObject.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[prod.index] + "/" + StartCounts[prod.index];
+            }
+            else
+            {
+                prod.gameObject.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Not Available";
             }
         }
     }
@@ -310,8 +337,49 @@ public class ShopManager : MonoBehaviour
         itemDets.GetChild(4).GetChild(2).GetComponent<FixWidth>().UpdateWidth();
         itemDets.GetChild(4).GetComponent<FixWidth>().UpdateWidth();
     }
+
+    public void IncreaseSliderValue()
+    {
+        Transform window = buyPopUp.transform.GetChild(1);
+        Slider slider = window.GetChild(6).GetComponent<Slider>();
+
+        if (selectedCount < slider.maxValue)
+        {
+            selectedCount++;
+            slider.value = selectedCount;
+        }
+
+        window.GetChild(5).GetComponent<TextMeshProUGUI>().text = selectedCount.ToString();
+
+        Transform itemDets = window.GetChild(11);
+        itemDets.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = (selectedCount * selectedProduct.GetComponent<ShopProduct>().cost).ToString();
+
+        itemDets.GetChild(4).GetChild(2).GetComponent<FixWidth>().UpdateWidth();
+        itemDets.GetChild(4).GetComponent<FixWidth>().UpdateWidth();
+    }
+
+    public void DecreaseSliderValue()
+    {
+        Transform window = buyPopUp.transform.GetChild(1);
+        Slider slider = window.GetChild(6).GetComponent<Slider>();
+
+        if (selectedCount > slider.minValue)
+        {
+            selectedCount--;
+            slider.value = selectedCount;
+        }
+
+        window.GetChild(5).GetComponent<TextMeshProUGUI>().text = selectedCount.ToString();
+
+        Transform itemDets = window.GetChild(11);
+        itemDets.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = (selectedCount * selectedProduct.GetComponent<ShopProduct>().cost).ToString();
+
+        itemDets.GetChild(4).GetChild(2).GetComponent<FixWidth>().UpdateWidth();
+        itemDets.GetChild(4).GetComponent<FixWidth>().UpdateWidth();
+    }
+
     
-    public void BuyWeapon(ShopProduct product, int count)
+    public void BuyWeapon(ShopProduct product)
     {
         // Instantiate Slot: WeaponInfo script
         WeaponInfo newSlot = Instantiate<WeaponInfo>(GameManager.Instance.invMan.WeaponInvSlot.GetComponent<WeaponInfo>(), GameManager.Instance.invMan.TabsContent[0]);
@@ -368,21 +436,21 @@ public class ShopManager : MonoBehaviour
         newSlot.transform.GetChild(6).gameObject.SetActive(true);
     }
 
-    public void BuyMaterial(ShopProduct product, int count)
+    public void BuyMaterial(ShopProduct product)
     {
         MaterialInfo matInfo = product.matInfo;
 
         // Instantiate Slot: MaterialInfo script
 
-        if (GameManager.Instance.invMan.MaterialsTab.Contains(matInfo.scrObj.TypeID))
+        if (GameManager.Instance.invMan.MaterialsTab.Contains(matInfo.scrObj.ItemID))
         {
             // Update the count 
             foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
             {
                 MaterialInfo info = t.GetComponent<MaterialInfo>();
-                if (info.scrObj.materialName == matInfo.scrObj.materialName)
+                if (info.scrObj.ItemID == matInfo.scrObj.ItemID)
                 {
-                    info.count += matInfo.count;
+                    info.count += selectedCount;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
                 }
             }
@@ -391,11 +459,11 @@ public class ShopManager : MonoBehaviour
         {
             MaterialInfo newSlot = Instantiate<MaterialInfo>(GameManager.Instance.invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), GameManager.Instance.invMan.TabsContent[1]);
 
-            GameManager.Instance.invMan.MaterialsTab.Add(matInfo.scrObj.TypeID);
+            GameManager.Instance.invMan.MaterialsTab.Add(matInfo.scrObj.ItemID);
             newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
 
             newSlot.scrObj = matInfo.scrObj;
-            newSlot.count = matInfo.count;
+            newSlot.count = selectedCount;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
@@ -426,20 +494,20 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void BuyIngredient(ShopProduct product, int count)
+    public void BuyIngredient(ShopProduct product)
     {
         IngredientInfo ingrInfo = product.ingrInfo;
 
         // Instantiate Slot: IngredientInfo script
-        if (GameManager.Instance.invMan.IngredientsTab.Contains(ingrInfo.scrObj.TypeID))
+        if (GameManager.Instance.invMan.IngredientsTab.Contains(ingrInfo.scrObj.ItemID))
         {
             // Add the count
             foreach (Transform t in GameManager.Instance.invMan.TabsContent[2].transform)
             {
                 IngredientInfo info = t.GetComponent<IngredientInfo>();
-                if (info.scrObj.ingredientName == ingrInfo.scrObj.ingredientName)
+                if (info.scrObj.ItemID == ingrInfo.scrObj.ItemID)
                 {
-                    info.count += ingrInfo.count;
+                    info.count += selectedCount;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
                 }
             }
@@ -449,11 +517,11 @@ public class ShopManager : MonoBehaviour
             // Instantiate slot
             IngredientInfo newSlot = Instantiate<IngredientInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), GameManager.Instance.invMan.TabsContent[2]);
 
-            GameManager.Instance.invMan.IngredientsTab.Add(ingrInfo.scrObj.TypeID);
+            GameManager.Instance.invMan.IngredientsTab.Add(ingrInfo.scrObj.ItemID);
             newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
 
             newSlot.scrObj = ingrInfo.scrObj;
-            newSlot.count = ingrInfo.count;
+            newSlot.count = selectedCount;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
@@ -484,20 +552,20 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void BuyFood(ShopProduct product, int count)
+    public void BuyFood(ShopProduct product)
     {
         FoodInfo foodInfo = product.foodInfo;
 
         // Instantiate Slot: FoodInfo script
-        if (GameManager.Instance.invMan.FoodTab.Contains(foodInfo.scrObj.TypeID))
+        if (GameManager.Instance.invMan.FoodTab.Contains(foodInfo.scrObj.ItemID))
         {
             // Add the count
             foreach (Transform t in GameManager.Instance.invMan.TabsContent[3].transform)
             {
                 FoodInfo info = t.GetComponent<FoodInfo>();
-                if (info.scrObj.foodName == foodInfo.scrObj.foodName)
+                if (info.scrObj.ItemID == foodInfo.scrObj.ItemID)
                 {
-                    info.count += foodInfo.count;
+                    info.count += selectedCount;
                     info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
                 }
             }
@@ -507,11 +575,11 @@ public class ShopManager : MonoBehaviour
             // Instantiate slot
             FoodInfo newSlot = Instantiate<FoodInfo>(GameManager.Instance.invMan.FoodInvSlot.GetComponent<FoodInfo>(), GameManager.Instance.invMan.TabsContent[3]);
 
-            GameManager.Instance.invMan.FoodTab.Add(foodInfo.scrObj.TypeID);
+            GameManager.Instance.invMan.FoodTab.Add(foodInfo.scrObj.ItemID);
             newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateFoodInvSlotDetails(newSlot.gameObject); });
 
             newSlot.scrObj = foodInfo.scrObj;
-            newSlot.count = foodInfo.count;
+            newSlot.count = selectedCount;
 
             newSlot.transform.GetChild(2).gameObject.SetActive(false);
 
@@ -565,14 +633,14 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void BuySpecialItem(ShopProduct product, int count)
+    public void BuySpecialItem(ShopProduct product)
     {
         SpecialItemInfo specItemInfo = product.specItemInfo;
 
         // Instantiate Slot: IngredientInfo script
         SpecialItemInfo newSlot = Instantiate<SpecialItemInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<SpecialItemInfo>(), GameManager.Instance.invMan.TabsContent[4]);
 
-        GameManager.Instance.invMan.SpecialItemsTab.Add(specItemInfo.scrObj.TypeID);
+        GameManager.Instance.invMan.SpecialItemsTab.Add(specItemInfo.scrObj.ItemID);
         newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateSpecialItemInvSlotDetails(newSlot.gameObject); });
 
         newSlot.scrObj = specItemInfo.scrObj;

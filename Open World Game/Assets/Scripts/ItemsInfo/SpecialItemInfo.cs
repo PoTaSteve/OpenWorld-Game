@@ -15,7 +15,7 @@ public class SpecialItemInfo : Interactable
         // Instantiate Slot: IngredientInfo script
         SpecialItemInfo newSlot = Instantiate<SpecialItemInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<SpecialItemInfo>(), GameManager.Instance.invMan.TabsContent[4]);
 
-        GameManager.Instance.invMan.SpecialItemsTab.Add(scrObj.TypeID);
+        GameManager.Instance.invMan.SpecialItemsTab.Add(scrObj.ItemID);
         newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateSpecialItemInvSlotDetails(newSlot.gameObject); });
 
         newSlot.scrObj = scrObj;

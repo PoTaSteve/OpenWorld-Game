@@ -21,7 +21,7 @@ public enum IngrSpecificType
 [CreateAssetMenu(fileName = "New Ingredient", menuName = "Ingredient")]
 public class IngredientScriptableObject : ScriptableObject
 {
-    public int TypeID;
+    public int ItemID;
 
     //Top
 

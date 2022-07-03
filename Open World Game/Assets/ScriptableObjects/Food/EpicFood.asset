@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e6a2e298ecfea48a1021eeafa1fe49, type: 3}
   m_Name: EpicFood
   m_EditorClassIdentifier: 
+  ItemID: 100004
   foodName: Epic food
   foodType: 0
   rarity: 4
@@ -22,6 +23,6 @@ MonoBehaviour:
   description: 'Test item: Epic food description.'
   numberOfSources: 0
   sources: []
-  cost: 0
+  buyCost: 0
+  sellCost: 0
   Console_Name: food:epic_test
-  itemID: 18

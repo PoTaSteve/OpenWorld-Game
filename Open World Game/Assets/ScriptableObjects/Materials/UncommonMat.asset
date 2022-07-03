@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26c35d9ddd69214d9c7eb03110e47ee, type: 3}
   m_Name: UncommonMat
   m_EditorClassIdentifier: 
+  ItemID: 300002
   materialName: Uncommon material
   materialType: 0
   rarity: 2
@@ -23,5 +24,4 @@ MonoBehaviour:
   buyCost: 20
   sellCost: 10
   Console_Name: material:uncommon_test
-  itemID: 6
   enhanceXp: 0

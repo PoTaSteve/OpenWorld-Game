@@ -5,10 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Water
-  - InventoryManager
-  - ItemManager
-  - DialogueManager
-  - ShopManager
+  - Enemy
+  - ItemsParent
   layers:
   - Default
   - TransparentFX
@@ -23,8 +21,8 @@ TagManager:
   - Stairs
   - Unclimbable
   - See-Through
-  - 
-  - 
+  - PlayerTrigger
+  - Enemy
   - 
   - 
   - 

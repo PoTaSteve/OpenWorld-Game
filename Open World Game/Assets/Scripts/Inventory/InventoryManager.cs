@@ -98,7 +98,7 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Windows[0].SetActive(true);
+        //Windows[0].SetActive(true);
     }
 
     // Update is called once per frame

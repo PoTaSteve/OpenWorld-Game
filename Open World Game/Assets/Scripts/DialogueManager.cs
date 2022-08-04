@@ -10,16 +10,15 @@ public class DialogueManager : MonoBehaviour
     public TextAsset inkJSON;
     private Story story;
 
-    [SerializeField]
-    private TextMeshProUGUI dialogue;
-    [SerializeField]
-    private TextMeshProUGUI speaker;
-    [SerializeField]
-    private Transform choiceParent;
+    public TextMeshProUGUI dialogue;
+    
+    public TextMeshProUGUI speaker;
+    
+    public Transform choiceParent;
     [SerializeField]
     private GameObject choicePrefab;
-    [SerializeField]
-    private GameObject DialogueWindow;
+    
+    public GameObject DialogueWindow;
 
     public bool needToChoose;
 

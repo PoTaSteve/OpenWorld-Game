@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenEscMenu",
+                    "name": "PressEsc",
                     "type": "Button",
                     "id": "6268452b-3310-43fe-9ba6-312dc693bd27",
                     "expectedControlType": "Button",
@@ -108,24 +108,6 @@
                     "name": "OpenConsole",
                     "type": "Button",
                     "id": "be144f32-6a3e-48f6-ab63-b7cd564893cd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "EnterDebugMode",
-                    "type": "Button",
-                    "id": "bd6066ab-4378-4630-aace-4e144fbd9122",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ExitDebugMode",
-                    "type": "Button",
-                    "id": "4c4a14a6-cd7d-4038-b2cf-27f6ec7b7bd3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -239,7 +221,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenEscMenu",
+                    "action": "PressEsc",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -262,28 +244,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenConsole",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ed4ea7ff-1e6f-462b-9cbe-f09a3fe48d77",
-                    "path": "<Keyboard>/f3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EnterDebugMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3d4b9117-ae4e-43fd-a8be-bedd84ddd482",
-                    "path": "<Keyboard>/f3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ExitDebugMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -584,6 +544,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ActiveBuffs",
+            "id": "5304541b-3385-4a1e-9c54-4b324d2ffcc5",
+            "actions": [
+                {
+                    "name": "ExitMenu",
+                    "type": "Button",
+                    "id": "3c55a18e-45e2-439a-b9e9-6a26ab1b4418",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ebf58d08-afae-4626-98bc-b8a8e9b5acfa",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

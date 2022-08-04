@@ -109,7 +109,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenEscMenu"",
+                    ""name"": ""PressEsc"",
                     ""type"": ""Button"",
                     ""id"": ""6268452b-3310-43fe-9ba6-312dc693bd27"",
                     ""expectedControlType"": ""Button"",
@@ -130,24 +130,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""name"": ""OpenConsole"",
                     ""type"": ""Button"",
                     ""id"": ""be144f32-6a3e-48f6-ab63-b7cd564893cd"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EnterDebugMode"",
-                    ""type"": ""Button"",
-                    ""id"": ""bd6066ab-4378-4630-aace-4e144fbd9122"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ExitDebugMode"",
-                    ""type"": ""Button"",
-                    ""id"": ""4c4a14a6-cd7d-4038-b2cf-27f6ec7b7bd3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -261,7 +243,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenEscMenu"",
+                    ""action"": ""PressEsc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -284,28 +266,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenConsole"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ed4ea7ff-1e6f-462b-9cbe-f09a3fe48d77"",
-                    ""path"": ""<Keyboard>/f3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EnterDebugMode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3d4b9117-ae4e-43fd-a8be-bedd84ddd482"",
-                    ""path"": ""<Keyboard>/f3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ExitDebugMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -610,6 +570,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ActiveBuffs"",
+            ""id"": ""5304541b-3385-4a1e-9c54-4b324d2ffcc5"",
+            ""actions"": [
+                {
+                    ""name"": ""ExitMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c55a18e-45e2-439a-b9e9-6a26ab1b4418"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ebf58d08-afae-4626-98bc-b8a8e9b5acfa"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -625,11 +613,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Skill3 = m_Player.FindAction("Skill3", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
         m_Player_OpenMap = m_Player.FindAction("OpenMap", throwIfNotFound: true);
-        m_Player_OpenEscMenu = m_Player.FindAction("OpenEscMenu", throwIfNotFound: true);
+        m_Player_PressEsc = m_Player.FindAction("PressEsc", throwIfNotFound: true);
         m_Player_ScrollWheel = m_Player.FindAction("ScrollWheel", throwIfNotFound: true);
         m_Player_OpenConsole = m_Player.FindAction("OpenConsole", throwIfNotFound: true);
-        m_Player_EnterDebugMode = m_Player.FindAction("EnterDebugMode", throwIfNotFound: true);
-        m_Player_ExitDebugMode = m_Player.FindAction("ExitDebugMode", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_CloseInventory = m_Inventory.FindAction("CloseInventory", throwIfNotFound: true);
@@ -654,6 +640,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Shop
         m_Shop = asset.FindActionMap("Shop", throwIfNotFound: true);
         m_Shop_CloseShop = m_Shop.FindAction("CloseShop", throwIfNotFound: true);
+        // ActiveBuffs
+        m_ActiveBuffs = asset.FindActionMap("ActiveBuffs", throwIfNotFound: true);
+        m_ActiveBuffs_ExitMenu = m_ActiveBuffs.FindAction("ExitMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -722,11 +711,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Skill3;
     private readonly InputAction m_Player_OpenInventory;
     private readonly InputAction m_Player_OpenMap;
-    private readonly InputAction m_Player_OpenEscMenu;
+    private readonly InputAction m_Player_PressEsc;
     private readonly InputAction m_Player_ScrollWheel;
     private readonly InputAction m_Player_OpenConsole;
-    private readonly InputAction m_Player_EnterDebugMode;
-    private readonly InputAction m_Player_ExitDebugMode;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -740,11 +727,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
         public InputAction @OpenMap => m_Wrapper.m_Player_OpenMap;
-        public InputAction @OpenEscMenu => m_Wrapper.m_Player_OpenEscMenu;
+        public InputAction @PressEsc => m_Wrapper.m_Player_PressEsc;
         public InputAction @ScrollWheel => m_Wrapper.m_Player_ScrollWheel;
         public InputAction @OpenConsole => m_Wrapper.m_Player_OpenConsole;
-        public InputAction @EnterDebugMode => m_Wrapper.m_Player_EnterDebugMode;
-        public InputAction @ExitDebugMode => m_Wrapper.m_Player_ExitDebugMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -781,21 +766,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenMap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMap;
                 @OpenMap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMap;
                 @OpenMap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenMap;
-                @OpenEscMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenEscMenu;
-                @OpenEscMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenEscMenu;
-                @OpenEscMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenEscMenu;
+                @PressEsc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPressEsc;
+                @PressEsc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPressEsc;
+                @PressEsc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPressEsc;
                 @ScrollWheel.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScrollWheel;
                 @OpenConsole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
                 @OpenConsole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
                 @OpenConsole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenConsole;
-                @EnterDebugMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
-                @EnterDebugMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
-                @EnterDebugMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugMode;
-                @ExitDebugMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
-                @ExitDebugMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
-                @ExitDebugMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitDebugMode;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -827,21 +806,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenMap.started += instance.OnOpenMap;
                 @OpenMap.performed += instance.OnOpenMap;
                 @OpenMap.canceled += instance.OnOpenMap;
-                @OpenEscMenu.started += instance.OnOpenEscMenu;
-                @OpenEscMenu.performed += instance.OnOpenEscMenu;
-                @OpenEscMenu.canceled += instance.OnOpenEscMenu;
+                @PressEsc.started += instance.OnPressEsc;
+                @PressEsc.performed += instance.OnPressEsc;
+                @PressEsc.canceled += instance.OnPressEsc;
                 @ScrollWheel.started += instance.OnScrollWheel;
                 @ScrollWheel.performed += instance.OnScrollWheel;
                 @ScrollWheel.canceled += instance.OnScrollWheel;
                 @OpenConsole.started += instance.OnOpenConsole;
                 @OpenConsole.performed += instance.OnOpenConsole;
                 @OpenConsole.canceled += instance.OnOpenConsole;
-                @EnterDebugMode.started += instance.OnEnterDebugMode;
-                @EnterDebugMode.performed += instance.OnEnterDebugMode;
-                @EnterDebugMode.canceled += instance.OnEnterDebugMode;
-                @ExitDebugMode.started += instance.OnExitDebugMode;
-                @ExitDebugMode.performed += instance.OnExitDebugMode;
-                @ExitDebugMode.canceled += instance.OnExitDebugMode;
             }
         }
     }
@@ -1101,6 +1074,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public ShopActions @Shop => new ShopActions(this);
+
+    // ActiveBuffs
+    private readonly InputActionMap m_ActiveBuffs;
+    private IActiveBuffsActions m_ActiveBuffsActionsCallbackInterface;
+    private readonly InputAction m_ActiveBuffs_ExitMenu;
+    public struct ActiveBuffsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public ActiveBuffsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ExitMenu => m_Wrapper.m_ActiveBuffs_ExitMenu;
+        public InputActionMap Get() { return m_Wrapper.m_ActiveBuffs; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ActiveBuffsActions set) { return set.Get(); }
+        public void SetCallbacks(IActiveBuffsActions instance)
+        {
+            if (m_Wrapper.m_ActiveBuffsActionsCallbackInterface != null)
+            {
+                @ExitMenu.started -= m_Wrapper.m_ActiveBuffsActionsCallbackInterface.OnExitMenu;
+                @ExitMenu.performed -= m_Wrapper.m_ActiveBuffsActionsCallbackInterface.OnExitMenu;
+                @ExitMenu.canceled -= m_Wrapper.m_ActiveBuffsActionsCallbackInterface.OnExitMenu;
+            }
+            m_Wrapper.m_ActiveBuffsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ExitMenu.started += instance.OnExitMenu;
+                @ExitMenu.performed += instance.OnExitMenu;
+                @ExitMenu.canceled += instance.OnExitMenu;
+            }
+        }
+    }
+    public ActiveBuffsActions @ActiveBuffs => new ActiveBuffsActions(this);
     public interface IPlayerActions
     {
         void OnLook(InputAction.CallbackContext context);
@@ -1112,11 +1118,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSkill3(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnOpenMap(InputAction.CallbackContext context);
-        void OnOpenEscMenu(InputAction.CallbackContext context);
+        void OnPressEsc(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnOpenConsole(InputAction.CallbackContext context);
-        void OnEnterDebugMode(InputAction.CallbackContext context);
-        void OnExitDebugMode(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {
@@ -1148,5 +1152,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IShopActions
     {
         void OnCloseShop(InputAction.CallbackContext context);
+    }
+    public interface IActiveBuffsActions
+    {
+        void OnExitMenu(InputAction.CallbackContext context);
     }
 }

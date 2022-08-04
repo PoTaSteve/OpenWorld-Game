@@ -13,22 +13,17 @@ public class PlayerInputManager : MonoBehaviour
 
     [SerializeField]
     private ConsoleManager consoleMan;
-    [SerializeField]
-    private DebugModeManager debugModeMan;
 
     public GameObject InventoryObj = default;
     public GameObject GameUIObj = default;
     public GameObject MapObj = default;
     public GameObject EscMenuObj = default;
     public GameObject ConsoleObj = default;
-    public GameObject DebugModeObj = default;
     public GameObject TempConsoleDebugObj = default;
     public GameObject DialogueObj = default;
     public GameObject WeaponEnhanceObj = default;
     public GameObject ShopObj = default;
-
-    public float debugModeTimer;
-    public bool isInDebugMode;
+    public GameObject ActiveBuffsWindow = default;
 
     public OrbitCamera orbitCam;
 
@@ -57,14 +52,13 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Console.Enable();
         playerControls.WeaponEnhance.Enable();
         playerControls.Shop.Enable();
+        playerControls.ActiveBuffs.Enable();
 
         playerControls.Player.OpenInventory.performed += OpenInventory;
         playerControls.Player.Interact.performed += Interact;
         playerControls.Player.OpenMap.performed += OpenMap;
-        playerControls.Player.OpenEscMenu.performed += OpenEscMenu;
+        playerControls.Player.PressEsc.performed += PressEsc;
         playerControls.Player.OpenConsole.performed += OpenConsole;
-        playerControls.Player.EnterDebugMode.performed += EnterDebugMode;
-        playerControls.Player.ExitDebugMode.performed += ExitDebugMode;
 
         playerControls.Inventory.CloseInventory.performed += CloseInventory;
         playerControls.Inventory.NextInvPage.performed += NextInvPage;
@@ -83,6 +77,8 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Shop.CloseShop.performed += CloseShop;
 
+        playerControls.ActiveBuffs.ExitMenu.performed += CloseActiveBuffsWindow;
+
         playerControls.Player.Enable();
         playerControls.Inventory.Disable();
         playerControls.Map.Disable();
@@ -99,8 +95,6 @@ public class PlayerInputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        debugModeTimer = 0f;
-        isInDebugMode = false;
         orbitCam.canUpdateCam = true;
 
         //Fetch the Raycaster from the GameObject(the Canvas)
@@ -112,9 +106,15 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInDebugMode && debugModeTimer <= 1)
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && GameManager.Instance.currentState == State.OPEN_WORLD)
         {
-            debugModeTimer += Time.deltaTime;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftAlt) && GameManager.Instance.currentState == State.OPEN_WORLD)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         #region Read ScrollWheel Input
@@ -264,7 +264,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Map.Disable();
     }
 
-    public void OpenEscMenu(InputAction.CallbackContext context)
+    public void PressEsc(InputAction.CallbackContext context)
     {
         ToUIState();
 
@@ -325,34 +325,6 @@ public class PlayerInputManager : MonoBehaviour
         ConsoleObj.SetActive(false);
 
         playerControls.Console.Disable();
-    }
-
-    public void EnterDebugMode(InputAction.CallbackContext context)
-    {
-        Debug.Log("Trying To acces debug mode");
-        if (!isInDebugMode)
-        {
-            Debug.Log("In debug mode");
-            debugModeMan.isInDebugMode = true;
-            isInDebugMode = true;
-            debugModeTimer = 0f;
-            GameUIObj.SetActive(false);
-            DebugModeObj.SetActive(true);
-        }
-    }
-
-    public void ExitDebugMode(InputAction.CallbackContext context)
-    {
-        Debug.Log("Trying to exit debug mode");
-        if (isInDebugMode && debugModeTimer >= 1)
-        {
-            Debug.Log("Out of debug mode");
-            debugModeMan.isInDebugMode = false;
-            isInDebugMode = false;
-            debugModeTimer = 0f;
-            DebugModeObj.SetActive(false);
-            GameUIObj.SetActive(true);
-        }
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -427,6 +399,31 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Shop.Disable();
     }
 
+    public void OpenActiveBuffsWindow()
+    {
+        playerControls.ActiveBuffs.Enable();
+        playerControls.Player.Disable();
+
+        ActiveBuffsWindow.SetActive(true);
+
+        GameManager.Instance.currentState = State.BUFFS_WINDOW;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void CloseActiveBuffsWindow(InputAction.CallbackContext context)
+    {
+        playerControls.Player.Enable();
+        playerControls.ActiveBuffs.Disable();
+
+        ActiveBuffsWindow.SetActive(false);
+
+        GameManager.Instance.currentState = State.OPEN_WORLD;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
     public void ToWorldState()
     {

@@ -5,8 +5,7 @@ using TMPro;
 
 public class ConsoleManager : MonoBehaviour
 {
-    [SerializeField]
-    private InventoryManager invMan;
+    public InventoryManager invMan;
     [SerializeField]
     private PlayerInputManager plInputMan;
     public GameObject Player;

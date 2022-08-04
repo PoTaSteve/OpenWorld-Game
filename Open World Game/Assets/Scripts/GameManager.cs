@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public enum SceneIndex
 {
@@ -10,26 +11,43 @@ public enum SceneIndex
     OPEN_WORLD = 2
 }
 
+public enum State
+{
+    MAIN_MENU,
+    LOADING_SCREEN,
+    OPEN_WORLD,
+    BUFFS_WINDOW,
+    INVENTORY,
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject LoadingScreen;
 
+    public GameObject player;
+
+    public State currentState;
+
     List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
     float totalLoadProgress;
 
-    [HideInInspector]
+    
     public InventoryManager invMan;
-    [HideInInspector]
+    
     public ItemManager itemMan;
-    [HideInInspector]
+    
     public DialogueManager dialMan;
-    [HideInInspector]
+    
     public PlayerInputManager plInMan;
-    [HideInInspector]
+    
     public PlayerStats plStats;
-    [HideInInspector]
+    
     public ShopManager shopMan;
+    
+    public DeBuffManager debuffMan;
+    
+    public ConsoleManager consoleMan;
 
     private void Awake()
     {
@@ -42,22 +60,20 @@ public class GameManager : MonoBehaviour
             Instance = this;
             
             SceneManager.LoadSceneAsync((int)SceneIndex.MAIN_MENU, LoadSceneMode.Additive);
-        }
-    }
 
-    public void SetUpManagers()
-    {
-        GameObject.FindGameObjectWithTag("InventoryManager").TryGetComponent(out invMan);
-        GameObject.FindGameObjectWithTag("ItemManager").TryGetComponent(out itemMan);
-        GameObject.FindGameObjectWithTag("DialogueManager").TryGetComponent(out dialMan);
-        GameObject.FindGameObjectWithTag("Player").TryGetComponent(out plInMan);
-        GameObject.FindGameObjectWithTag("Player").TryGetComponent(out plStats);
-        GameObject.FindGameObjectWithTag("ShopManager").TryGetComponent(out shopMan);
+            player.SetActive(false);
+            plInMan.orbitCam.gameObject.SetActive(false);
+            DeactivateUI();
+            LoadingScreen.SetActive(false);
+
+            currentState = State.MAIN_MENU;
+        }
     }
 
     public void LoadOpenWorld()
     {
         LoadingScreen.SetActive(true);
+        currentState = State.LOADING_SCREEN;
         scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndex.MAIN_MENU));
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndex.OPEN_WORLD, LoadSceneMode.Additive));
 
@@ -87,11 +103,35 @@ public class GameManager : MonoBehaviour
 
         LoadingScreen.SetActive(false);
 
-        SetUpManagers();
+        SetUpOpenWorld();
+    }
+
+    public void SetUpOpenWorld()
+    {
+        currentState = State.OPEN_WORLD;
+
+        player.SetActive(true);
+        plInMan.orbitCam.gameObject.SetActive(true);
+
+        SetUpManagersInOpenWorld();
 
         SetUI();
 
-        plStats.SetHealth();
+        //plStats.SetHealth();
+    }
+
+    public void DeactivateUI()
+    {
+        plInMan.GameUIObj.SetActive(false);
+        plInMan.InventoryObj.SetActive(false);
+        plInMan.MapObj.SetActive(false);
+        plInMan.EscMenuObj.SetActive(false);
+        plInMan.ConsoleObj.SetActive(false);
+        plInMan.WeaponEnhanceObj.SetActive(false);
+        plInMan.DialogueObj.SetActive(false);
+        plInMan.TempConsoleDebugObj.SetActive(false);
+        plInMan.ShopObj.SetActive(false);
+        plInMan.ActiveBuffsWindow.SetActive(false);
     }
 
     public void SetUI()
@@ -101,15 +141,50 @@ public class GameManager : MonoBehaviour
         plInMan.MapObj.SetActive(false);
         plInMan.EscMenuObj.SetActive(false);
         plInMan.ConsoleObj.SetActive(false);
-        plInMan.DebugModeObj.SetActive(false);
         plInMan.WeaponEnhanceObj.SetActive(false);
         plInMan.DialogueObj.SetActive(false);
         plInMan.TempConsoleDebugObj.SetActive(false);
         plInMan.ShopObj.SetActive(false);
+        plInMan.ActiveBuffsWindow.SetActive(false);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void SetUpManagersInOpenWorld()
+    {
+        //#region DeBuff Manager
+        //debuffMan.DeBuffParent = GameObject.FindGameObjectWithTag("DeBuffParent").transform;
+        //debuffMan.ActiveDeBuffWindow = GameObject.FindGameObjectWithTag("DeBuffWindow");
+        //debuffMan.ActiveDeBuffParent = debuffMan.ActiveDeBuffWindow.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        //#endregion
+
+        //#region Shop Manager
+        //GameObject shopWin = GameObject.FindGameObjectWithTag("ShopWindow");
+        //shopMan.buyPopUp = shopWin.transform.GetChild(4).gameObject;
+        //shopMan.ItemDetails = shopWin.transform.GetChild(2).GetChild(0).gameObject;
+        //shopMan.ProductContent = shopWin.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<RectTransform>();
+        //#endregion
+
+        //#region Dialogue Manager
+        //GameObject dialogueWin = GameObject.FindGameObjectWithTag("DialogueWindow");
+        //dialMan.DialogueWindow = dialogueWin;
+        //dialMan.dialogue = dialogueWin.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        //dialMan.speaker = dialogueWin.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        //dialMan.choiceParent = dialogueWin.transform.GetChild(4).GetComponent<RectTransform>();
+        //#endregion
+
+        //#region Console Manager
+        //consoleMan.invMan = invMan;
+        //GameObject console = GameObject.FindGameObjectWithTag("ConsoleWindow");
+        //consoleMan.txtField = console.transform.GetChild(1).GetComponent<TMP_InputField>();
+        //consoleMan.MsgParent = console.transform.GetChild(2).GetChild(0);
+        //#endregion
+
+        #region Item Manager
+        itemMan.itemsParent = GameObject.FindGameObjectWithTag("ItemsParent").transform;
+        #endregion
     }
 }

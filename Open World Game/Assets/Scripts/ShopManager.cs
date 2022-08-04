@@ -17,8 +17,8 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject ProductPrefab;
-    [SerializeField]
-    private Transform ProductContent;
+    
+    public Transform ProductContent;
 
     //[HideInInspector]
     public List<GameObject> products;
@@ -30,14 +30,12 @@ public class ShopManager : MonoBehaviour
     [HideInInspector]
     public Shop currentShop;
 
-    [SerializeField]
-    private GameObject ItemDetails;
+    public GameObject ItemDetails;
 
     public GameObject selectedProduct;
     public int selectedCount;
 
-    [SerializeField]
-    private GameObject buyPopUp;
+    public GameObject buyPopUp;
 
     public void CreateShop()
     {

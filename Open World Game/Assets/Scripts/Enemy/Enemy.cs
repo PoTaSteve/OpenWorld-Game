@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public int damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,13 +16,5 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Weapon"))
-        {
-            Debug.Log("Enemy got hit by " + other.name);
-        }
     }
 }

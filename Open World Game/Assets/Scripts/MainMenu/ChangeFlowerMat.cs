@@ -77,6 +77,7 @@ public class ChangeFlowerMat : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             isLerpingToRed = true;
+            isLerpingToWhite = false;
         }
     }
 
@@ -85,6 +86,7 @@ public class ChangeFlowerMat : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             isLerpingToWhite = true;
+            isLerpingToRed = false;
         }
     }
 }

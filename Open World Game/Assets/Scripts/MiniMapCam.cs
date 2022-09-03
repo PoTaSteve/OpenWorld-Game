@@ -24,7 +24,7 @@ public class MiniMapCam : MonoBehaviour
     {
         Vector3 pos = Player.position;
 
-        gameObject.transform.position = pos;
+        gameObject.transform.position = new Vector3(pos.x, pos.y + height, pos.z);
     }
 
     public void ChangeCameraZoom(float zoom)

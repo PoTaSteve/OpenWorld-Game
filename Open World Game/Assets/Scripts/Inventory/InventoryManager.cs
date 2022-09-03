@@ -109,6 +109,8 @@ public class InventoryManager : MonoBehaviour
 
     public void GoToNextInvTab()
     {
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.clear;
+
         Windows[currInvTab].SetActive(false);
 
         if (currInvTab == 4)
@@ -131,10 +133,14 @@ public class InventoryManager : MonoBehaviour
         {
             InvDetails[currInvTab].SetActive(false);
         }
+
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.blue;
     }
 
     public void GoToPreviousInvTab()
     {
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.clear;
+
         Windows[currInvTab].SetActive(false);
 
         if (currInvTab == 0)
@@ -157,6 +163,8 @@ public class InventoryManager : MonoBehaviour
         {
             InvDetails[currInvTab].SetActive(false);
         }
+
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.blue;
     }
 
     public void GoToSpecificInvTab(int tab)
@@ -170,6 +178,8 @@ public class InventoryManager : MonoBehaviour
 
         if (tab != currInvTab)
         {
+            Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.clear;
+
             int prevTab = currInvTab;
             currInvTab = tab;
 
@@ -189,6 +199,8 @@ public class InventoryManager : MonoBehaviour
             }
 
             Windows[currInvTab].SetActive(true);
+
+            Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.blue;
         }
     }
 
@@ -198,6 +210,8 @@ public class InventoryManager : MonoBehaviour
         {
             currInvTab = 0;
         }
+
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.clear;
 
         if (TabsContent[currInvTab].transform.childCount > 0)
         {
@@ -210,6 +224,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         Windows[currInvTab].SetActive(true);
+
+        Tabs[currInvTab].transform.GetChild(0).GetComponent<Image>().color = Color.blue;
     }
 
     public void BottomButtonFunc()

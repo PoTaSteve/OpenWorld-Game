@@ -59,14 +59,21 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             
-            SceneManager.LoadSceneAsync((int)SceneIndex.MAIN_MENU, LoadSceneMode.Additive);
+            if (currentState != State.OPEN_WORLD)
+            {
+                SceneManager.LoadSceneAsync((int)SceneIndex.MAIN_MENU, LoadSceneMode.Additive);
 
-            player.SetActive(false);
-            plInMan.orbitCam.gameObject.SetActive(false);
-            DeactivateUI();
-            LoadingScreen.SetActive(false);
+                player.SetActive(false);
+                plInMan.orbitCam.gameObject.SetActive(false);
+                DeactivateUI();
+                LoadingScreen.SetActive(false);
 
-            currentState = State.MAIN_MENU;
+                currentState = State.MAIN_MENU;
+            }
+            else
+            {
+                SetUI();
+            }
         }
     }
 

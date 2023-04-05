@@ -9,7 +9,7 @@ public class Billboard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GameManager.Instance.plInMan.orbitCam.transform;
+        cam = GameManager.Instance.plInMan.cam.transform;
     }
 
     // Update is called once per frame

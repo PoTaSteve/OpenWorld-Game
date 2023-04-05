@@ -36,6 +36,14 @@ public class ConsoleManager : MonoBehaviour
             funcParams[i - 1] = strs[i];
         }
 
+        switch (cmd)
+        {
+            case "/spawn":
+                break;
+            default:
+                break;
+        }
+
         if (cmd == "/spawn")
         {
             debug = ConsoleSpawn(funcParams);

@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadSceneAsync((int)SceneIndex.MAIN_MENU, LoadSceneMode.Additive);
 
                 player.SetActive(false);
-                plInMan.orbitCam.gameObject.SetActive(false);
+                plInMan.cam.gameObject.SetActive(false);
                 DeactivateUI();
                 LoadingScreen.SetActive(false);
 
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
         currentState = State.OPEN_WORLD;
 
         player.SetActive(true);
-        plInMan.orbitCam.gameObject.SetActive(true);
+        plInMan.cam.gameObject.SetActive(true);
 
         SetUpManagersInOpenWorld();
 
@@ -129,12 +129,15 @@ public class GameManager : MonoBehaviour
 
     public void DeactivateUI()
     {
+        plInMan.UIStateObject.SetActive(false);
         plInMan.GameUIObj.SetActive(false);
+        plInMan.QuestsUIObject.SetActive(false);
         plInMan.InventoryObj.SetActive(false);
+        plInMan.SkillsUIObject.SetActive(false);
+        plInMan.SystemUIObject.SetActive(false);
         plInMan.MapObj.SetActive(false);
         plInMan.EscMenuObj.SetActive(false);
         plInMan.ConsoleObj.SetActive(false);
-        plInMan.WeaponEnhanceObj.SetActive(false);
         plInMan.DialogueObj.SetActive(false);
         plInMan.TempConsoleDebugObj.SetActive(false);
         plInMan.ShopObj.SetActive(false);
@@ -143,12 +146,15 @@ public class GameManager : MonoBehaviour
 
     public void SetUI()
     {
+        plInMan.UIStateObject.SetActive(false);
         plInMan.GameUIObj.SetActive(true);
+        plInMan.QuestsUIObject.SetActive(false);
         plInMan.InventoryObj.SetActive(false);
+        plInMan.SkillsUIObject.SetActive(false);
+        plInMan.SystemUIObject.SetActive(false);
         plInMan.MapObj.SetActive(false);
         plInMan.EscMenuObj.SetActive(false);
         plInMan.ConsoleObj.SetActive(false);
-        plInMan.WeaponEnhanceObj.SetActive(false);
         plInMan.DialogueObj.SetActive(false);
         plInMan.TempConsoleDebugObj.SetActive(false);
         plInMan.ShopObj.SetActive(false);

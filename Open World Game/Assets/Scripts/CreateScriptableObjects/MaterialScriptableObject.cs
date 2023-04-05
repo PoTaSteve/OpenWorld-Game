@@ -18,7 +18,6 @@ public class MaterialScriptableObject : ScriptableObject
 
     public string materialName;
     public MaterialTypeEnum materialType;
-    public int rarity;
 
     public Sprite icon;
 
@@ -28,8 +27,6 @@ public class MaterialScriptableObject : ScriptableObject
 
     [TextArea(3, 10)]
     public string description;
-    public int numberOfSources;
-    public string[] sources;
 
     // Other
     public int buyCost;
@@ -52,7 +49,6 @@ public class MaterialScriptableObject : ScriptableObject
         }
         else
         {
-
             s = "Enhance Material";
         }
 

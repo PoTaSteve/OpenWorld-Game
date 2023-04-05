@@ -4,15 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum ItemType
-{
-    Weapon,
-    Material,
-    Ingredient,
-    Food,
-    SpecialItem
-}
-
 public class ShopManager : MonoBehaviour
 {
     [SerializeField]
@@ -66,8 +57,6 @@ public class ShopManager : MonoBehaviour
                 prod.itemName = weapInfo.scrObj.weaponName;
                 prod.description = weapInfo.scrObj.description;
 
-                prod.rarity = weapInfo.scrObj.rarity;
-
                 newProduct.transform.GetChild(3).GetComponent<Image>().sprite = weapInfo.scrObj.icon;
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text= weapInfo.scrObj.weaponName;
 
@@ -91,37 +80,10 @@ public class ShopManager : MonoBehaviour
                 prod.itemName = matInfo.scrObj.materialName;
                 prod.description = matInfo.scrObj.description;
 
-                prod.rarity = matInfo.scrObj.rarity;
-
                 newProduct.transform.GetChild(3).GetComponent<Image>().sprite = matInfo.scrObj.icon;
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = matInfo.scrObj.materialName;
 
                 newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = matInfo.scrObj.buyCost.ToString();
-                if (CurrCounts[i] > 0)
-                {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
-                }
-                else
-                {
-                    newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Not Available";
-                }
-            }
-            else if (products[i].TryGetComponent(out IngredientInfo ingrInfo))
-            {
-                prod.ingrInfo = ingrInfo;
-                prod.itemType = ItemType.Ingredient;
-                prod.cost = ingrInfo.scrObj.buyCost;
-
-                prod.icon = ingrInfo.scrObj.icon;
-                prod.itemName = ingrInfo.scrObj.ingredientName;
-                prod.description = ingrInfo.scrObj.description;
-
-                prod.rarity = ingrInfo.scrObj.rarity;
-
-                newProduct.transform.GetChild(3).GetComponent<Image>().sprite = ingrInfo.scrObj.icon;
-                newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = ingrInfo.scrObj.ingredientName;
-
-                newProduct.transform.GetChild(5).GetChild(1).GetComponent<TextMeshProUGUI>().text = ingrInfo.scrObj.buyCost.ToString();
                 if (CurrCounts[i] > 0)
                 {
                     newProduct.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[i] + "/" + StartCounts[i];
@@ -140,8 +102,6 @@ public class ShopManager : MonoBehaviour
                 prod.icon = foodInfo.scrObj.icon;
                 prod.itemName = foodInfo.scrObj.foodName;
                 prod.description = foodInfo.scrObj.description;
-
-                prod.rarity = foodInfo.scrObj.rarity;
 
                 newProduct.transform.GetChild(3).GetComponent<Image>().sprite = foodInfo.scrObj.icon;
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = foodInfo.scrObj.foodName;
@@ -165,8 +125,6 @@ public class ShopManager : MonoBehaviour
                 prod.icon = specItemInfo.scrObj.icon;
                 prod.itemName = specItemInfo.scrObj.specialItemName;
                 prod.description = specItemInfo.scrObj.description;
-
-                prod.rarity = specItemInfo.scrObj.rarity;
 
                 newProduct.transform.GetChild(3).GetComponent<Image>().sprite = specItemInfo.scrObj.icon;
                 newProduct.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = specItemInfo.scrObj.specialItemName;
@@ -222,53 +180,7 @@ public class ShopManager : MonoBehaviour
 
     public void Buy()
     {
-        ShopProduct prod = selectedProduct.GetComponent<ShopProduct>();
-        
-        if (GameManager.Instance.invMan.currency >= prod.cost * selectedCount)
-        {
-            if (prod.itemType == ItemType.Weapon)
-            {
-                BuyWeapon(prod);
-            }
-            else if (prod.itemType == ItemType.Material)
-            {
-                BuyMaterial(prod);
-            }
-            else if (prod.itemType == ItemType.Ingredient)
-            {
-                BuyIngredient(prod);
-            }
-            else if (prod.itemType == ItemType.Food)
-            {
-                BuyFood(prod);
-            }
-            else if (prod.itemType == ItemType.SpecialItem)
-            {
-                BuySpecialItem(prod);
-            }
-            else
-            {
-                Debug.Log("Error: Trying to buy an invalid item");
-
-                return;
-            }
-
-            buyPopUp.SetActive(false);
-
-            prod.currCount -= selectedCount;
-            currentShop.CurrCounts[prod.index] -= selectedCount;
-
-            GameManager.Instance.invMan.currency -= prod.cost * selectedCount;
-
-            if (CurrCounts[prod.index] > 0)
-            {
-                prod.gameObject.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Available " + CurrCounts[prod.index] + "/" + StartCounts[prod.index];
-            }
-            else
-            {
-                prod.gameObject.transform.GetChild(6).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Not Available";
-            }
-        }
+        // Check for money then call inventory AddItem
     }
 
     public void UpdateDetails(GameObject obj)
@@ -281,10 +193,6 @@ public class ShopManager : MonoBehaviour
 
         ShopProduct product = obj.GetComponent<ShopProduct>();
         InventoryManager invMan = GameManager.Instance.invMan;
-
-        borderColor = invMan.DetailsBorderColor[product.rarity - 1];
-        textColor = invMan.DetailsTextColor[product.rarity - 1];
-        symbolColor = invMan.DetailsSymboloColor[product.rarity - 1];
 
         Transform content = ItemDetails.transform.GetChild(0);
 
@@ -379,284 +287,21 @@ public class ShopManager : MonoBehaviour
     
     public void BuyWeapon(ShopProduct product)
     {
-        // Instantiate Slot: WeaponInfo script
-        WeaponInfo newSlot = Instantiate<WeaponInfo>(GameManager.Instance.invMan.WeaponInvSlot.GetComponent<WeaponInfo>(), GameManager.Instance.invMan.TabsContent[0]);
-        WeaponInfo weapInfo = product.weapInfo;
-
-        GameManager.Instance.invMan.WeaponsTab.Add(weapInfo.GetIdentificationString());
-        newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateWeaponInvSlotDetails(newSlot.gameObject); });
-
-        newSlot.scrObj = weapInfo.scrObj;
-
-        newSlot.baseATK = weapInfo.SetAtkFromLevel(weapInfo.currentLevel);
-        newSlot.currentSubstat = weapInfo.SetSecondaryStatFromLevel(weapInfo.currentLevel);
-
-        newSlot.currentXp = weapInfo.currentXp;
-        newSlot.xpForNextLevel = weapInfo.XpForNextLevel(weapInfo.currentLevel);
-
-        newSlot.currentLevel = weapInfo.currentLevel;
-        newSlot.currentMaxLevel = weapInfo.currentMaxLevel;
-        newSlot.ascensionLevel = weapInfo.ascensionLevel;
-        newSlot.refinementLevel = weapInfo.refinementLevel;
-        newSlot.isLocked = weapInfo.isLocked;
-
-        newSlot.UniqueID = newSlot.GetIdentificationString();
-
-        // Instantiate Slot: Slot UI
-        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + newSlot.currentLevel;
-        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.scrObj.icon;
-
-        Transform Rarity = newSlot.transform.GetChild(3);
-        foreach (Transform t in Rarity)
-        {
-            t.gameObject.SetActive(false);
-        }
-        for (int i = 0; i < newSlot.scrObj.rarity; i++)
-        {
-            Rarity.GetChild(i).gameObject.SetActive(true);
-        }
-
-        if (newSlot.isLocked)
-        {
-            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockColBG;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.PadlockClosed;
-            //newSlot.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<Image>().color = GameManager.Instance.invMan.closedPadlockCol;
-        }
-        else
-        {
-            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
-        }
-
-        newSlot.transform.GetChild(5).GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.refinementLevel.ToString();
-
-        newSlot.transform.GetChild(6).gameObject.SetActive(true);
+        
     }
 
     public void BuyMaterial(ShopProduct product)
     {
-        MaterialInfo matInfo = product.matInfo;
-
-        // Instantiate Slot: MaterialInfo script
-
-        if (GameManager.Instance.invMan.MaterialsTab.Contains(matInfo.scrObj.ItemID))
-        {
-            // Update the count 
-            foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
-            {
-                MaterialInfo info = t.GetComponent<MaterialInfo>();
-                if (info.scrObj.ItemID == matInfo.scrObj.ItemID)
-                {
-                    info.count += selectedCount;
-                    info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                }
-            }
-        }
-        else
-        {
-            MaterialInfo newSlot = Instantiate<MaterialInfo>(GameManager.Instance.invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), GameManager.Instance.invMan.TabsContent[1]);
-
-            GameManager.Instance.invMan.MaterialsTab.Add(matInfo.scrObj.ItemID);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
-
-            newSlot.scrObj = matInfo.scrObj;
-            newSlot.count = selectedCount;
-
-            newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = matInfo.scrObj.icon;
-
-            Transform rarity = newSlot.transform.GetChild(3);
-            foreach (Transform t in rarity)
-            {
-                t.gameObject.SetActive(false);
-            }
-            for (int i = 0; i < newSlot.scrObj.rarity; i++)
-            {
-                rarity.GetChild(i).gameObject.SetActive(true);
-            }
-
-            newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-            if (newSlot.scrObj.materialType == MaterialTypeEnum.CrafingIngredient)
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingIngredientIcon;
-            }
-            else
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingResultIcon;
-            }
-
-            newSlot.transform.GetChild(6).gameObject.SetActive(true);
-        }
+        
     }
-
-    public void BuyIngredient(ShopProduct product)
-    {
-        IngredientInfo ingrInfo = product.ingrInfo;
-
-        // Instantiate Slot: IngredientInfo script
-        if (GameManager.Instance.invMan.IngredientsTab.Contains(ingrInfo.scrObj.ItemID))
-        {
-            // Add the count
-            foreach (Transform t in GameManager.Instance.invMan.TabsContent[2].transform)
-            {
-                IngredientInfo info = t.GetComponent<IngredientInfo>();
-                if (info.scrObj.ItemID == ingrInfo.scrObj.ItemID)
-                {
-                    info.count += selectedCount;
-                    info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                }
-            }
-        }
-        else
-        {
-            // Instantiate slot
-            IngredientInfo newSlot = Instantiate<IngredientInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<IngredientInfo>(), GameManager.Instance.invMan.TabsContent[2]);
-
-            GameManager.Instance.invMan.IngredientsTab.Add(ingrInfo.scrObj.ItemID);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateIngredientInvSlotDetails(newSlot.gameObject); });
-
-            newSlot.scrObj = ingrInfo.scrObj;
-            newSlot.count = selectedCount;
-
-            newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = ingrInfo.scrObj.icon;
-
-            Transform rarity = newSlot.transform.GetChild(3);
-            foreach (Transform t in rarity)
-            {
-                t.gameObject.SetActive(false);
-            }
-            for (int i = 0; i < newSlot.scrObj.rarity; i++)
-            {
-                rarity.GetChild(i).gameObject.SetActive(true);
-            }
-
-            newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-            if (newSlot.scrObj.ingredientType == IngredientType.Base)
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.BaseIngredientIcon;
-            }
-            else if (newSlot.scrObj.ingredientType == IngredientType.Specific)
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.SpecificIngredientIcon;
-            }
-
-            newSlot.transform.GetChild(6).gameObject.SetActive(true);
-        }
-    }
-
+        
     public void BuyFood(ShopProduct product)
     {
-        FoodInfo foodInfo = product.foodInfo;
-
-        // Instantiate Slot: FoodInfo script
-        if (GameManager.Instance.invMan.FoodTab.Contains(foodInfo.scrObj.ItemID))
-        {
-            // Add the count
-            foreach (Transform t in GameManager.Instance.invMan.TabsContent[3].transform)
-            {
-                FoodInfo info = t.GetComponent<FoodInfo>();
-                if (info.scrObj.ItemID == foodInfo.scrObj.ItemID)
-                {
-                    info.count += selectedCount;
-                    info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                }
-            }
-        }
-        else
-        {
-            // Instantiate slot
-            FoodInfo newSlot = Instantiate<FoodInfo>(GameManager.Instance.invMan.FoodInvSlot.GetComponent<FoodInfo>(), GameManager.Instance.invMan.TabsContent[3]);
-
-            GameManager.Instance.invMan.FoodTab.Add(foodInfo.scrObj.ItemID);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateFoodInvSlotDetails(newSlot.gameObject); });
-
-            newSlot.scrObj = foodInfo.scrObj;
-            newSlot.count = selectedCount;
-
-            newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = foodInfo.scrObj.icon;
-
-            Transform rarity = newSlot.transform.GetChild(3);
-            foreach (Transform t in rarity)
-            {
-                t.gameObject.SetActive(false);
-            }
-            for (int i = 0; i < newSlot.scrObj.rarity; i++)
-            {
-                rarity.GetChild(i).gameObject.SetActive(true);
-            }
-
-            newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-            if (newSlot.scrObj.foodType == FoodType.Potion)
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.PotionFoodTypeIcon;
-            }
-            else if (newSlot.scrObj.foodType == FoodType.Food)
-            {
-                if (newSlot.scrObj.buffType == FoodBuffType.Attack)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.AttackFoodBuffIcon;
-                }
-                else if (newSlot.scrObj.buffType == FoodBuffType.Defence)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.DefenceFoodBuffIcon;
-                }
-                else if (newSlot.scrObj.buffType == FoodBuffType.Heal)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.HealFoodBuffIcon;
-                }
-                else if (newSlot.scrObj.buffType == FoodBuffType.Regen)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.RegenFoodBuffIcon;
-                }
-                else if (newSlot.scrObj.buffType == FoodBuffType.Speed)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.SpeedFoodBuffIcon;
-                }
-                else if (newSlot.scrObj.buffType == FoodBuffType.StaminaConsumption)
-                {
-                    newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.StaminaConsumptionFoodBuffIcon;
-                }
-            }
-
-            newSlot.transform.GetChild(6).gameObject.SetActive(true);
-        }
+        
     }
 
     public void BuySpecialItem(ShopProduct product)
     {
-        SpecialItemInfo specItemInfo = product.specItemInfo;
-
-        // Instantiate Slot: IngredientInfo script
-        SpecialItemInfo newSlot = Instantiate<SpecialItemInfo>(GameManager.Instance.invMan.IngredientInvSlot.GetComponent<SpecialItemInfo>(), GameManager.Instance.invMan.TabsContent[4]);
-
-        GameManager.Instance.invMan.SpecialItemsTab.Add(specItemInfo.scrObj.ItemID);
-        newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateSpecialItemInvSlotDetails(newSlot.gameObject); });
-
-        newSlot.scrObj = specItemInfo.scrObj;
-
-        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = specItemInfo.scrObj.icon;
-
-        Transform rarity = newSlot.transform.GetChild(3);
-        foreach (Transform t in rarity)
-        {
-            t.gameObject.SetActive(false);
-        }
-        for (int i = 0; i < newSlot.scrObj.rarity; i++)
-        {
-            rarity.GetChild(i).gameObject.SetActive(true);
-        }
-
-        newSlot.transform.GetChild(4).gameObject.SetActive(true);
+        
     }
 }

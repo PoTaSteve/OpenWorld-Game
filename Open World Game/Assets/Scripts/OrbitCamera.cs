@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Camera))]
 public class OrbitCamera : MonoBehaviour
@@ -220,5 +221,10 @@ public class OrbitCamera : MonoBehaviour
     {
         float angle = Mathf.Acos(direction.y) * Mathf.Rad2Deg;
         return direction.x < 0f ? 360f - angle : angle;
+    }
+
+    public void DoFOV(float endValue)
+    {
+        GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
     }
 }

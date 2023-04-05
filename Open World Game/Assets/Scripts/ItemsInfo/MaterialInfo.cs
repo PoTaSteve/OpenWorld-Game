@@ -10,60 +10,13 @@ public class MaterialInfo : Interactable
 
     public int count;
 
+    public bool hasBottomRightValue;
+    public bool hasTopRightValue;
+    public bool hasTopLeftValue;
+
     public override void Interact()
     {
-        // Instantiate Slot: MaterialInfo script
-
-        if (GameManager.Instance.invMan.MaterialsTab.Contains(scrObj.ItemID))
-        {
-            // Update the count 
-            foreach (Transform t in GameManager.Instance.invMan.TabsContent[1].transform)
-            {
-                MaterialInfo info = t.GetComponent<MaterialInfo>();
-                if (info.scrObj.ItemID == scrObj.ItemID)
-                {
-                    info.count += count;
-                    info.gameObject.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = info.count.ToString();
-                }
-            }
-        }
-        else
-        {
-            MaterialInfo newSlot = Instantiate<MaterialInfo>(GameManager.Instance.invMan.MaterialInvSlot.GetComponent<MaterialInfo>(), GameManager.Instance.invMan.TabsContent[1]);
-
-            GameManager.Instance.invMan.MaterialsTab.Add(scrObj.ItemID);
-            newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateMaterialInvSlotDetails(newSlot.gameObject); });
-
-            newSlot.scrObj = scrObj;
-            newSlot.count = count;
-
-            newSlot.transform.GetChild(2).gameObject.SetActive(false);
-
-            newSlot.transform.GetChild(1).GetComponent<Image>().sprite = scrObj.icon;
-
-            Transform rarity = newSlot.transform.GetChild(3);
-            foreach (Transform t in rarity)
-            {
-                t.gameObject.SetActive(false);
-            }
-            for (int i = 0; i < newSlot.scrObj.rarity; i++)
-            {
-                rarity.GetChild(i).gameObject.SetActive(true);
-            }
-
-            newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.count.ToString();
-
-            if (newSlot.scrObj.materialType == MaterialTypeEnum.CrafingIngredient)
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingIngredientIcon;
-            }
-            else
-            {
-                newSlot.transform.GetChild(5).GetChild(2).GetComponent<Image>().sprite = GameManager.Instance.invMan.CraftingResultIcon;
-            }
-
-            newSlot.transform.GetChild(6).gameObject.SetActive(true);
-        }
+        GameManager.Instance.invMan.AddItemToInventoryST(ItemType.Material, gameObject);
 
         Destroy(gameObject);
     }

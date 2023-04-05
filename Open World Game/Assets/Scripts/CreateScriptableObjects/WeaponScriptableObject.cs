@@ -21,7 +21,6 @@ public class WeaponScriptableObject : ScriptableObject
     public string subStatType;
     public bool isSubStatPercentage;
     public float subStat;
-    public int rarity;
 
     public Sprite icon;
 

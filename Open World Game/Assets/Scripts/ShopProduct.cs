@@ -19,7 +19,6 @@ public class ShopProduct : MonoBehaviour
 
     public WeaponInfo weapInfo;
     public MaterialInfo matInfo;
-    public IngredientInfo ingrInfo;
     public FoodInfo foodInfo;
     public SpecialItemInfo specItemInfo;
 }

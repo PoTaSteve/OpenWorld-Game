@@ -10,6 +10,10 @@ public class WeaponInfo : Interactable
 
     public string UniqueID;
 
+    public bool hasBottomRightValue;
+    public bool hasTopRightValue;
+    public bool hasTopLeftValue;
+
     #region InventoryInfos
     //Top
 
@@ -22,66 +26,13 @@ public class WeaponInfo : Interactable
     public int xpForNextLevel;
     public int currentLevel;
     public int currentMaxLevel;
-    public int ascensionLevel;
-    public int refinementLevel;
-    public bool isLocked;
+    public int ascensionLevel; // Remove
+    public int refinementLevel; // Remove
     #endregion
 
     public override void Interact()
     {
-        #region Set Inventory Slot
-
-        // Instantiate Slot: WeaponInfo script
-        WeaponInfo newSlot = Instantiate<WeaponInfo>(GameManager.Instance.invMan.WeaponInvSlot.GetComponent<WeaponInfo>(), GameManager.Instance.invMan.TabsContent[0]);
-        GameManager.Instance.invMan.WeaponsTab.Add(GetIdentificationString());
-        newSlot.GetComponent<Button>().onClick.AddListener(delegate { GameManager.Instance.invMan.UpdateWeaponInvSlotDetails(newSlot.gameObject); });
-
-        newSlot.scrObj = scrObj;
-
-        newSlot.baseATK = SetAtkFromLevel(currentLevel);
-        newSlot.currentSubstat = SetSecondaryStatFromLevel(currentLevel);
-
-        newSlot.currentXp = currentXp;
-        xpForNextLevel = XpForNextLevel(currentLevel);
-        newSlot.xpForNextLevel = xpForNextLevel;
-
-        newSlot.currentLevel = currentLevel;
-        newSlot.currentMaxLevel = currentMaxLevel;
-        newSlot.ascensionLevel = ascensionLevel;
-        newSlot.refinementLevel = refinementLevel;
-        newSlot.isLocked = isLocked;
-
-        newSlot.UniqueID = newSlot.GetIdentificationString();
-
-        // Instantiate Slot: Slot UI
-        newSlot.transform.GetChild(2).gameObject.SetActive(false);
-        newSlot.transform.GetChild(4).GetChild(2).GetComponent<TextMeshProUGUI>().text = "Lv. " + newSlot.currentLevel;
-        newSlot.transform.GetChild(1).GetComponent<Image>().sprite = newSlot.scrObj.icon;
-
-        Transform Rarity = newSlot.transform.GetChild(3);
-        foreach (Transform t in Rarity)
-        {
-            t.gameObject.SetActive(false);
-        }
-        for (int i = 0; i < newSlot.scrObj.rarity; i++)
-        {
-            Rarity.GetChild(i).gameObject.SetActive(true);
-        }
-
-        if (newSlot.isLocked)
-        {
-            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(true);
-        }
-        else
-        {
-            newSlot.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
-        }
-
-        newSlot.transform.GetChild(5).GetChild(1).GetChild(2).GetComponent<TextMeshProUGUI>().text = newSlot.refinementLevel.ToString();
-
-        newSlot.transform.GetChild(6).gameObject.SetActive(true);
-
-        #endregion
+        GameManager.Instance.invMan.AddItemToInventoryST(ItemType.Weapon, gameObject);
 
         Destroy(gameObject);
     }
@@ -147,55 +98,55 @@ public class WeaponInfo : Interactable
 
     public int XpForNextLevel(int level) // Xp to get from a level to the next. Parameter level is the lower level
     {
-        int xp;
-        level++;
+        int xp = 0;
+        //level++;
 
-        if (scrObj.rarity == 1)
-        {
-            xp = Mathf.RoundToInt(6 * Mathf.Pow(level, 2)) + 200;
-        }
-        else if (scrObj.rarity == 2)
-        {
-            xp = Mathf.RoundToInt(10 * Mathf.Pow(level, 2)) + 300;
-        }
-        else if (scrObj.rarity == 3)
-        {
-            if (level < 80)
-            {
-                xp = Mathf.RoundToInt(15 * Mathf.Pow(level, 2)) + 400;
-            }
-            else // level >= 80
-            {
-                xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(50 * Mathf.Pow(level, 2)) - 14000 * level - 384400;
-            }
-        }
-        else if (scrObj.rarity == 4)
-        {
-            if (level < 80)
-            {
-                xp = Mathf.RoundToInt(22 * Mathf.Pow(level, 2)) + 500;
-            }
-            else // level >= 80
-            {
-                xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(150 * Mathf.Pow(level, 2)) - 16620 * level - 1100;
-            }
-        }
-        else if (scrObj.rarity == 5)
-        {
-            if (level < 80)
-            {
-                xp = Mathf.RoundToInt(34 * Mathf.Pow(level, 2)) + 600;
-            }
-            else // level >= 80
-            {
-                xp = Mathf.RoundToInt(2 * Mathf.Pow(level, 3)) - 3900 * level - 499400;
-            }
-        }
-        else
-        {
-            xp = 0;
-            Debug.Log("Error: Rarity int out of range. Xp for next level set to 0.");
-        }
+        //if (scrObj.rarity == 1)
+        //{
+        //    xp = Mathf.RoundToInt(6 * Mathf.Pow(level, 2)) + 200;
+        //}
+        //else if (scrObj.rarity == 2)
+        //{
+        //    xp = Mathf.RoundToInt(10 * Mathf.Pow(level, 2)) + 300;
+        //}
+        //else if (scrObj.rarity == 3)
+        //{
+        //    if (level < 80)
+        //    {
+        //        xp = Mathf.RoundToInt(15 * Mathf.Pow(level, 2)) + 400;
+        //    }
+        //    else // level >= 80
+        //    {
+        //        xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(50 * Mathf.Pow(level, 2)) - 14000 * level - 384400;
+        //    }
+        //}
+        //else if (scrObj.rarity == 4)
+        //{
+        //    if (level < 80)
+        //    {
+        //        xp = Mathf.RoundToInt(22 * Mathf.Pow(level, 2)) + 500;
+        //    }
+        //    else // level >= 80
+        //    {
+        //        xp = Mathf.RoundToInt(Mathf.Pow(level, 3)) + Mathf.RoundToInt(150 * Mathf.Pow(level, 2)) - 16620 * level - 1100;
+        //    }
+        //}
+        //else if (scrObj.rarity == 5)
+        //{
+        //    if (level < 80)
+        //    {
+        //        xp = Mathf.RoundToInt(34 * Mathf.Pow(level, 2)) + 600;
+        //    }
+        //    else // level >= 80
+        //    {
+        //        xp = Mathf.RoundToInt(2 * Mathf.Pow(level, 3)) - 3900 * level - 499400;
+        //    }
+        //}
+        //else
+        //{
+        //    xp = 0;
+        //    Debug.Log("Error: Rarity int out of range. Xp for next level set to 0.");
+        //}
 
         return xp;
     }
@@ -285,17 +236,7 @@ public class WeaponInfo : Interactable
     {
         string ID;
 
-        string locked;
-        if (isLocked)
-        {
-            locked = "1";
-        }
-        else
-        {
-            locked = "0";
-        }
-
-        ID = scrObj.ItemID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString() + "_" + locked;
+        ID = scrObj.ItemID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString();
 
         return ID;
     }

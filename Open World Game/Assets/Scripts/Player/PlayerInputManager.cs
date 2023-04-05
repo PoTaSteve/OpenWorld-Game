@@ -5,27 +5,32 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using Cinemachine;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] PlayerControllerRB plContrRB;
+    [SerializeField] PlayerMovement pm;
     private PlayerControls playerControls;
 
     [SerializeField]
     private ConsoleManager consoleMan;
 
+    public GameObject UIStateObject = default;
+    public GameObject CommonUIObject = default;
+    public GameObject QuestsUIObject = default;
     public GameObject InventoryObj = default;
+    public GameObject SkillsUIObject = default;
+    public GameObject SystemUIObject = default;
     public GameObject GameUIObj = default;
     public GameObject MapObj = default;
     public GameObject EscMenuObj = default;
     public GameObject ConsoleObj = default;
     public GameObject TempConsoleDebugObj = default;
     public GameObject DialogueObj = default;
-    public GameObject WeaponEnhanceObj = default;
     public GameObject ShopObj = default;
     public GameObject ActiveBuffsWindow = default;
 
-    public OrbitCamera orbitCam;
+    public ThirdPersonCam cam;
 
     public float animationSpeedPercent;
 
@@ -61,8 +66,6 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Player.OpenConsole.performed += OpenConsole;
 
         playerControls.Inventory.CloseInventory.performed += CloseInventory;
-        playerControls.Inventory.NextInvPage.performed += NextInvPage;
-        playerControls.Inventory.PreviousInvPage.performed += PreviousInvPage;
 
         playerControls.Map.CloseMap.performed += CloseMap;
 
@@ -70,8 +73,6 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Console.ConfirmInput.performed += ConfirmInput;
         playerControls.Console.CloseConsole.performed += CloseConsole;
-
-        playerControls.WeaponEnhance.CloseWeapDetails.performed += CloseWeapDetails;
 
         playerControls.Dialogues.Continue.performed += ContinueDialogue;
 
@@ -95,7 +96,7 @@ public class PlayerInputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        orbitCam.canUpdateCam = true;
+        //orbitCam.canUpdateCam = true;
 
         //Fetch the Raycaster from the GameObject(the Canvas)
         m_Raycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -164,12 +165,10 @@ public class PlayerInputManager : MonoBehaviour
         ToUIState();
 
         playerControls.Inventory.Enable();
-        InventoryObj.SetActive(true);
-        GameUIObj.SetActive(false);
 
         playerControls.Player.Disable();
 
-        GameManager.Instance.invMan.OpenInventory();
+        GameManager.Instance.invMan.SetInventoryActive(true);
     }
 
     public void CloseInventory(InputAction.CallbackContext context)
@@ -177,10 +176,10 @@ public class PlayerInputManager : MonoBehaviour
         ToWorldState();
 
         playerControls.Player.Enable();
-        InventoryObj.SetActive(false);
-        GameUIObj.SetActive(true);
 
         playerControls.Inventory.Disable();
+
+        GameManager.Instance.invMan.SetInventoryActive(false);
     }
 
     public void CloseInventoryForButton()
@@ -190,52 +189,6 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Player.Enable();
         InventoryObj.SetActive(false);
         GameUIObj.SetActive(true);
-
-        playerControls.Inventory.Disable();
-    }
-
-    public void NextInvPage(InputAction.CallbackContext context)
-    {
-        GameManager.Instance.invMan.GoToNextInvTab();
-    }
-
-    public void PreviousInvPage(InputAction.CallbackContext context)
-    {
-        GameManager.Instance.invMan.GoToPreviousInvTab();
-    }
-
-    public void CloseWeapDetails(InputAction.CallbackContext context)
-    {
-        playerControls.Inventory.Enable();
-
-        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().CloseWeaponDetails();
-
-        InventoryObj.SetActive(true);
-        WeaponEnhanceObj.SetActive(false);
-
-        playerControls.WeaponEnhance.Disable();
-    }
-
-    public void CloseWeapDetailsForButton()
-    {
-        playerControls.Inventory.Enable();
-
-        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().CloseWeaponDetails();
-
-        InventoryObj.SetActive(true);
-        WeaponEnhanceObj.SetActive(false);
-
-        playerControls.WeaponEnhance.Disable();
-    }
-
-    public void OpenWeapDetails()
-    {
-        playerControls.WeaponEnhance.Enable();
-
-        WeaponEnhanceObj.GetComponent<EnhanceEquipmentManager>().OpenWeaponDetails();
-
-        WeaponEnhanceObj.SetActive(true);
-        InventoryObj.SetActive(false);
 
         playerControls.Inventory.Disable();
     }
@@ -335,12 +288,7 @@ public class PlayerInputManager : MonoBehaviour
 
             interactab.Interact();
 
-            if (interactab.doesInteractionDestory)
-            {
-                playerTrColl.RemoveInteractabUI(interactab.gameObject);
-
-                // Destroy(interactab.gameObject); Destroy handled in the object class
-            }
+            playerTrColl.RemoveInteractabUI(interactab.gameObject);
         }
     }
 
@@ -429,15 +377,19 @@ public class PlayerInputManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        orbitCam.canUpdateCam = true;
-        plContrRB.canUpdateMovement = true;
+        //cam.canUpdate = true;
+        cam.gameObject.GetComponent<CinemachineBrain>().enabled = true;
+        pm.canRotate = true;
+        pm.freeze = false;
     }
 
     public void ToUIState()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        orbitCam.canUpdateCam = false;
-        plContrRB.canUpdateMovement = false;
+        //cam.canUpdate = false;
+        cam.gameObject.GetComponent<CinemachineBrain>().enabled = false;
+        pm.canRotate = false;
+        pm.freeze = true;
     }
 }

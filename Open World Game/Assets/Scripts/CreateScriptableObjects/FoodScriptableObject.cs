@@ -27,7 +27,6 @@ public class FoodScriptableObject : ScriptableObject
 
     public string foodName;
     public FoodType foodType;
-    public int rarity;
     public FoodBuffType buffType;
 
     public Sprite icon;
@@ -39,8 +38,6 @@ public class FoodScriptableObject : ScriptableObject
     public string effect;
     [TextArea(3, 10)]
     public string description;
-    public int numberOfSources;
-    public string[] sources;
 
     // Other
     public int buyCost;

@@ -9,8 +9,9 @@ public class NPC : Interactable
     public override void Interact()
     {
         // Start dialogue
-        GameManager.Instance.plInMan.StartDialogue();
+        GameManager.Instance.plInputMan.SetDialogueUI();
         GameManager.Instance.dialMan.inkJSON = inkJSON;
+        GameManager.Instance.dialMan.NPC = gameObject;
         GameManager.Instance.dialMan.StartDialogue();
     } 
 }

@@ -24,17 +24,72 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""DetectController"",
+            ""id"": ""3d7b4dab-9a16-44e1-873c-e3c60d14de7a"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchToController"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b95d669-8d6a-4811-8478-979310463e04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0f38da8c-288e-4557-b52d-471781d4c487"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchToController"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard_Player"",
             ""id"": ""4a564af1-33e2-458e-a006-b7be607df500"",
             ""actions"": [
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
-                    ""id"": ""de851836-f28e-4fa6-8859-76fd81b6eacf"",
+                    ""id"": ""03ef908d-5c55-4194-b742-837eaffea2be"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec5d14dd-af54-4cd2-92e8-2be35081fcb3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""7dcaf38f-f4b7-4938-b384-b65c06af21f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c1c4b7e-db3e-4302-9812-c1edeabef78d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Interact"",
@@ -91,7 +146,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenInventory"",
+                    ""name"": ""OpenUIState"",
                     ""type"": ""Button"",
                     ""id"": ""597baf7b-d159-41c8-a41f-adc4396b93ee"",
                     ""expectedControlType"": ""Button"",
@@ -103,15 +158,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""OpenMap"",
                     ""type"": ""Button"",
                     ""id"": ""87f91229-f34a-47e0-b526-b81948f59b5f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PressEsc"",
-                    ""type"": ""Button"",
-                    ""id"": ""6268452b-3310-43fe-9ba6-312dc693bd27"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -134,20 +180,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TurnCursorOnOff"",
+                    ""type"": ""Button"",
+                    ""id"": ""4612f1b2-4c64-4179-97ff-5d1975a980db"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""a320dc5b-03bd-4fd1-80ca-d905d1d2adfe"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""ac829007-0f16-471c-ac06-9312abd68a44"",
@@ -217,11 +261,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""32fb6f79-8c04-405f-94fa-b53e017e950c"",
-                    ""path"": ""<Keyboard>/b"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenInventory"",
+                    ""action"": ""OpenUIState"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -233,17 +277,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenMap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5a8c38f8-4701-45b8-8fa0-0a5b9e1f8f98"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PressEsc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,24 +301,230 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenConsole"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Movement Vector"",
+                    ""id"": ""eec34e89-52a1-4532-8cf3-46f396b54f9e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""6be80c5f-5568-4abb-ba4f-362c284ac57d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4afbf2b2-4a11-4617-9071-047dc1929286"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a3178a0b-f170-4c1b-a0d9-ea69389d6b31"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b191a128-f1fa-4a4f-8cc6-94397a429d28"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3c1424a-a349-44cb-b1f9-99ddf690ac81"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TurnCursorOnOff"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3932ebdc-7558-42c3-b567-946dfd2ff367"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2e0dd9b-cda4-40e1-8c06-32d96f562b3d"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f22e001-7c89-48e9-8b0d-f637a466a48c"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Inventory"",
-            ""id"": ""f7bb0cba-b8b8-45d9-b5f5-2e35b64b2c80"",
+            ""name"": ""Keyboard_UIState"",
+            ""id"": ""a69e7fd2-ae19-4f46-88f0-b371cbc189ae"",
             ""actions"": [
                 {
-                    ""name"": ""CloseInventory"",
+                    ""name"": ""CloseUIState"",
                     ""type"": ""Button"",
-                    ""id"": ""0bdd076f-a4ad-46ca-a9b8-6a6a3b2d062c"",
+                    ""id"": ""efba7132-dbd4-44ff-be6a-0efb52b0915f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NextInvPage"",
+                    ""name"": ""NextUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""97c84907-98fa-4e30-98b4-4b9d6c924498"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""516217ae-b83e-44f8-bb84-f5465f6678aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c1353aac-6489-472c-9eae-28d8d36bfdca"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa7f3556-06dc-4cdd-8aa7-b61a4fc2ff9f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7773b7a-e803-46bb-9541-cdb741c0e6da"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard_QuestsUI"",
+            ""id"": ""00c4bcd3-df7a-45f8-9d2b-d05e5c57f702"",
+            ""actions"": [
+                {
+                    ""name"": ""NextQuestPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""30b10678-cd4e-4d05-9f24-2ce4c4ca44e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousQuestPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""98f68fe4-b04d-45fb-86bd-6668dd1b880b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c09b429f-f8cb-47a1-8e7e-a3d8d86b82d6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextQuestPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""705bd6d4-1e32-4b64-a517-7e52b721bbf2"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousQuestPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard_InventoryUI"",
+            ""id"": ""f7bb0cba-b8b8-45d9-b5f5-2e35b64b2c80"",
+            ""actions"": [
+                {
+                    ""name"": ""NextInventoryPage"",
                     ""type"": ""Button"",
                     ""id"": ""2c3f63a5-0bf2-4b29-8a9e-21778d7fbc54"",
                     ""expectedControlType"": ""Button"",
@@ -294,7 +533,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PreviousInvPage"",
+                    ""name"": ""PreviousInventoryPage"",
                     ""type"": ""Button"",
                     ""id"": ""92cb5b88-6c9d-46d3-b4e8-94ae995c75d3"",
                     ""expectedControlType"": ""Button"",
@@ -306,52 +545,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""97790120-cde9-49a6-968b-2f6e4f5f353b"",
-                    ""path"": ""<Keyboard>/b"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CloseInventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""71ba83f8-0c10-4764-808d-d7a2e167a303"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CloseInventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""82ac87f1-8bb9-428e-8eb2-64d58b07c699"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""NextInvPage"",
+                    ""action"": ""NextInventoryPage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c6bf572d-8264-4c06-832f-d1b46d181493"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PreviousInvPage"",
+                    ""action"": ""PreviousInventoryPage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Map"",
+            ""name"": ""Keyboard_SkillsUI"",
+            ""id"": ""1206371b-2da5-4d5c-afd9-1203cd3f266a"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
+            ""name"": ""Keyboard_SystemUI"",
+            ""id"": ""cb0f173f-6a57-46a7-b535-3f20ca597c4b"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
+            ""name"": ""Keyboard_Map"",
             ""id"": ""e7bca92f-9ffa-4fa7-953f-f5f43d19f4e0"",
             ""actions"": [
                 {
@@ -390,35 +619,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""EscMenu"",
-            ""id"": ""e37169ab-2141-45b2-b8f2-f908d6aff557"",
-            ""actions"": [
-                {
-                    ""name"": ""CloseEscMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""0ca8e250-fb9b-4449-940f-96a8a6e8d7f3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""2d892eaa-539b-4dfc-8dd2-c2450ff45628"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CloseEscMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Dialogues"",
+            ""name"": ""Keyboard_Dialogues"",
             ""id"": ""13693169-fd64-4564-8cb3-22f3f1eaf564"",
             ""actions"": [
                 {
@@ -468,7 +669,35 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Console"",
+            ""name"": ""Keyboard_Shop"",
+            ""id"": ""564fdde7-9f9e-4373-9fde-06e56d97f720"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseShop"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1f86ba7-376b-4482-bdff-b93eaab5c9a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6a4cc679-c675-4c67-bf86-082b26262723"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseShop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard_Console"",
             ""id"": ""603d602c-3204-4ceb-b793-f08323fdb08b"",
             ""actions"": [
                 {
@@ -516,13 +745,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""WeaponEnhance"",
-            ""id"": ""786a271a-798c-4dea-bf7e-fa0a52a6fcfa"",
+            ""name"": ""DetectMouseKeyboard"",
+            ""id"": ""ae661767-e254-4da3-9999-39bf7fc4db5b"",
             ""actions"": [
                 {
-                    ""name"": ""CloseWeapDetails"",
+                    ""name"": ""SwitchToMouseKeyboard"",
                     ""type"": ""Button"",
-                    ""id"": ""20b44d29-2430-402b-876c-c04b394bd141"",
+                    ""id"": ""14835348-2b9e-4de8-9709-5104547a625f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -532,25 +761,146 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""8417ed63-a2e6-41d4-96f1-3c9ac7b24062"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""9f8b9dcc-b4a1-42e3-a427-71d448b1ef8e"",
+                    ""path"": ""<Keyboard>/anyKey"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CloseWeapDetails"",
+                    ""action"": ""SwitchToMouseKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6ba3f10-3dee-456b-94b8-e00745e50769"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchToMouseKeyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27a99052-00d2-412c-b799-06a5c5ce135e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchToMouseKeyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Shop"",
-            ""id"": ""564fdde7-9f9e-4373-9fde-06e56d97f720"",
+            ""name"": ""Controller_Player"",
+            ""id"": ""2fc45983-dc37-4c5c-a0e0-57fd16967340"",
             ""actions"": [
                 {
-                    ""name"": ""CloseShop"",
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""c6e6fc32-c8e6-4c57-8cf3-c6153cd97179"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Sprint"",
                     ""type"": ""Button"",
-                    ""id"": ""c1f86ba7-376b-4482-bdff-b93eaab5c9a2"",
+                    ""id"": ""b556d614-f604-4968-8421-7dcc1297bac8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""6913e2b1-084e-41b8-b7fe-48257d77678b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""80a6030e-e165-40fb-bb1b-c3ee44703bcf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""73b0be61-67d6-4ef2-9ab4-92474b1871b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NormalAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""11aec436-7c51-4629-a058-95a13671bddd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargedAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2d93d02-c679-413f-a3a5-6597bc7fb1a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill1"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4f71594-8692-47d8-a2af-8bb68f062e4a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill2"",
+                    ""type"": ""Button"",
+                    ""id"": ""3de52dbc-5553-41ef-9500-0fe838355613"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill3"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fe2581e-4e60-49b7-b3c0-841affe1607a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""b702d435-844d-49b3-827c-2d3501d67602"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenMap"",
+                    ""type"": ""Button"",
+                    ""id"": ""de918ea6-712b-452c-b84e-ef6723d300b4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -560,8 +910,455 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""6a4cc679-c675-4c67-bf86-082b26262723"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""2c2b914b-0061-4976-80a1-eff9be4377f3"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NormalAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a1790e4-110c-4548-8f66-2dfec3d9e401"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargedAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3fd37e1-1b1b-4991-a5c8-c681a333c67a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b97e0662-7c0d-443b-b2c3-7418e8796d86"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e2738c7-8c5c-42f1-91d5-840807d06ffe"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d85eaaac-8baa-4fd1-8dfa-60441bb561da"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8624210-6247-4a6b-b386-fd090915d387"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1dbc5575-1757-4f8e-8a09-b53e1efb0634"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f93ba4e3-676d-4a4f-9101-3aaa21781775"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Movement Vector"",
+                    ""id"": ""9f495284-8795-40cc-95f8-db0ebc21c3f7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e21fbad3-ded5-47a0-89d7-5c50b69faa01"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3a0f9b5a-a0ab-46a7-8ade-f64e4ba3b510"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""3d4612f6-7204-4db0-b862-41cd080abeb7"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""820f1735-76e5-454b-9d42-936da698a9aa"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da3354de-971f-4beb-ad92-316425e816b5"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bc0282e-cc0e-4b06-a9c7-662217425665"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_UIState"",
+            ""id"": ""ec154cb4-8401-4aef-9c83-2024e1e4a501"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""f8792d96-75cc-4fea-b236-50d8b60ff9ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""14f45db4-6ca0-466f-a3ee-e5b1c71a1763"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousUIState"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcd7c7cf-aa65-4e59-b488-84b2147c630c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e06bdcd8-6946-4df7-8e72-5cd46d7e6caa"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35a6f333-e0a9-4ad4-98d8-1170140dd3b4"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1508c544-4295-4c81-8852-460e8de97a58"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousUIState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_QuestsUI"",
+            ""id"": ""d52996d4-3996-40b1-a9e6-4784d073ca86"",
+            ""actions"": [
+                {
+                    ""name"": ""NextQuestPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""b865ccf1-3f99-4a60-bf6f-2b93f8b1c182"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousQuestPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""db8b74fa-7352-40ef-b9d9-b048b6acaf48"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""096fc47b-af21-4b3e-a4fd-7c06945ebd9b"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextQuestPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f93d2e22-cd88-4813-97c9-409ff1d8d7fd"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousQuestPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_InventoryUI"",
+            ""id"": ""bd6ea2e8-58b1-4d96-a53d-5e7a40270477"",
+            ""actions"": [
+                {
+                    ""name"": ""NextInventoryPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""eef172ad-c9eb-47b3-a790-92a56a8e239c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousInventoryPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca41889a-683a-4594-8f2b-c694256ed482"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ca323a21-7580-4ff7-9b14-5eea2cf36a40"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextInventoryPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fcc9939d-7897-4dd3-89e2-f042446ab918"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousInventoryPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_SkillsUI"",
+            ""id"": ""7d238661-9f19-40ef-96ac-24c178101bf4"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
+            ""name"": ""Controller_SystemUI"",
+            ""id"": ""c80bbab0-bd5d-467d-913a-548a8ac33113"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
+            ""name"": ""Controller_Map"",
+            ""id"": ""8c2dca32-e59c-42a5-b1d4-9730ea6adbc6"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseMap"",
+                    ""type"": ""Button"",
+                    ""id"": ""f73c7e37-a359-4d3a-be8c-13448a4aa58b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""85ede2f1-62fa-480d-8ca1-68a333b6e41d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56e37297-1f1a-4bb4-a73f-0d6a41d69b3a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_Dialogues"",
+            ""id"": ""daf48a4c-dab6-4850-9586-e247e90836df"",
+            ""actions"": [
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Button"",
+                    ""id"": ""15703b2b-a445-447d-b228-87140e56fd99"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""381bc264-6c61-410e-ade4-88a8400601be"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9655f316-cf16-4ba7-bff1-7d243c338f1d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Controller_Shop"",
+            ""id"": ""5b55e026-680e-4b43-9adc-81bd544de395"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseShop"",
+                    ""type"": ""Button"",
+                    ""id"": ""d11dc8d4-0109-434d-8a34-e6ba8f5aab51"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e48ffa43-160e-418d-baa5-3d0bfaf39893"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -570,79 +1367,103 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""ActiveBuffs"",
-            ""id"": ""5304541b-3385-4a1e-9c54-4b324d2ffcc5"",
-            ""actions"": [
-                {
-                    ""name"": ""ExitMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""3c55a18e-45e2-439a-b9e9-6a26ab1b4418"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ebf58d08-afae-4626-98bc-b8a8e9b5acfa"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ExitMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_NormalAttack = m_Player.FindAction("NormalAttack", throwIfNotFound: true);
-        m_Player_ChargedAttack = m_Player.FindAction("ChargedAttack", throwIfNotFound: true);
-        m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
-        m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
-        m_Player_Skill3 = m_Player.FindAction("Skill3", throwIfNotFound: true);
-        m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
-        m_Player_OpenMap = m_Player.FindAction("OpenMap", throwIfNotFound: true);
-        m_Player_PressEsc = m_Player.FindAction("PressEsc", throwIfNotFound: true);
-        m_Player_ScrollWheel = m_Player.FindAction("ScrollWheel", throwIfNotFound: true);
-        m_Player_OpenConsole = m_Player.FindAction("OpenConsole", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_CloseInventory = m_Inventory.FindAction("CloseInventory", throwIfNotFound: true);
-        m_Inventory_NextInvPage = m_Inventory.FindAction("NextInvPage", throwIfNotFound: true);
-        m_Inventory_PreviousInvPage = m_Inventory.FindAction("PreviousInvPage", throwIfNotFound: true);
-        // Map
-        m_Map = asset.FindActionMap("Map", throwIfNotFound: true);
-        m_Map_CloseMap = m_Map.FindAction("CloseMap", throwIfNotFound: true);
-        // EscMenu
-        m_EscMenu = asset.FindActionMap("EscMenu", throwIfNotFound: true);
-        m_EscMenu_CloseEscMenu = m_EscMenu.FindAction("CloseEscMenu", throwIfNotFound: true);
-        // Dialogues
-        m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
-        m_Dialogues_Continue = m_Dialogues.FindAction("Continue", throwIfNotFound: true);
-        // Console
-        m_Console = asset.FindActionMap("Console", throwIfNotFound: true);
-        m_Console_ConfirmInput = m_Console.FindAction("ConfirmInput", throwIfNotFound: true);
-        m_Console_CloseConsole = m_Console.FindAction("CloseConsole", throwIfNotFound: true);
-        // WeaponEnhance
-        m_WeaponEnhance = asset.FindActionMap("WeaponEnhance", throwIfNotFound: true);
-        m_WeaponEnhance_CloseWeapDetails = m_WeaponEnhance.FindAction("CloseWeapDetails", throwIfNotFound: true);
-        // Shop
-        m_Shop = asset.FindActionMap("Shop", throwIfNotFound: true);
-        m_Shop_CloseShop = m_Shop.FindAction("CloseShop", throwIfNotFound: true);
-        // ActiveBuffs
-        m_ActiveBuffs = asset.FindActionMap("ActiveBuffs", throwIfNotFound: true);
-        m_ActiveBuffs_ExitMenu = m_ActiveBuffs.FindAction("ExitMenu", throwIfNotFound: true);
+        // DetectController
+        m_DetectController = asset.FindActionMap("DetectController", throwIfNotFound: true);
+        m_DetectController_SwitchToController = m_DetectController.FindAction("SwitchToController", throwIfNotFound: true);
+        // Keyboard_Player
+        m_Keyboard_Player = asset.FindActionMap("Keyboard_Player", throwIfNotFound: true);
+        m_Keyboard_Player_Movement = m_Keyboard_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Keyboard_Player_Sprint = m_Keyboard_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Keyboard_Player_Crouch = m_Keyboard_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Keyboard_Player_Jump = m_Keyboard_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Keyboard_Player_Interact = m_Keyboard_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Keyboard_Player_NormalAttack = m_Keyboard_Player.FindAction("NormalAttack", throwIfNotFound: true);
+        m_Keyboard_Player_ChargedAttack = m_Keyboard_Player.FindAction("ChargedAttack", throwIfNotFound: true);
+        m_Keyboard_Player_Skill1 = m_Keyboard_Player.FindAction("Skill1", throwIfNotFound: true);
+        m_Keyboard_Player_Skill2 = m_Keyboard_Player.FindAction("Skill2", throwIfNotFound: true);
+        m_Keyboard_Player_Skill3 = m_Keyboard_Player.FindAction("Skill3", throwIfNotFound: true);
+        m_Keyboard_Player_OpenUIState = m_Keyboard_Player.FindAction("OpenUIState", throwIfNotFound: true);
+        m_Keyboard_Player_OpenMap = m_Keyboard_Player.FindAction("OpenMap", throwIfNotFound: true);
+        m_Keyboard_Player_ScrollWheel = m_Keyboard_Player.FindAction("ScrollWheel", throwIfNotFound: true);
+        m_Keyboard_Player_OpenConsole = m_Keyboard_Player.FindAction("OpenConsole", throwIfNotFound: true);
+        m_Keyboard_Player_TurnCursorOnOff = m_Keyboard_Player.FindAction("TurnCursorOnOff", throwIfNotFound: true);
+        // Keyboard_UIState
+        m_Keyboard_UIState = asset.FindActionMap("Keyboard_UIState", throwIfNotFound: true);
+        m_Keyboard_UIState_CloseUIState = m_Keyboard_UIState.FindAction("CloseUIState", throwIfNotFound: true);
+        m_Keyboard_UIState_NextUIState = m_Keyboard_UIState.FindAction("NextUIState", throwIfNotFound: true);
+        m_Keyboard_UIState_PreviousUIState = m_Keyboard_UIState.FindAction("PreviousUIState", throwIfNotFound: true);
+        // Keyboard_QuestsUI
+        m_Keyboard_QuestsUI = asset.FindActionMap("Keyboard_QuestsUI", throwIfNotFound: true);
+        m_Keyboard_QuestsUI_NextQuestPage = m_Keyboard_QuestsUI.FindAction("NextQuestPage", throwIfNotFound: true);
+        m_Keyboard_QuestsUI_PreviousQuestPage = m_Keyboard_QuestsUI.FindAction("PreviousQuestPage", throwIfNotFound: true);
+        // Keyboard_InventoryUI
+        m_Keyboard_InventoryUI = asset.FindActionMap("Keyboard_InventoryUI", throwIfNotFound: true);
+        m_Keyboard_InventoryUI_NextInventoryPage = m_Keyboard_InventoryUI.FindAction("NextInventoryPage", throwIfNotFound: true);
+        m_Keyboard_InventoryUI_PreviousInventoryPage = m_Keyboard_InventoryUI.FindAction("PreviousInventoryPage", throwIfNotFound: true);
+        // Keyboard_SkillsUI
+        m_Keyboard_SkillsUI = asset.FindActionMap("Keyboard_SkillsUI", throwIfNotFound: true);
+        // Keyboard_SystemUI
+        m_Keyboard_SystemUI = asset.FindActionMap("Keyboard_SystemUI", throwIfNotFound: true);
+        // Keyboard_Map
+        m_Keyboard_Map = asset.FindActionMap("Keyboard_Map", throwIfNotFound: true);
+        m_Keyboard_Map_CloseMap = m_Keyboard_Map.FindAction("CloseMap", throwIfNotFound: true);
+        // Keyboard_Dialogues
+        m_Keyboard_Dialogues = asset.FindActionMap("Keyboard_Dialogues", throwIfNotFound: true);
+        m_Keyboard_Dialogues_Continue = m_Keyboard_Dialogues.FindAction("Continue", throwIfNotFound: true);
+        // Keyboard_Shop
+        m_Keyboard_Shop = asset.FindActionMap("Keyboard_Shop", throwIfNotFound: true);
+        m_Keyboard_Shop_CloseShop = m_Keyboard_Shop.FindAction("CloseShop", throwIfNotFound: true);
+        // Keyboard_Console
+        m_Keyboard_Console = asset.FindActionMap("Keyboard_Console", throwIfNotFound: true);
+        m_Keyboard_Console_ConfirmInput = m_Keyboard_Console.FindAction("ConfirmInput", throwIfNotFound: true);
+        m_Keyboard_Console_CloseConsole = m_Keyboard_Console.FindAction("CloseConsole", throwIfNotFound: true);
+        // DetectMouseKeyboard
+        m_DetectMouseKeyboard = asset.FindActionMap("DetectMouseKeyboard", throwIfNotFound: true);
+        m_DetectMouseKeyboard_SwitchToMouseKeyboard = m_DetectMouseKeyboard.FindAction("SwitchToMouseKeyboard", throwIfNotFound: true);
+        // Controller_Player
+        m_Controller_Player = asset.FindActionMap("Controller_Player", throwIfNotFound: true);
+        m_Controller_Player_Movement = m_Controller_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Controller_Player_Sprint = m_Controller_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Controller_Player_Crouch = m_Controller_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Controller_Player_Jump = m_Controller_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Controller_Player_Interact = m_Controller_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Controller_Player_NormalAttack = m_Controller_Player.FindAction("NormalAttack", throwIfNotFound: true);
+        m_Controller_Player_ChargedAttack = m_Controller_Player.FindAction("ChargedAttack", throwIfNotFound: true);
+        m_Controller_Player_Skill1 = m_Controller_Player.FindAction("Skill1", throwIfNotFound: true);
+        m_Controller_Player_Skill2 = m_Controller_Player.FindAction("Skill2", throwIfNotFound: true);
+        m_Controller_Player_Skill3 = m_Controller_Player.FindAction("Skill3", throwIfNotFound: true);
+        m_Controller_Player_OpenUIState = m_Controller_Player.FindAction("OpenUIState", throwIfNotFound: true);
+        m_Controller_Player_OpenMap = m_Controller_Player.FindAction("OpenMap", throwIfNotFound: true);
+        // Controller_UIState
+        m_Controller_UIState = asset.FindActionMap("Controller_UIState", throwIfNotFound: true);
+        m_Controller_UIState_CloseUIState = m_Controller_UIState.FindAction("CloseUIState", throwIfNotFound: true);
+        m_Controller_UIState_NextUIState = m_Controller_UIState.FindAction("NextUIState", throwIfNotFound: true);
+        m_Controller_UIState_PreviousUIState = m_Controller_UIState.FindAction("PreviousUIState", throwIfNotFound: true);
+        // Controller_QuestsUI
+        m_Controller_QuestsUI = asset.FindActionMap("Controller_QuestsUI", throwIfNotFound: true);
+        m_Controller_QuestsUI_NextQuestPage = m_Controller_QuestsUI.FindAction("NextQuestPage", throwIfNotFound: true);
+        m_Controller_QuestsUI_PreviousQuestPage = m_Controller_QuestsUI.FindAction("PreviousQuestPage", throwIfNotFound: true);
+        // Controller_InventoryUI
+        m_Controller_InventoryUI = asset.FindActionMap("Controller_InventoryUI", throwIfNotFound: true);
+        m_Controller_InventoryUI_NextInventoryPage = m_Controller_InventoryUI.FindAction("NextInventoryPage", throwIfNotFound: true);
+        m_Controller_InventoryUI_PreviousInventoryPage = m_Controller_InventoryUI.FindAction("PreviousInventoryPage", throwIfNotFound: true);
+        // Controller_SkillsUI
+        m_Controller_SkillsUI = asset.FindActionMap("Controller_SkillsUI", throwIfNotFound: true);
+        // Controller_SystemUI
+        m_Controller_SystemUI = asset.FindActionMap("Controller_SystemUI", throwIfNotFound: true);
+        // Controller_Map
+        m_Controller_Map = asset.FindActionMap("Controller_Map", throwIfNotFound: true);
+        m_Controller_Map_CloseMap = m_Controller_Map.FindAction("CloseMap", throwIfNotFound: true);
+        // Controller_Dialogues
+        m_Controller_Dialogues = asset.FindActionMap("Controller_Dialogues", throwIfNotFound: true);
+        m_Controller_Dialogues_Continue = m_Controller_Dialogues.FindAction("Continue", throwIfNotFound: true);
+        // Controller_Shop
+        m_Controller_Shop = asset.FindActionMap("Controller_Shop", throwIfNotFound: true);
+        m_Controller_Shop_CloseShop = m_Controller_Shop.FindAction("CloseShop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -701,49 +1522,110 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_NormalAttack;
-    private readonly InputAction m_Player_ChargedAttack;
-    private readonly InputAction m_Player_Skill1;
-    private readonly InputAction m_Player_Skill2;
-    private readonly InputAction m_Player_Skill3;
-    private readonly InputAction m_Player_OpenInventory;
-    private readonly InputAction m_Player_OpenMap;
-    private readonly InputAction m_Player_PressEsc;
-    private readonly InputAction m_Player_ScrollWheel;
-    private readonly InputAction m_Player_OpenConsole;
-    public struct PlayerActions
+    // DetectController
+    private readonly InputActionMap m_DetectController;
+    private List<IDetectControllerActions> m_DetectControllerActionsCallbackInterfaces = new List<IDetectControllerActions>();
+    private readonly InputAction m_DetectController_SwitchToController;
+    public struct DetectControllerActions
     {
         private @PlayerControls m_Wrapper;
-        public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @NormalAttack => m_Wrapper.m_Player_NormalAttack;
-        public InputAction @ChargedAttack => m_Wrapper.m_Player_ChargedAttack;
-        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
-        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
-        public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
-        public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
-        public InputAction @OpenMap => m_Wrapper.m_Player_OpenMap;
-        public InputAction @PressEsc => m_Wrapper.m_Player_PressEsc;
-        public InputAction @ScrollWheel => m_Wrapper.m_Player_ScrollWheel;
-        public InputAction @OpenConsole => m_Wrapper.m_Player_OpenConsole;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public DetectControllerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchToController => m_Wrapper.m_DetectController_SwitchToController;
+        public InputActionMap Get() { return m_Wrapper.m_DetectController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(DetectControllerActions set) { return set.Get(); }
+        public void AddCallbacks(IDetectControllerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
+            if (instance == null || m_Wrapper.m_DetectControllerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DetectControllerActionsCallbackInterfaces.Add(instance);
+            @SwitchToController.started += instance.OnSwitchToController;
+            @SwitchToController.performed += instance.OnSwitchToController;
+            @SwitchToController.canceled += instance.OnSwitchToController;
+        }
+
+        private void UnregisterCallbacks(IDetectControllerActions instance)
+        {
+            @SwitchToController.started -= instance.OnSwitchToController;
+            @SwitchToController.performed -= instance.OnSwitchToController;
+            @SwitchToController.canceled -= instance.OnSwitchToController;
+        }
+
+        public void RemoveCallbacks(IDetectControllerActions instance)
+        {
+            if (m_Wrapper.m_DetectControllerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDetectControllerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DetectControllerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DetectControllerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DetectControllerActions @DetectController => new DetectControllerActions(this);
+
+    // Keyboard_Player
+    private readonly InputActionMap m_Keyboard_Player;
+    private List<IKeyboard_PlayerActions> m_Keyboard_PlayerActionsCallbackInterfaces = new List<IKeyboard_PlayerActions>();
+    private readonly InputAction m_Keyboard_Player_Movement;
+    private readonly InputAction m_Keyboard_Player_Sprint;
+    private readonly InputAction m_Keyboard_Player_Crouch;
+    private readonly InputAction m_Keyboard_Player_Jump;
+    private readonly InputAction m_Keyboard_Player_Interact;
+    private readonly InputAction m_Keyboard_Player_NormalAttack;
+    private readonly InputAction m_Keyboard_Player_ChargedAttack;
+    private readonly InputAction m_Keyboard_Player_Skill1;
+    private readonly InputAction m_Keyboard_Player_Skill2;
+    private readonly InputAction m_Keyboard_Player_Skill3;
+    private readonly InputAction m_Keyboard_Player_OpenUIState;
+    private readonly InputAction m_Keyboard_Player_OpenMap;
+    private readonly InputAction m_Keyboard_Player_ScrollWheel;
+    private readonly InputAction m_Keyboard_Player_OpenConsole;
+    private readonly InputAction m_Keyboard_Player_TurnCursorOnOff;
+    public struct Keyboard_PlayerActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Keyboard_Player_Movement;
+        public InputAction @Sprint => m_Wrapper.m_Keyboard_Player_Sprint;
+        public InputAction @Crouch => m_Wrapper.m_Keyboard_Player_Crouch;
+        public InputAction @Jump => m_Wrapper.m_Keyboard_Player_Jump;
+        public InputAction @Interact => m_Wrapper.m_Keyboard_Player_Interact;
+        public InputAction @NormalAttack => m_Wrapper.m_Keyboard_Player_NormalAttack;
+        public InputAction @ChargedAttack => m_Wrapper.m_Keyboard_Player_ChargedAttack;
+        public InputAction @Skill1 => m_Wrapper.m_Keyboard_Player_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Keyboard_Player_Skill2;
+        public InputAction @Skill3 => m_Wrapper.m_Keyboard_Player_Skill3;
+        public InputAction @OpenUIState => m_Wrapper.m_Keyboard_Player_OpenUIState;
+        public InputAction @OpenMap => m_Wrapper.m_Keyboard_Player_OpenMap;
+        public InputAction @ScrollWheel => m_Wrapper.m_Keyboard_Player_ScrollWheel;
+        public InputAction @OpenConsole => m_Wrapper.m_Keyboard_Player_OpenConsole;
+        public InputAction @TurnCursorOnOff => m_Wrapper.m_Keyboard_Player_TurnCursorOnOff;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_Player; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_PlayerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_PlayerActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -762,28 +1644,37 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Skill3.started += instance.OnSkill3;
             @Skill3.performed += instance.OnSkill3;
             @Skill3.canceled += instance.OnSkill3;
-            @OpenInventory.started += instance.OnOpenInventory;
-            @OpenInventory.performed += instance.OnOpenInventory;
-            @OpenInventory.canceled += instance.OnOpenInventory;
+            @OpenUIState.started += instance.OnOpenUIState;
+            @OpenUIState.performed += instance.OnOpenUIState;
+            @OpenUIState.canceled += instance.OnOpenUIState;
             @OpenMap.started += instance.OnOpenMap;
             @OpenMap.performed += instance.OnOpenMap;
             @OpenMap.canceled += instance.OnOpenMap;
-            @PressEsc.started += instance.OnPressEsc;
-            @PressEsc.performed += instance.OnPressEsc;
-            @PressEsc.canceled += instance.OnPressEsc;
             @ScrollWheel.started += instance.OnScrollWheel;
             @ScrollWheel.performed += instance.OnScrollWheel;
             @ScrollWheel.canceled += instance.OnScrollWheel;
             @OpenConsole.started += instance.OnOpenConsole;
             @OpenConsole.performed += instance.OnOpenConsole;
             @OpenConsole.canceled += instance.OnOpenConsole;
+            @TurnCursorOnOff.started += instance.OnTurnCursorOnOff;
+            @TurnCursorOnOff.performed += instance.OnTurnCursorOnOff;
+            @TurnCursorOnOff.canceled += instance.OnTurnCursorOnOff;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IKeyboard_PlayerActions instance)
         {
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -802,259 +1693,443 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Skill3.started -= instance.OnSkill3;
             @Skill3.performed -= instance.OnSkill3;
             @Skill3.canceled -= instance.OnSkill3;
-            @OpenInventory.started -= instance.OnOpenInventory;
-            @OpenInventory.performed -= instance.OnOpenInventory;
-            @OpenInventory.canceled -= instance.OnOpenInventory;
+            @OpenUIState.started -= instance.OnOpenUIState;
+            @OpenUIState.performed -= instance.OnOpenUIState;
+            @OpenUIState.canceled -= instance.OnOpenUIState;
             @OpenMap.started -= instance.OnOpenMap;
             @OpenMap.performed -= instance.OnOpenMap;
             @OpenMap.canceled -= instance.OnOpenMap;
-            @PressEsc.started -= instance.OnPressEsc;
-            @PressEsc.performed -= instance.OnPressEsc;
-            @PressEsc.canceled -= instance.OnPressEsc;
             @ScrollWheel.started -= instance.OnScrollWheel;
             @ScrollWheel.performed -= instance.OnScrollWheel;
             @ScrollWheel.canceled -= instance.OnScrollWheel;
             @OpenConsole.started -= instance.OnOpenConsole;
             @OpenConsole.performed -= instance.OnOpenConsole;
             @OpenConsole.canceled -= instance.OnOpenConsole;
+            @TurnCursorOnOff.started -= instance.OnTurnCursorOnOff;
+            @TurnCursorOnOff.performed -= instance.OnTurnCursorOnOff;
+            @TurnCursorOnOff.canceled -= instance.OnTurnCursorOnOff;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IKeyboard_PlayerActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Keyboard_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IKeyboard_PlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Keyboard_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Keyboard_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public Keyboard_PlayerActions @Keyboard_Player => new Keyboard_PlayerActions(this);
 
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_CloseInventory;
-    private readonly InputAction m_Inventory_NextInvPage;
-    private readonly InputAction m_Inventory_PreviousInvPage;
-    public struct InventoryActions
+    // Keyboard_UIState
+    private readonly InputActionMap m_Keyboard_UIState;
+    private List<IKeyboard_UIStateActions> m_Keyboard_UIStateActionsCallbackInterfaces = new List<IKeyboard_UIStateActions>();
+    private readonly InputAction m_Keyboard_UIState_CloseUIState;
+    private readonly InputAction m_Keyboard_UIState_NextUIState;
+    private readonly InputAction m_Keyboard_UIState_PreviousUIState;
+    public struct Keyboard_UIStateActions
     {
         private @PlayerControls m_Wrapper;
-        public InventoryActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseInventory => m_Wrapper.m_Inventory_CloseInventory;
-        public InputAction @NextInvPage => m_Wrapper.m_Inventory_NextInvPage;
-        public InputAction @PreviousInvPage => m_Wrapper.m_Inventory_PreviousInvPage;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public Keyboard_UIStateActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseUIState => m_Wrapper.m_Keyboard_UIState_CloseUIState;
+        public InputAction @NextUIState => m_Wrapper.m_Keyboard_UIState_NextUIState;
+        public InputAction @PreviousUIState => m_Wrapper.m_Keyboard_UIState_PreviousUIState;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_UIState; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void AddCallbacks(IInventoryActions instance)
+        public static implicit operator InputActionMap(Keyboard_UIStateActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_UIStateActions instance)
         {
-            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
-            @CloseInventory.started += instance.OnCloseInventory;
-            @CloseInventory.performed += instance.OnCloseInventory;
-            @CloseInventory.canceled += instance.OnCloseInventory;
-            @NextInvPage.started += instance.OnNextInvPage;
-            @NextInvPage.performed += instance.OnNextInvPage;
-            @NextInvPage.canceled += instance.OnNextInvPage;
-            @PreviousInvPage.started += instance.OnPreviousInvPage;
-            @PreviousInvPage.performed += instance.OnPreviousInvPage;
-            @PreviousInvPage.canceled += instance.OnPreviousInvPage;
+            if (instance == null || m_Wrapper.m_Keyboard_UIStateActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_UIStateActionsCallbackInterfaces.Add(instance);
+            @CloseUIState.started += instance.OnCloseUIState;
+            @CloseUIState.performed += instance.OnCloseUIState;
+            @CloseUIState.canceled += instance.OnCloseUIState;
+            @NextUIState.started += instance.OnNextUIState;
+            @NextUIState.performed += instance.OnNextUIState;
+            @NextUIState.canceled += instance.OnNextUIState;
+            @PreviousUIState.started += instance.OnPreviousUIState;
+            @PreviousUIState.performed += instance.OnPreviousUIState;
+            @PreviousUIState.canceled += instance.OnPreviousUIState;
         }
 
-        private void UnregisterCallbacks(IInventoryActions instance)
+        private void UnregisterCallbacks(IKeyboard_UIStateActions instance)
         {
-            @CloseInventory.started -= instance.OnCloseInventory;
-            @CloseInventory.performed -= instance.OnCloseInventory;
-            @CloseInventory.canceled -= instance.OnCloseInventory;
-            @NextInvPage.started -= instance.OnNextInvPage;
-            @NextInvPage.performed -= instance.OnNextInvPage;
-            @NextInvPage.canceled -= instance.OnNextInvPage;
-            @PreviousInvPage.started -= instance.OnPreviousInvPage;
-            @PreviousInvPage.performed -= instance.OnPreviousInvPage;
-            @PreviousInvPage.canceled -= instance.OnPreviousInvPage;
+            @CloseUIState.started -= instance.OnCloseUIState;
+            @CloseUIState.performed -= instance.OnCloseUIState;
+            @CloseUIState.canceled -= instance.OnCloseUIState;
+            @NextUIState.started -= instance.OnNextUIState;
+            @NextUIState.performed -= instance.OnNextUIState;
+            @NextUIState.canceled -= instance.OnNextUIState;
+            @PreviousUIState.started -= instance.OnPreviousUIState;
+            @PreviousUIState.performed -= instance.OnPreviousUIState;
+            @PreviousUIState.canceled -= instance.OnPreviousUIState;
         }
 
-        public void RemoveCallbacks(IInventoryActions instance)
+        public void RemoveCallbacks(IKeyboard_UIStateActions instance)
         {
-            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Keyboard_UIStateActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInventoryActions instance)
+        public void SetCallbacks(IKeyboard_UIStateActions instance)
         {
-            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Keyboard_UIStateActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Keyboard_UIStateActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InventoryActions @Inventory => new InventoryActions(this);
+    public Keyboard_UIStateActions @Keyboard_UIState => new Keyboard_UIStateActions(this);
 
-    // Map
-    private readonly InputActionMap m_Map;
-    private List<IMapActions> m_MapActionsCallbackInterfaces = new List<IMapActions>();
-    private readonly InputAction m_Map_CloseMap;
-    public struct MapActions
+    // Keyboard_QuestsUI
+    private readonly InputActionMap m_Keyboard_QuestsUI;
+    private List<IKeyboard_QuestsUIActions> m_Keyboard_QuestsUIActionsCallbackInterfaces = new List<IKeyboard_QuestsUIActions>();
+    private readonly InputAction m_Keyboard_QuestsUI_NextQuestPage;
+    private readonly InputAction m_Keyboard_QuestsUI_PreviousQuestPage;
+    public struct Keyboard_QuestsUIActions
     {
         private @PlayerControls m_Wrapper;
-        public MapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseMap => m_Wrapper.m_Map_CloseMap;
-        public InputActionMap Get() { return m_Wrapper.m_Map; }
+        public Keyboard_QuestsUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextQuestPage => m_Wrapper.m_Keyboard_QuestsUI_NextQuestPage;
+        public InputAction @PreviousQuestPage => m_Wrapper.m_Keyboard_QuestsUI_PreviousQuestPage;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_QuestsUI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MapActions set) { return set.Get(); }
-        public void AddCallbacks(IMapActions instance)
+        public static implicit operator InputActionMap(Keyboard_QuestsUIActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_QuestsUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_MapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_Keyboard_QuestsUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_QuestsUIActionsCallbackInterfaces.Add(instance);
+            @NextQuestPage.started += instance.OnNextQuestPage;
+            @NextQuestPage.performed += instance.OnNextQuestPage;
+            @NextQuestPage.canceled += instance.OnNextQuestPage;
+            @PreviousQuestPage.started += instance.OnPreviousQuestPage;
+            @PreviousQuestPage.performed += instance.OnPreviousQuestPage;
+            @PreviousQuestPage.canceled += instance.OnPreviousQuestPage;
+        }
+
+        private void UnregisterCallbacks(IKeyboard_QuestsUIActions instance)
+        {
+            @NextQuestPage.started -= instance.OnNextQuestPage;
+            @NextQuestPage.performed -= instance.OnNextQuestPage;
+            @NextQuestPage.canceled -= instance.OnNextQuestPage;
+            @PreviousQuestPage.started -= instance.OnPreviousQuestPage;
+            @PreviousQuestPage.performed -= instance.OnPreviousQuestPage;
+            @PreviousQuestPage.canceled -= instance.OnPreviousQuestPage;
+        }
+
+        public void RemoveCallbacks(IKeyboard_QuestsUIActions instance)
+        {
+            if (m_Wrapper.m_Keyboard_QuestsUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeyboard_QuestsUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Keyboard_QuestsUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Keyboard_QuestsUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Keyboard_QuestsUIActions @Keyboard_QuestsUI => new Keyboard_QuestsUIActions(this);
+
+    // Keyboard_InventoryUI
+    private readonly InputActionMap m_Keyboard_InventoryUI;
+    private List<IKeyboard_InventoryUIActions> m_Keyboard_InventoryUIActionsCallbackInterfaces = new List<IKeyboard_InventoryUIActions>();
+    private readonly InputAction m_Keyboard_InventoryUI_NextInventoryPage;
+    private readonly InputAction m_Keyboard_InventoryUI_PreviousInventoryPage;
+    public struct Keyboard_InventoryUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_InventoryUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextInventoryPage => m_Wrapper.m_Keyboard_InventoryUI_NextInventoryPage;
+        public InputAction @PreviousInventoryPage => m_Wrapper.m_Keyboard_InventoryUI_PreviousInventoryPage;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_InventoryUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_InventoryUIActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_InventoryUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_InventoryUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_InventoryUIActionsCallbackInterfaces.Add(instance);
+            @NextInventoryPage.started += instance.OnNextInventoryPage;
+            @NextInventoryPage.performed += instance.OnNextInventoryPage;
+            @NextInventoryPage.canceled += instance.OnNextInventoryPage;
+            @PreviousInventoryPage.started += instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.performed += instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.canceled += instance.OnPreviousInventoryPage;
+        }
+
+        private void UnregisterCallbacks(IKeyboard_InventoryUIActions instance)
+        {
+            @NextInventoryPage.started -= instance.OnNextInventoryPage;
+            @NextInventoryPage.performed -= instance.OnNextInventoryPage;
+            @NextInventoryPage.canceled -= instance.OnNextInventoryPage;
+            @PreviousInventoryPage.started -= instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.performed -= instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.canceled -= instance.OnPreviousInventoryPage;
+        }
+
+        public void RemoveCallbacks(IKeyboard_InventoryUIActions instance)
+        {
+            if (m_Wrapper.m_Keyboard_InventoryUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeyboard_InventoryUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Keyboard_InventoryUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Keyboard_InventoryUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Keyboard_InventoryUIActions @Keyboard_InventoryUI => new Keyboard_InventoryUIActions(this);
+
+    // Keyboard_SkillsUI
+    private readonly InputActionMap m_Keyboard_SkillsUI;
+    private List<IKeyboard_SkillsUIActions> m_Keyboard_SkillsUIActionsCallbackInterfaces = new List<IKeyboard_SkillsUIActions>();
+    public struct Keyboard_SkillsUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_SkillsUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_SkillsUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_SkillsUIActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_SkillsUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_SkillsUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_SkillsUIActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IKeyboard_SkillsUIActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IKeyboard_SkillsUIActions instance)
+        {
+            if (m_Wrapper.m_Keyboard_SkillsUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeyboard_SkillsUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Keyboard_SkillsUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Keyboard_SkillsUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Keyboard_SkillsUIActions @Keyboard_SkillsUI => new Keyboard_SkillsUIActions(this);
+
+    // Keyboard_SystemUI
+    private readonly InputActionMap m_Keyboard_SystemUI;
+    private List<IKeyboard_SystemUIActions> m_Keyboard_SystemUIActionsCallbackInterfaces = new List<IKeyboard_SystemUIActions>();
+    public struct Keyboard_SystemUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_SystemUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_SystemUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_SystemUIActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_SystemUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_SystemUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_SystemUIActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IKeyboard_SystemUIActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IKeyboard_SystemUIActions instance)
+        {
+            if (m_Wrapper.m_Keyboard_SystemUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeyboard_SystemUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Keyboard_SystemUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Keyboard_SystemUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Keyboard_SystemUIActions @Keyboard_SystemUI => new Keyboard_SystemUIActions(this);
+
+    // Keyboard_Map
+    private readonly InputActionMap m_Keyboard_Map;
+    private List<IKeyboard_MapActions> m_Keyboard_MapActionsCallbackInterfaces = new List<IKeyboard_MapActions>();
+    private readonly InputAction m_Keyboard_Map_CloseMap;
+    public struct Keyboard_MapActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_MapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseMap => m_Wrapper.m_Keyboard_Map_CloseMap;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_Map; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_MapActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_MapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_MapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_MapActionsCallbackInterfaces.Add(instance);
             @CloseMap.started += instance.OnCloseMap;
             @CloseMap.performed += instance.OnCloseMap;
             @CloseMap.canceled += instance.OnCloseMap;
         }
 
-        private void UnregisterCallbacks(IMapActions instance)
+        private void UnregisterCallbacks(IKeyboard_MapActions instance)
         {
             @CloseMap.started -= instance.OnCloseMap;
             @CloseMap.performed -= instance.OnCloseMap;
             @CloseMap.canceled -= instance.OnCloseMap;
         }
 
-        public void RemoveCallbacks(IMapActions instance)
+        public void RemoveCallbacks(IKeyboard_MapActions instance)
         {
-            if (m_Wrapper.m_MapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Keyboard_MapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IMapActions instance)
+        public void SetCallbacks(IKeyboard_MapActions instance)
         {
-            foreach (var item in m_Wrapper.m_MapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Keyboard_MapActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_MapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Keyboard_MapActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public MapActions @Map => new MapActions(this);
+    public Keyboard_MapActions @Keyboard_Map => new Keyboard_MapActions(this);
 
-    // EscMenu
-    private readonly InputActionMap m_EscMenu;
-    private List<IEscMenuActions> m_EscMenuActionsCallbackInterfaces = new List<IEscMenuActions>();
-    private readonly InputAction m_EscMenu_CloseEscMenu;
-    public struct EscMenuActions
+    // Keyboard_Dialogues
+    private readonly InputActionMap m_Keyboard_Dialogues;
+    private List<IKeyboard_DialoguesActions> m_Keyboard_DialoguesActionsCallbackInterfaces = new List<IKeyboard_DialoguesActions>();
+    private readonly InputAction m_Keyboard_Dialogues_Continue;
+    public struct Keyboard_DialoguesActions
     {
         private @PlayerControls m_Wrapper;
-        public EscMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseEscMenu => m_Wrapper.m_EscMenu_CloseEscMenu;
-        public InputActionMap Get() { return m_Wrapper.m_EscMenu; }
+        public Keyboard_DialoguesActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Continue => m_Wrapper.m_Keyboard_Dialogues_Continue;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_Dialogues; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(EscMenuActions set) { return set.Get(); }
-        public void AddCallbacks(IEscMenuActions instance)
+        public static implicit operator InputActionMap(Keyboard_DialoguesActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_DialoguesActions instance)
         {
-            if (instance == null || m_Wrapper.m_EscMenuActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_EscMenuActionsCallbackInterfaces.Add(instance);
-            @CloseEscMenu.started += instance.OnCloseEscMenu;
-            @CloseEscMenu.performed += instance.OnCloseEscMenu;
-            @CloseEscMenu.canceled += instance.OnCloseEscMenu;
-        }
-
-        private void UnregisterCallbacks(IEscMenuActions instance)
-        {
-            @CloseEscMenu.started -= instance.OnCloseEscMenu;
-            @CloseEscMenu.performed -= instance.OnCloseEscMenu;
-            @CloseEscMenu.canceled -= instance.OnCloseEscMenu;
-        }
-
-        public void RemoveCallbacks(IEscMenuActions instance)
-        {
-            if (m_Wrapper.m_EscMenuActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IEscMenuActions instance)
-        {
-            foreach (var item in m_Wrapper.m_EscMenuActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_EscMenuActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public EscMenuActions @EscMenu => new EscMenuActions(this);
-
-    // Dialogues
-    private readonly InputActionMap m_Dialogues;
-    private List<IDialoguesActions> m_DialoguesActionsCallbackInterfaces = new List<IDialoguesActions>();
-    private readonly InputAction m_Dialogues_Continue;
-    public struct DialoguesActions
-    {
-        private @PlayerControls m_Wrapper;
-        public DialoguesActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Continue => m_Wrapper.m_Dialogues_Continue;
-        public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(DialoguesActions set) { return set.Get(); }
-        public void AddCallbacks(IDialoguesActions instance)
-        {
-            if (instance == null || m_Wrapper.m_DialoguesActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DialoguesActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_Keyboard_DialoguesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_DialoguesActionsCallbackInterfaces.Add(instance);
             @Continue.started += instance.OnContinue;
             @Continue.performed += instance.OnContinue;
             @Continue.canceled += instance.OnContinue;
         }
 
-        private void UnregisterCallbacks(IDialoguesActions instance)
+        private void UnregisterCallbacks(IKeyboard_DialoguesActions instance)
         {
             @Continue.started -= instance.OnContinue;
             @Continue.performed -= instance.OnContinue;
             @Continue.canceled -= instance.OnContinue;
         }
 
-        public void RemoveCallbacks(IDialoguesActions instance)
+        public void RemoveCallbacks(IKeyboard_DialoguesActions instance)
         {
-            if (m_Wrapper.m_DialoguesActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Keyboard_DialoguesActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IDialoguesActions instance)
+        public void SetCallbacks(IKeyboard_DialoguesActions instance)
         {
-            foreach (var item in m_Wrapper.m_DialoguesActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Keyboard_DialoguesActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_DialoguesActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Keyboard_DialoguesActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public DialoguesActions @Dialogues => new DialoguesActions(this);
+    public Keyboard_DialoguesActions @Keyboard_Dialogues => new Keyboard_DialoguesActions(this);
 
-    // Console
-    private readonly InputActionMap m_Console;
-    private List<IConsoleActions> m_ConsoleActionsCallbackInterfaces = new List<IConsoleActions>();
-    private readonly InputAction m_Console_ConfirmInput;
-    private readonly InputAction m_Console_CloseConsole;
-    public struct ConsoleActions
+    // Keyboard_Shop
+    private readonly InputActionMap m_Keyboard_Shop;
+    private List<IKeyboard_ShopActions> m_Keyboard_ShopActionsCallbackInterfaces = new List<IKeyboard_ShopActions>();
+    private readonly InputAction m_Keyboard_Shop_CloseShop;
+    public struct Keyboard_ShopActions
     {
         private @PlayerControls m_Wrapper;
-        public ConsoleActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ConfirmInput => m_Wrapper.m_Console_ConfirmInput;
-        public InputAction @CloseConsole => m_Wrapper.m_Console_CloseConsole;
-        public InputActionMap Get() { return m_Wrapper.m_Console; }
+        public Keyboard_ShopActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseShop => m_Wrapper.m_Keyboard_Shop_CloseShop;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_Shop; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ConsoleActions set) { return set.Get(); }
-        public void AddCallbacks(IConsoleActions instance)
+        public static implicit operator InputActionMap(Keyboard_ShopActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_ShopActions instance)
         {
-            if (instance == null || m_Wrapper.m_ConsoleActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_ConsoleActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_Keyboard_ShopActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_ShopActionsCallbackInterfaces.Add(instance);
+            @CloseShop.started += instance.OnCloseShop;
+            @CloseShop.performed += instance.OnCloseShop;
+            @CloseShop.canceled += instance.OnCloseShop;
+        }
+
+        private void UnregisterCallbacks(IKeyboard_ShopActions instance)
+        {
+            @CloseShop.started -= instance.OnCloseShop;
+            @CloseShop.performed -= instance.OnCloseShop;
+            @CloseShop.canceled -= instance.OnCloseShop;
+        }
+
+        public void RemoveCallbacks(IKeyboard_ShopActions instance)
+        {
+            if (m_Wrapper.m_Keyboard_ShopActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IKeyboard_ShopActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Keyboard_ShopActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Keyboard_ShopActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Keyboard_ShopActions @Keyboard_Shop => new Keyboard_ShopActions(this);
+
+    // Keyboard_Console
+    private readonly InputActionMap m_Keyboard_Console;
+    private List<IKeyboard_ConsoleActions> m_Keyboard_ConsoleActionsCallbackInterfaces = new List<IKeyboard_ConsoleActions>();
+    private readonly InputAction m_Keyboard_Console_ConfirmInput;
+    private readonly InputAction m_Keyboard_Console_CloseConsole;
+    public struct Keyboard_ConsoleActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Keyboard_ConsoleActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ConfirmInput => m_Wrapper.m_Keyboard_Console_ConfirmInput;
+        public InputAction @CloseConsole => m_Wrapper.m_Keyboard_Console_CloseConsole;
+        public InputActionMap Get() { return m_Wrapper.m_Keyboard_Console; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Keyboard_ConsoleActions set) { return set.Get(); }
+        public void AddCallbacks(IKeyboard_ConsoleActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Keyboard_ConsoleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Keyboard_ConsoleActionsCallbackInterfaces.Add(instance);
             @ConfirmInput.started += instance.OnConfirmInput;
             @ConfirmInput.performed += instance.OnConfirmInput;
             @ConfirmInput.canceled += instance.OnConfirmInput;
@@ -1063,7 +2138,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CloseConsole.canceled += instance.OnCloseConsole;
         }
 
-        private void UnregisterCallbacks(IConsoleActions instance)
+        private void UnregisterCallbacks(IKeyboard_ConsoleActions instance)
         {
             @ConfirmInput.started -= instance.OnConfirmInput;
             @ConfirmInput.performed -= instance.OnConfirmInput;
@@ -1073,207 +2148,697 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CloseConsole.canceled -= instance.OnCloseConsole;
         }
 
-        public void RemoveCallbacks(IConsoleActions instance)
+        public void RemoveCallbacks(IKeyboard_ConsoleActions instance)
         {
-            if (m_Wrapper.m_ConsoleActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Keyboard_ConsoleActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IConsoleActions instance)
+        public void SetCallbacks(IKeyboard_ConsoleActions instance)
         {
-            foreach (var item in m_Wrapper.m_ConsoleActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Keyboard_ConsoleActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_ConsoleActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Keyboard_ConsoleActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public ConsoleActions @Console => new ConsoleActions(this);
+    public Keyboard_ConsoleActions @Keyboard_Console => new Keyboard_ConsoleActions(this);
 
-    // WeaponEnhance
-    private readonly InputActionMap m_WeaponEnhance;
-    private List<IWeaponEnhanceActions> m_WeaponEnhanceActionsCallbackInterfaces = new List<IWeaponEnhanceActions>();
-    private readonly InputAction m_WeaponEnhance_CloseWeapDetails;
-    public struct WeaponEnhanceActions
+    // DetectMouseKeyboard
+    private readonly InputActionMap m_DetectMouseKeyboard;
+    private List<IDetectMouseKeyboardActions> m_DetectMouseKeyboardActionsCallbackInterfaces = new List<IDetectMouseKeyboardActions>();
+    private readonly InputAction m_DetectMouseKeyboard_SwitchToMouseKeyboard;
+    public struct DetectMouseKeyboardActions
     {
         private @PlayerControls m_Wrapper;
-        public WeaponEnhanceActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseWeapDetails => m_Wrapper.m_WeaponEnhance_CloseWeapDetails;
-        public InputActionMap Get() { return m_Wrapper.m_WeaponEnhance; }
+        public DetectMouseKeyboardActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchToMouseKeyboard => m_Wrapper.m_DetectMouseKeyboard_SwitchToMouseKeyboard;
+        public InputActionMap Get() { return m_Wrapper.m_DetectMouseKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(WeaponEnhanceActions set) { return set.Get(); }
-        public void AddCallbacks(IWeaponEnhanceActions instance)
+        public static implicit operator InputActionMap(DetectMouseKeyboardActions set) { return set.Get(); }
+        public void AddCallbacks(IDetectMouseKeyboardActions instance)
         {
-            if (instance == null || m_Wrapper.m_WeaponEnhanceActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_WeaponEnhanceActionsCallbackInterfaces.Add(instance);
-            @CloseWeapDetails.started += instance.OnCloseWeapDetails;
-            @CloseWeapDetails.performed += instance.OnCloseWeapDetails;
-            @CloseWeapDetails.canceled += instance.OnCloseWeapDetails;
+            if (instance == null || m_Wrapper.m_DetectMouseKeyboardActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DetectMouseKeyboardActionsCallbackInterfaces.Add(instance);
+            @SwitchToMouseKeyboard.started += instance.OnSwitchToMouseKeyboard;
+            @SwitchToMouseKeyboard.performed += instance.OnSwitchToMouseKeyboard;
+            @SwitchToMouseKeyboard.canceled += instance.OnSwitchToMouseKeyboard;
         }
 
-        private void UnregisterCallbacks(IWeaponEnhanceActions instance)
+        private void UnregisterCallbacks(IDetectMouseKeyboardActions instance)
         {
-            @CloseWeapDetails.started -= instance.OnCloseWeapDetails;
-            @CloseWeapDetails.performed -= instance.OnCloseWeapDetails;
-            @CloseWeapDetails.canceled -= instance.OnCloseWeapDetails;
+            @SwitchToMouseKeyboard.started -= instance.OnSwitchToMouseKeyboard;
+            @SwitchToMouseKeyboard.performed -= instance.OnSwitchToMouseKeyboard;
+            @SwitchToMouseKeyboard.canceled -= instance.OnSwitchToMouseKeyboard;
         }
 
-        public void RemoveCallbacks(IWeaponEnhanceActions instance)
+        public void RemoveCallbacks(IDetectMouseKeyboardActions instance)
         {
-            if (m_Wrapper.m_WeaponEnhanceActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_DetectMouseKeyboardActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IWeaponEnhanceActions instance)
+        public void SetCallbacks(IDetectMouseKeyboardActions instance)
         {
-            foreach (var item in m_Wrapper.m_WeaponEnhanceActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_DetectMouseKeyboardActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_WeaponEnhanceActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_DetectMouseKeyboardActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public WeaponEnhanceActions @WeaponEnhance => new WeaponEnhanceActions(this);
+    public DetectMouseKeyboardActions @DetectMouseKeyboard => new DetectMouseKeyboardActions(this);
 
-    // Shop
-    private readonly InputActionMap m_Shop;
-    private List<IShopActions> m_ShopActionsCallbackInterfaces = new List<IShopActions>();
-    private readonly InputAction m_Shop_CloseShop;
-    public struct ShopActions
+    // Controller_Player
+    private readonly InputActionMap m_Controller_Player;
+    private List<IController_PlayerActions> m_Controller_PlayerActionsCallbackInterfaces = new List<IController_PlayerActions>();
+    private readonly InputAction m_Controller_Player_Movement;
+    private readonly InputAction m_Controller_Player_Sprint;
+    private readonly InputAction m_Controller_Player_Crouch;
+    private readonly InputAction m_Controller_Player_Jump;
+    private readonly InputAction m_Controller_Player_Interact;
+    private readonly InputAction m_Controller_Player_NormalAttack;
+    private readonly InputAction m_Controller_Player_ChargedAttack;
+    private readonly InputAction m_Controller_Player_Skill1;
+    private readonly InputAction m_Controller_Player_Skill2;
+    private readonly InputAction m_Controller_Player_Skill3;
+    private readonly InputAction m_Controller_Player_OpenUIState;
+    private readonly InputAction m_Controller_Player_OpenMap;
+    public struct Controller_PlayerActions
     {
         private @PlayerControls m_Wrapper;
-        public ShopActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseShop => m_Wrapper.m_Shop_CloseShop;
-        public InputActionMap Get() { return m_Wrapper.m_Shop; }
+        public Controller_PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Controller_Player_Movement;
+        public InputAction @Sprint => m_Wrapper.m_Controller_Player_Sprint;
+        public InputAction @Crouch => m_Wrapper.m_Controller_Player_Crouch;
+        public InputAction @Jump => m_Wrapper.m_Controller_Player_Jump;
+        public InputAction @Interact => m_Wrapper.m_Controller_Player_Interact;
+        public InputAction @NormalAttack => m_Wrapper.m_Controller_Player_NormalAttack;
+        public InputAction @ChargedAttack => m_Wrapper.m_Controller_Player_ChargedAttack;
+        public InputAction @Skill1 => m_Wrapper.m_Controller_Player_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Controller_Player_Skill2;
+        public InputAction @Skill3 => m_Wrapper.m_Controller_Player_Skill3;
+        public InputAction @OpenUIState => m_Wrapper.m_Controller_Player_OpenUIState;
+        public InputAction @OpenMap => m_Wrapper.m_Controller_Player_OpenMap;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ShopActions set) { return set.Get(); }
-        public void AddCallbacks(IShopActions instance)
+        public static implicit operator InputActionMap(Controller_PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IController_PlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_ShopActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_ShopActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_Controller_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_PlayerActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @NormalAttack.started += instance.OnNormalAttack;
+            @NormalAttack.performed += instance.OnNormalAttack;
+            @NormalAttack.canceled += instance.OnNormalAttack;
+            @ChargedAttack.started += instance.OnChargedAttack;
+            @ChargedAttack.performed += instance.OnChargedAttack;
+            @ChargedAttack.canceled += instance.OnChargedAttack;
+            @Skill1.started += instance.OnSkill1;
+            @Skill1.performed += instance.OnSkill1;
+            @Skill1.canceled += instance.OnSkill1;
+            @Skill2.started += instance.OnSkill2;
+            @Skill2.performed += instance.OnSkill2;
+            @Skill2.canceled += instance.OnSkill2;
+            @Skill3.started += instance.OnSkill3;
+            @Skill3.performed += instance.OnSkill3;
+            @Skill3.canceled += instance.OnSkill3;
+            @OpenUIState.started += instance.OnOpenUIState;
+            @OpenUIState.performed += instance.OnOpenUIState;
+            @OpenUIState.canceled += instance.OnOpenUIState;
+            @OpenMap.started += instance.OnOpenMap;
+            @OpenMap.performed += instance.OnOpenMap;
+            @OpenMap.canceled += instance.OnOpenMap;
+        }
+
+        private void UnregisterCallbacks(IController_PlayerActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @NormalAttack.started -= instance.OnNormalAttack;
+            @NormalAttack.performed -= instance.OnNormalAttack;
+            @NormalAttack.canceled -= instance.OnNormalAttack;
+            @ChargedAttack.started -= instance.OnChargedAttack;
+            @ChargedAttack.performed -= instance.OnChargedAttack;
+            @ChargedAttack.canceled -= instance.OnChargedAttack;
+            @Skill1.started -= instance.OnSkill1;
+            @Skill1.performed -= instance.OnSkill1;
+            @Skill1.canceled -= instance.OnSkill1;
+            @Skill2.started -= instance.OnSkill2;
+            @Skill2.performed -= instance.OnSkill2;
+            @Skill2.canceled -= instance.OnSkill2;
+            @Skill3.started -= instance.OnSkill3;
+            @Skill3.performed -= instance.OnSkill3;
+            @Skill3.canceled -= instance.OnSkill3;
+            @OpenUIState.started -= instance.OnOpenUIState;
+            @OpenUIState.performed -= instance.OnOpenUIState;
+            @OpenUIState.canceled -= instance.OnOpenUIState;
+            @OpenMap.started -= instance.OnOpenMap;
+            @OpenMap.performed -= instance.OnOpenMap;
+            @OpenMap.canceled -= instance.OnOpenMap;
+        }
+
+        public void RemoveCallbacks(IController_PlayerActions instance)
+        {
+            if (m_Wrapper.m_Controller_PlayerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_PlayerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_PlayerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_PlayerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_PlayerActions @Controller_Player => new Controller_PlayerActions(this);
+
+    // Controller_UIState
+    private readonly InputActionMap m_Controller_UIState;
+    private List<IController_UIStateActions> m_Controller_UIStateActionsCallbackInterfaces = new List<IController_UIStateActions>();
+    private readonly InputAction m_Controller_UIState_CloseUIState;
+    private readonly InputAction m_Controller_UIState_NextUIState;
+    private readonly InputAction m_Controller_UIState_PreviousUIState;
+    public struct Controller_UIStateActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_UIStateActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseUIState => m_Wrapper.m_Controller_UIState_CloseUIState;
+        public InputAction @NextUIState => m_Wrapper.m_Controller_UIState_NextUIState;
+        public InputAction @PreviousUIState => m_Wrapper.m_Controller_UIState_PreviousUIState;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_UIState; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_UIStateActions set) { return set.Get(); }
+        public void AddCallbacks(IController_UIStateActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_UIStateActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_UIStateActionsCallbackInterfaces.Add(instance);
+            @CloseUIState.started += instance.OnCloseUIState;
+            @CloseUIState.performed += instance.OnCloseUIState;
+            @CloseUIState.canceled += instance.OnCloseUIState;
+            @NextUIState.started += instance.OnNextUIState;
+            @NextUIState.performed += instance.OnNextUIState;
+            @NextUIState.canceled += instance.OnNextUIState;
+            @PreviousUIState.started += instance.OnPreviousUIState;
+            @PreviousUIState.performed += instance.OnPreviousUIState;
+            @PreviousUIState.canceled += instance.OnPreviousUIState;
+        }
+
+        private void UnregisterCallbacks(IController_UIStateActions instance)
+        {
+            @CloseUIState.started -= instance.OnCloseUIState;
+            @CloseUIState.performed -= instance.OnCloseUIState;
+            @CloseUIState.canceled -= instance.OnCloseUIState;
+            @NextUIState.started -= instance.OnNextUIState;
+            @NextUIState.performed -= instance.OnNextUIState;
+            @NextUIState.canceled -= instance.OnNextUIState;
+            @PreviousUIState.started -= instance.OnPreviousUIState;
+            @PreviousUIState.performed -= instance.OnPreviousUIState;
+            @PreviousUIState.canceled -= instance.OnPreviousUIState;
+        }
+
+        public void RemoveCallbacks(IController_UIStateActions instance)
+        {
+            if (m_Wrapper.m_Controller_UIStateActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_UIStateActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_UIStateActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_UIStateActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_UIStateActions @Controller_UIState => new Controller_UIStateActions(this);
+
+    // Controller_QuestsUI
+    private readonly InputActionMap m_Controller_QuestsUI;
+    private List<IController_QuestsUIActions> m_Controller_QuestsUIActionsCallbackInterfaces = new List<IController_QuestsUIActions>();
+    private readonly InputAction m_Controller_QuestsUI_NextQuestPage;
+    private readonly InputAction m_Controller_QuestsUI_PreviousQuestPage;
+    public struct Controller_QuestsUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_QuestsUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextQuestPage => m_Wrapper.m_Controller_QuestsUI_NextQuestPage;
+        public InputAction @PreviousQuestPage => m_Wrapper.m_Controller_QuestsUI_PreviousQuestPage;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_QuestsUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_QuestsUIActions set) { return set.Get(); }
+        public void AddCallbacks(IController_QuestsUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_QuestsUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_QuestsUIActionsCallbackInterfaces.Add(instance);
+            @NextQuestPage.started += instance.OnNextQuestPage;
+            @NextQuestPage.performed += instance.OnNextQuestPage;
+            @NextQuestPage.canceled += instance.OnNextQuestPage;
+            @PreviousQuestPage.started += instance.OnPreviousQuestPage;
+            @PreviousQuestPage.performed += instance.OnPreviousQuestPage;
+            @PreviousQuestPage.canceled += instance.OnPreviousQuestPage;
+        }
+
+        private void UnregisterCallbacks(IController_QuestsUIActions instance)
+        {
+            @NextQuestPage.started -= instance.OnNextQuestPage;
+            @NextQuestPage.performed -= instance.OnNextQuestPage;
+            @NextQuestPage.canceled -= instance.OnNextQuestPage;
+            @PreviousQuestPage.started -= instance.OnPreviousQuestPage;
+            @PreviousQuestPage.performed -= instance.OnPreviousQuestPage;
+            @PreviousQuestPage.canceled -= instance.OnPreviousQuestPage;
+        }
+
+        public void RemoveCallbacks(IController_QuestsUIActions instance)
+        {
+            if (m_Wrapper.m_Controller_QuestsUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_QuestsUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_QuestsUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_QuestsUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_QuestsUIActions @Controller_QuestsUI => new Controller_QuestsUIActions(this);
+
+    // Controller_InventoryUI
+    private readonly InputActionMap m_Controller_InventoryUI;
+    private List<IController_InventoryUIActions> m_Controller_InventoryUIActionsCallbackInterfaces = new List<IController_InventoryUIActions>();
+    private readonly InputAction m_Controller_InventoryUI_NextInventoryPage;
+    private readonly InputAction m_Controller_InventoryUI_PreviousInventoryPage;
+    public struct Controller_InventoryUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_InventoryUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextInventoryPage => m_Wrapper.m_Controller_InventoryUI_NextInventoryPage;
+        public InputAction @PreviousInventoryPage => m_Wrapper.m_Controller_InventoryUI_PreviousInventoryPage;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_InventoryUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_InventoryUIActions set) { return set.Get(); }
+        public void AddCallbacks(IController_InventoryUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_InventoryUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_InventoryUIActionsCallbackInterfaces.Add(instance);
+            @NextInventoryPage.started += instance.OnNextInventoryPage;
+            @NextInventoryPage.performed += instance.OnNextInventoryPage;
+            @NextInventoryPage.canceled += instance.OnNextInventoryPage;
+            @PreviousInventoryPage.started += instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.performed += instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.canceled += instance.OnPreviousInventoryPage;
+        }
+
+        private void UnregisterCallbacks(IController_InventoryUIActions instance)
+        {
+            @NextInventoryPage.started -= instance.OnNextInventoryPage;
+            @NextInventoryPage.performed -= instance.OnNextInventoryPage;
+            @NextInventoryPage.canceled -= instance.OnNextInventoryPage;
+            @PreviousInventoryPage.started -= instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.performed -= instance.OnPreviousInventoryPage;
+            @PreviousInventoryPage.canceled -= instance.OnPreviousInventoryPage;
+        }
+
+        public void RemoveCallbacks(IController_InventoryUIActions instance)
+        {
+            if (m_Wrapper.m_Controller_InventoryUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_InventoryUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_InventoryUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_InventoryUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_InventoryUIActions @Controller_InventoryUI => new Controller_InventoryUIActions(this);
+
+    // Controller_SkillsUI
+    private readonly InputActionMap m_Controller_SkillsUI;
+    private List<IController_SkillsUIActions> m_Controller_SkillsUIActionsCallbackInterfaces = new List<IController_SkillsUIActions>();
+    public struct Controller_SkillsUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_SkillsUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Controller_SkillsUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_SkillsUIActions set) { return set.Get(); }
+        public void AddCallbacks(IController_SkillsUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_SkillsUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_SkillsUIActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IController_SkillsUIActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IController_SkillsUIActions instance)
+        {
+            if (m_Wrapper.m_Controller_SkillsUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_SkillsUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_SkillsUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_SkillsUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_SkillsUIActions @Controller_SkillsUI => new Controller_SkillsUIActions(this);
+
+    // Controller_SystemUI
+    private readonly InputActionMap m_Controller_SystemUI;
+    private List<IController_SystemUIActions> m_Controller_SystemUIActionsCallbackInterfaces = new List<IController_SystemUIActions>();
+    public struct Controller_SystemUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_SystemUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Controller_SystemUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_SystemUIActions set) { return set.Get(); }
+        public void AddCallbacks(IController_SystemUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_SystemUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_SystemUIActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IController_SystemUIActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IController_SystemUIActions instance)
+        {
+            if (m_Wrapper.m_Controller_SystemUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_SystemUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_SystemUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_SystemUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_SystemUIActions @Controller_SystemUI => new Controller_SystemUIActions(this);
+
+    // Controller_Map
+    private readonly InputActionMap m_Controller_Map;
+    private List<IController_MapActions> m_Controller_MapActionsCallbackInterfaces = new List<IController_MapActions>();
+    private readonly InputAction m_Controller_Map_CloseMap;
+    public struct Controller_MapActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_MapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseMap => m_Wrapper.m_Controller_Map_CloseMap;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_Map; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_MapActions set) { return set.Get(); }
+        public void AddCallbacks(IController_MapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_MapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_MapActionsCallbackInterfaces.Add(instance);
+            @CloseMap.started += instance.OnCloseMap;
+            @CloseMap.performed += instance.OnCloseMap;
+            @CloseMap.canceled += instance.OnCloseMap;
+        }
+
+        private void UnregisterCallbacks(IController_MapActions instance)
+        {
+            @CloseMap.started -= instance.OnCloseMap;
+            @CloseMap.performed -= instance.OnCloseMap;
+            @CloseMap.canceled -= instance.OnCloseMap;
+        }
+
+        public void RemoveCallbacks(IController_MapActions instance)
+        {
+            if (m_Wrapper.m_Controller_MapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_MapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_MapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_MapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_MapActions @Controller_Map => new Controller_MapActions(this);
+
+    // Controller_Dialogues
+    private readonly InputActionMap m_Controller_Dialogues;
+    private List<IController_DialoguesActions> m_Controller_DialoguesActionsCallbackInterfaces = new List<IController_DialoguesActions>();
+    private readonly InputAction m_Controller_Dialogues_Continue;
+    public struct Controller_DialoguesActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_DialoguesActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Continue => m_Wrapper.m_Controller_Dialogues_Continue;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_Dialogues; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_DialoguesActions set) { return set.Get(); }
+        public void AddCallbacks(IController_DialoguesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_DialoguesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_DialoguesActionsCallbackInterfaces.Add(instance);
+            @Continue.started += instance.OnContinue;
+            @Continue.performed += instance.OnContinue;
+            @Continue.canceled += instance.OnContinue;
+        }
+
+        private void UnregisterCallbacks(IController_DialoguesActions instance)
+        {
+            @Continue.started -= instance.OnContinue;
+            @Continue.performed -= instance.OnContinue;
+            @Continue.canceled -= instance.OnContinue;
+        }
+
+        public void RemoveCallbacks(IController_DialoguesActions instance)
+        {
+            if (m_Wrapper.m_Controller_DialoguesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IController_DialoguesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Controller_DialoguesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Controller_DialoguesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Controller_DialoguesActions @Controller_Dialogues => new Controller_DialoguesActions(this);
+
+    // Controller_Shop
+    private readonly InputActionMap m_Controller_Shop;
+    private List<IController_ShopActions> m_Controller_ShopActionsCallbackInterfaces = new List<IController_ShopActions>();
+    private readonly InputAction m_Controller_Shop_CloseShop;
+    public struct Controller_ShopActions
+    {
+        private @PlayerControls m_Wrapper;
+        public Controller_ShopActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseShop => m_Wrapper.m_Controller_Shop_CloseShop;
+        public InputActionMap Get() { return m_Wrapper.m_Controller_Shop; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Controller_ShopActions set) { return set.Get(); }
+        public void AddCallbacks(IController_ShopActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Controller_ShopActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Controller_ShopActionsCallbackInterfaces.Add(instance);
             @CloseShop.started += instance.OnCloseShop;
             @CloseShop.performed += instance.OnCloseShop;
             @CloseShop.canceled += instance.OnCloseShop;
         }
 
-        private void UnregisterCallbacks(IShopActions instance)
+        private void UnregisterCallbacks(IController_ShopActions instance)
         {
             @CloseShop.started -= instance.OnCloseShop;
             @CloseShop.performed -= instance.OnCloseShop;
             @CloseShop.canceled -= instance.OnCloseShop;
         }
 
-        public void RemoveCallbacks(IShopActions instance)
+        public void RemoveCallbacks(IController_ShopActions instance)
         {
-            if (m_Wrapper.m_ShopActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_Controller_ShopActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IShopActions instance)
+        public void SetCallbacks(IController_ShopActions instance)
         {
-            foreach (var item in m_Wrapper.m_ShopActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_Controller_ShopActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_ShopActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_Controller_ShopActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public ShopActions @Shop => new ShopActions(this);
-
-    // ActiveBuffs
-    private readonly InputActionMap m_ActiveBuffs;
-    private List<IActiveBuffsActions> m_ActiveBuffsActionsCallbackInterfaces = new List<IActiveBuffsActions>();
-    private readonly InputAction m_ActiveBuffs_ExitMenu;
-    public struct ActiveBuffsActions
+    public Controller_ShopActions @Controller_Shop => new Controller_ShopActions(this);
+    public interface IDetectControllerActions
     {
-        private @PlayerControls m_Wrapper;
-        public ActiveBuffsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ExitMenu => m_Wrapper.m_ActiveBuffs_ExitMenu;
-        public InputActionMap Get() { return m_Wrapper.m_ActiveBuffs; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(ActiveBuffsActions set) { return set.Get(); }
-        public void AddCallbacks(IActiveBuffsActions instance)
-        {
-            if (instance == null || m_Wrapper.m_ActiveBuffsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_ActiveBuffsActionsCallbackInterfaces.Add(instance);
-            @ExitMenu.started += instance.OnExitMenu;
-            @ExitMenu.performed += instance.OnExitMenu;
-            @ExitMenu.canceled += instance.OnExitMenu;
-        }
-
-        private void UnregisterCallbacks(IActiveBuffsActions instance)
-        {
-            @ExitMenu.started -= instance.OnExitMenu;
-            @ExitMenu.performed -= instance.OnExitMenu;
-            @ExitMenu.canceled -= instance.OnExitMenu;
-        }
-
-        public void RemoveCallbacks(IActiveBuffsActions instance)
-        {
-            if (m_Wrapper.m_ActiveBuffsActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IActiveBuffsActions instance)
-        {
-            foreach (var item in m_Wrapper.m_ActiveBuffsActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_ActiveBuffsActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
+        void OnSwitchToController(InputAction.CallbackContext context);
     }
-    public ActiveBuffsActions @ActiveBuffs => new ActiveBuffsActions(this);
-    public interface IPlayerActions
+    public interface IKeyboard_PlayerActions
     {
-        void OnLook(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnNormalAttack(InputAction.CallbackContext context);
         void OnChargedAttack(InputAction.CallbackContext context);
         void OnSkill1(InputAction.CallbackContext context);
         void OnSkill2(InputAction.CallbackContext context);
         void OnSkill3(InputAction.CallbackContext context);
-        void OnOpenInventory(InputAction.CallbackContext context);
+        void OnOpenUIState(InputAction.CallbackContext context);
         void OnOpenMap(InputAction.CallbackContext context);
-        void OnPressEsc(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnOpenConsole(InputAction.CallbackContext context);
+        void OnTurnCursorOnOff(InputAction.CallbackContext context);
     }
-    public interface IInventoryActions
+    public interface IKeyboard_UIStateActions
     {
-        void OnCloseInventory(InputAction.CallbackContext context);
-        void OnNextInvPage(InputAction.CallbackContext context);
-        void OnPreviousInvPage(InputAction.CallbackContext context);
+        void OnCloseUIState(InputAction.CallbackContext context);
+        void OnNextUIState(InputAction.CallbackContext context);
+        void OnPreviousUIState(InputAction.CallbackContext context);
     }
-    public interface IMapActions
+    public interface IKeyboard_QuestsUIActions
+    {
+        void OnNextQuestPage(InputAction.CallbackContext context);
+        void OnPreviousQuestPage(InputAction.CallbackContext context);
+    }
+    public interface IKeyboard_InventoryUIActions
+    {
+        void OnNextInventoryPage(InputAction.CallbackContext context);
+        void OnPreviousInventoryPage(InputAction.CallbackContext context);
+    }
+    public interface IKeyboard_SkillsUIActions
+    {
+    }
+    public interface IKeyboard_SystemUIActions
+    {
+    }
+    public interface IKeyboard_MapActions
     {
         void OnCloseMap(InputAction.CallbackContext context);
     }
-    public interface IEscMenuActions
-    {
-        void OnCloseEscMenu(InputAction.CallbackContext context);
-    }
-    public interface IDialoguesActions
+    public interface IKeyboard_DialoguesActions
     {
         void OnContinue(InputAction.CallbackContext context);
     }
-    public interface IConsoleActions
+    public interface IKeyboard_ShopActions
+    {
+        void OnCloseShop(InputAction.CallbackContext context);
+    }
+    public interface IKeyboard_ConsoleActions
     {
         void OnConfirmInput(InputAction.CallbackContext context);
         void OnCloseConsole(InputAction.CallbackContext context);
     }
-    public interface IWeaponEnhanceActions
+    public interface IDetectMouseKeyboardActions
     {
-        void OnCloseWeapDetails(InputAction.CallbackContext context);
+        void OnSwitchToMouseKeyboard(InputAction.CallbackContext context);
     }
-    public interface IShopActions
+    public interface IController_PlayerActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnNormalAttack(InputAction.CallbackContext context);
+        void OnChargedAttack(InputAction.CallbackContext context);
+        void OnSkill1(InputAction.CallbackContext context);
+        void OnSkill2(InputAction.CallbackContext context);
+        void OnSkill3(InputAction.CallbackContext context);
+        void OnOpenUIState(InputAction.CallbackContext context);
+        void OnOpenMap(InputAction.CallbackContext context);
+    }
+    public interface IController_UIStateActions
+    {
+        void OnCloseUIState(InputAction.CallbackContext context);
+        void OnNextUIState(InputAction.CallbackContext context);
+        void OnPreviousUIState(InputAction.CallbackContext context);
+    }
+    public interface IController_QuestsUIActions
+    {
+        void OnNextQuestPage(InputAction.CallbackContext context);
+        void OnPreviousQuestPage(InputAction.CallbackContext context);
+    }
+    public interface IController_InventoryUIActions
+    {
+        void OnNextInventoryPage(InputAction.CallbackContext context);
+        void OnPreviousInventoryPage(InputAction.CallbackContext context);
+    }
+    public interface IController_SkillsUIActions
+    {
+    }
+    public interface IController_SystemUIActions
+    {
+    }
+    public interface IController_MapActions
+    {
+        void OnCloseMap(InputAction.CallbackContext context);
+    }
+    public interface IController_DialoguesActions
+    {
+        void OnContinue(InputAction.CallbackContext context);
+    }
+    public interface IController_ShopActions
     {
         void OnCloseShop(InputAction.CallbackContext context);
-    }
-    public interface IActiveBuffsActions
-    {
-        void OnExitMenu(InputAction.CallbackContext context);
     }
 }

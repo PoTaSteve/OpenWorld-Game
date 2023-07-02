@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: UncommonSpItem
   m_EditorClassIdentifier: 
   ItemID: 2
+  isStackable: 1
+  hasDetailIcon: 0
   specialItemName: Uncommon Special Item
-  rarity: 2
   icon: {fileID: 0}
   description: 'Test item: Uncommon special item.'
-  numberOfSources: 0
-  sources: []
   Console_Name: 
   buyCost: 0

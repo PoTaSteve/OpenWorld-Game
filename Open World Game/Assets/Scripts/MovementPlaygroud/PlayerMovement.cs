@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -39,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public bool sliding;
     public bool wallrunning;
     public bool climbing;
+    public bool isCrouched;
+    public bool isSprinting;
 
     public bool usingGravity;
 
@@ -52,19 +55,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
+    public bool canJump;
     public float airMultiplier;
-
-    bool readyToJump;
 
     [Header("Crouching")]
     public float crouchSpeed;
-    public float crouchYScale;
-    float startYScale;
 
-    [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode sprintKey = KeyCode.LeftControl;
-    public KeyCode crouchKey = KeyCode.LeftShift;
+    [Header("Keyhold")]
+    public bool holdingSprintKey;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -76,13 +74,19 @@ public class PlayerMovement : MonoBehaviour
     private bool exitingSlope;
 
     [Header("References")]
-    private Climbing climbingScript;
+    public CapsuleCollider playerCollider;
+
+    public Climbing climbingScript;
+    public WallRunning wallRunningScript;
+    public Sliding slidingScript;
+
+    public Animator anim;
 
     public Transform orientation;
     public Transform cam;
 
-    float horizontalInput;
-    float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
 
     Vector3 moveDirection;
 
@@ -95,12 +99,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
-        climbingScript = GetComponent<Climbing>();
-
-        readyToJump = true;
-
-        startYScale = 1f;
     }
 
     // Update is called once per frame
@@ -110,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Ground check
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsground);
+
+        anim.SetBool("IsGrounded", isGrounded);
 
         if (!isGrounded && !wallrunning && !climbing)
             isInAir = true;
@@ -139,32 +139,85 @@ public class PlayerMovement : MonoBehaviour
     // Register inputs for movement
     private void InputMethod()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = GameManager.Instance.plInputMan.horizontalInput;
+        verticalInput = GameManager.Instance.plInputMan.verticalInput;
 
-        // When to jump
-        if (Input.GetKey(jumpKey) && readyToJump && isGrounded)
+        bool hasInput = horizontalInput != 0 || verticalInput != 0;
+
+        if (isGrounded)
         {
-            readyToJump = false;
+            if (holdingSprintKey)
+            {
+                isSprinting = true;
 
-            Jump();
+                if (hasInput)
+                {
+                    if (isCrouched)
+                    {
+                        isCrouched = false;
 
-            // Allows continuos jumps by keeping jump button pressed
-            Invoke(nameof(ResetJump), jumpCooldown);
+                        anim.SetBool("IsCrouched", false);
+
+                        playerCollider.center = Vector3.zero;
+                        playerCollider.height = playerHeight;
+                    }
+
+                    anim.SetInteger("MoveSpeed", 3);
+                }
+            }
+            else
+            {
+                isSprinting = false;
+            }
+
+            // Crouched movement
+            if (isCrouched)
+            {
+                if (hasInput)
+                {
+                    anim.SetInteger("MoveSpeed", 1);
+                }
+                else
+                {
+                    anim.SetInteger("MoveSpeed", 0);
+                }
+            }
+
+            if (hasInput && !isSprinting && !isCrouched)
+            {
+                anim.SetInteger("MoveSpeed", 2);
+            }
+            else if (horizontalInput == 0 && verticalInput == 0)
+            {
+                anim.SetInteger("MoveSpeed", 0);
+            }
         }
+    }
 
-        // Start crouch
-        if (Input.GetKeyDown(crouchKey))
+
+    // Check for slidnig is not implemented yet
+    public void PressedCrouchKey()
+    {
+        if (isGrounded && !isSprinting)
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            isCrouched = !isCrouched;
 
-            // I want to add force down since the center of the player is 1 unit over the ground
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            anim.SetBool("IsCrouched", isCrouched);
+
+            if (isCrouched)
+            {
+                playerCollider.center = new Vector3(0, -playerHeight / 4f, 0);
+                playerCollider.height = -playerHeight / 2f;
+            }
+            else
+            {
+                playerCollider.center = Vector3.zero;
+                playerCollider.height = playerHeight;
+            }
         }
-        // Stop crouch
-        if (Input.GetKeyUp(crouchKey))
+        else if (isGrounded && isSprinting && (horizontalInput != 0 || verticalInput != 0))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            slidingScript.StartSlide();
         }
     }
 
@@ -212,13 +265,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // Mode - Crouching
-        else if (Input.GetKey(crouchKey))
+        else if (isCrouched)
         {
             state = MovementState.CROUCHING;
             desiredMoveSpeed = crouchSpeed;
         }
         // Mode - Sprinting
-        else if (isGrounded && Input.GetKey(sprintKey))
+        else if (isGrounded && isSprinting && (horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.SPRINTING;
             desiredMoveSpeed = sprintSpeed;
@@ -343,21 +396,39 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void Jump()
     {
-        exitingSlope = true;
-        
-        // Reset y velocity
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        if (canJump)
+        {
+            if (isCrouched)
+            {
+                anim.SetBool("IsCrouched", false);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                isCrouched = false;
+            }
+            else
+            {
+                anim.SetTrigger("Jump");
+
+                canJump = false;
+
+                StartCoroutine(ResetJumpIn(jumpCooldown));
+
+                exitingSlope = true;
+
+                // Reset y velocity
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            }
+        }               
     }
 
-    private void ResetJump()
+    public IEnumerator ResetJumpIn(float t)
     {
-        readyToJump = true;
+        yield return new WaitForSeconds(t);
 
-        exitingSlope = false;
+        canJump = true;
     }
 
     public bool OnSlope()

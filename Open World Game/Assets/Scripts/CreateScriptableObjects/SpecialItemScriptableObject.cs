@@ -7,6 +7,9 @@ public class SpecialItemScriptableObject : ScriptableObject
 {
     public int ItemID;
 
+    public bool isStackable;
+    public bool hasDetailIcon; // Icon in the top left
+
     //Top
 
     public string specialItemName;

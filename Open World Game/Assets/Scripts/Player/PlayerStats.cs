@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     public int currMaxHealth;
     
     public float currAtk;
+    public float currWeaponAttack;
 
     public float currDef;
 
@@ -161,16 +162,6 @@ public class PlayerStats : MonoBehaviour
         ExtraHealthBar.value = currExtraHealth;
 
         HealthText.text = currHealth + "/" + currMaxHealth;
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponentInParent<Enemy>();
-
-            GetDamage(enemy.damage);
-        }
     }
 
     public void Die()

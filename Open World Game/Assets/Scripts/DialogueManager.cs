@@ -22,6 +22,8 @@ public class DialogueManager : MonoBehaviour
 
     public bool needToChoose;
 
+    public GameObject NPC;
+
     public void StartDialogue()
     {
         needToChoose = false;
@@ -36,7 +38,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                GameManager.Instance.plInMan.ExitDialogueSequence();
+                GameManager.Instance.plInputMan.ExitDialogueSequence(); // Disable dialogue UI
             }
         }
     }
@@ -51,7 +53,7 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                GameManager.Instance.plInMan.ExitDialogueSequence();
+                GameManager.Instance.plInputMan.ExitDialogueSequence();
             }
         }
     }
@@ -66,14 +68,20 @@ public class DialogueManager : MonoBehaviour
 
         speaker.text = tags[0];
 
+        // Check for other tags
+        if (tags.Count > 1)
+        {
+            CheckOtherTag();
+        }
+
         if (story.currentChoices.Count > 0)
         {
             needToChoose = true;
 
             foreach (Choice choice in story.currentChoices)
             {
-                GameObject newChoice = Instantiate(choicePrefab, choiceParent);
-                
+                GameObject newChoice = Instantiate(choicePrefab, choiceParent);                
+
                 newChoice.GetComponentInChildren<TextMeshProUGUI>().text = choice.text;
 
                 newChoice.GetComponent<Button>().onClick.AddListener(delegate { MakeChoice(choice); });
@@ -95,10 +103,30 @@ public class DialogueManager : MonoBehaviour
         ContinueDialogue();
     }
 
-    public void BindFunctionToChoice(string s)
+    // Checks the other tag in a conversation
+    public void CheckOtherTag()
     {
-        // When creating a choice check for a tag 
-        // That tag will decide which function to bind to the button (if sequence)
-        // Tags are gotten right after the narrator finish to speak
+        string tag = story.currentTags[1];
+
+        switch (tag)
+        {
+            case "Shop":
+                // Open Shop
+                NPC.GetComponent<Shop>().OpenShop();
+
+                break;
+
+            case "Quest":
+                string questID = story.currentTags[2];
+
+                GameManager.Instance.QuestsMan.CheckQuestProgress(questID);
+
+                // Change dialogue of curr NPC
+
+                break;
+
+            default:
+                break;
+        }
     }
 }

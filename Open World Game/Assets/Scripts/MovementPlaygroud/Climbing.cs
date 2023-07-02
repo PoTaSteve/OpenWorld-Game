@@ -66,13 +66,18 @@ public class Climbing : MonoBehaviour
         }
     }
 
+    public void ReadMovementInput()
+    {
+        
+    }
+
     private void StateMachine()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = GameManager.Instance.plInputMan.horizontalInput;
+        verticalInput = GameManager.Instance.plInputMan.verticalInput;
 
         // State 1 - Start Climbing
-        if (!climbing && wallFront && Input.GetKey(KeyCode.W) && wallLookAngle < maxWallLookAngle && !exitingWall && currentStamina > 0)
+        if (!climbing && wallFront && verticalInput > 0 && wallLookAngle < maxWallLookAngle && !exitingWall && currentStamina > 0)
         {
             StartClimbing();
         }
@@ -81,12 +86,6 @@ public class Climbing : MonoBehaviour
         else if (climbing && !exitingWall)
         {
             ClimbingMovement();
-
-            // Climb Jump
-            if (wallFront && Input.GetKeyDown(jumpKey))
-            {
-                ClimbJump();
-            }
 
             // Stamina management
             if (currentStamina > 0)
@@ -189,16 +188,19 @@ public class Climbing : MonoBehaviour
         pm.canRotate = true;
     }
 
-    private void ClimbJump()
+    public void ClimbJump()
     {
-        exitingWall = true;
-        pm.restricted = true;
-        exitWallTimer = exitWallTime;
+        if (climbing && !exitingWall && wallFront)
+        {
+            exitingWall = true;
+            pm.restricted = true;
+            exitWallTimer = exitWallTime;
 
-        Vector3 forceToApply = transform.up * climbJumpUpForce + frontWallHit.normal * climbJumpBackForce;
+            Vector3 forceToApply = transform.up * climbJumpUpForce + frontWallHit.normal * climbJumpBackForce;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(forceToApply, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.AddForce(forceToApply, ForceMode.Impulse);
+        }        
     }
 
     private void RunOutOfStamina()

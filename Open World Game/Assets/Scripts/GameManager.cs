@@ -16,8 +16,19 @@ public enum State
     MAIN_MENU,
     LOADING_SCREEN,
     OPEN_WORLD,
-    BUFFS_WINDOW,
+    QUESTS,
     INVENTORY,
+    SKILLS,
+    SYSTEM,
+    MAP,
+    DIALOGUE,
+    SHOP
+}
+
+public enum InputMethod
+{
+    MOUSE_AND_KEYBOARD,
+    CONTROLLER
 }
 
 public class GameManager : MonoBehaviour
@@ -28,24 +39,33 @@ public class GameManager : MonoBehaviour
     public GameObject player;
 
     public State currentState;
+    public InputMethod inputMethod;
 
     List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
     float totalLoadProgress;
 
     
-    public InventoryManager invMan;
-    
     public ItemManager itemMan;
     
     public DialogueManager dialMan;
     
-    public PlayerInputManager plInMan;
+    public PlayerInputManager plInputMan;
+
+    public PlayerInteractionManager plInteractMan;
     
     public PlayerStats plStats;
+
+    public UIStateManager UIStateMan;
+    
+    public QuestsManager QuestsMan;
+
+    public InventoryManager invMan;
+
+    public SkillsManager skillsMan;
+
+    public SystemManager systemMan;
     
     public ShopManager shopMan;
-    
-    public DeBuffManager debuffMan;
     
     public ConsoleManager consoleMan;
 
@@ -64,7 +84,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadSceneAsync((int)SceneIndex.MAIN_MENU, LoadSceneMode.Additive);
 
                 player.SetActive(false);
-                plInMan.cam.gameObject.SetActive(false);
+                plInputMan.cam.gameObject.SetActive(false);
                 DeactivateUI();
                 LoadingScreen.SetActive(false);
 
@@ -118,9 +138,9 @@ public class GameManager : MonoBehaviour
         currentState = State.OPEN_WORLD;
 
         player.SetActive(true);
-        plInMan.cam.gameObject.SetActive(true);
+        plInputMan.cam.gameObject.SetActive(true);
 
-        SetUpManagersInOpenWorld();
+        SetItemParent();
 
         SetUI();
 
@@ -129,36 +149,24 @@ public class GameManager : MonoBehaviour
 
     public void DeactivateUI()
     {
-        plInMan.UIStateObject.SetActive(false);
-        plInMan.GameUIObj.SetActive(false);
-        plInMan.QuestsUIObject.SetActive(false);
-        plInMan.InventoryObj.SetActive(false);
-        plInMan.SkillsUIObject.SetActive(false);
-        plInMan.SystemUIObject.SetActive(false);
-        plInMan.MapObj.SetActive(false);
-        plInMan.EscMenuObj.SetActive(false);
-        plInMan.ConsoleObj.SetActive(false);
-        plInMan.DialogueObj.SetActive(false);
-        plInMan.TempConsoleDebugObj.SetActive(false);
-        plInMan.ShopObj.SetActive(false);
-        plInMan.ActiveBuffsWindow.SetActive(false);
+        plInputMan.UIStateObject.SetActive(false);
+        plInputMan.GameUIObj.SetActive(false);
+        plInputMan.MapObj.SetActive(false);
+        plInputMan.ConsoleObj.SetActive(false);
+        plInputMan.DialogueObj.SetActive(false);
+        plInputMan.TempConsoleDebugObj.SetActive(false);
+        plInputMan.ShopObj.SetActive(false);
     }
 
     public void SetUI()
     {
-        plInMan.UIStateObject.SetActive(false);
-        plInMan.GameUIObj.SetActive(true);
-        plInMan.QuestsUIObject.SetActive(false);
-        plInMan.InventoryObj.SetActive(false);
-        plInMan.SkillsUIObject.SetActive(false);
-        plInMan.SystemUIObject.SetActive(false);
-        plInMan.MapObj.SetActive(false);
-        plInMan.EscMenuObj.SetActive(false);
-        plInMan.ConsoleObj.SetActive(false);
-        plInMan.DialogueObj.SetActive(false);
-        plInMan.TempConsoleDebugObj.SetActive(false);
-        plInMan.ShopObj.SetActive(false);
-        plInMan.ActiveBuffsWindow.SetActive(false);
+        plInputMan.UIStateObject.SetActive(false);
+        plInputMan.GameUIObj.SetActive(true);
+        plInputMan.MapObj.SetActive(false);
+        plInputMan.ConsoleObj.SetActive(false);
+        plInputMan.DialogueObj.SetActive(false);
+        plInputMan.TempConsoleDebugObj.SetActive(false);
+        plInputMan.ShopObj.SetActive(false);
     }
 
     public void QuitGame()
@@ -166,38 +174,8 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void SetUpManagersInOpenWorld()
+    public void SetItemParent()
     {
-        //#region DeBuff Manager
-        //debuffMan.DeBuffParent = GameObject.FindGameObjectWithTag("DeBuffParent").transform;
-        //debuffMan.ActiveDeBuffWindow = GameObject.FindGameObjectWithTag("DeBuffWindow");
-        //debuffMan.ActiveDeBuffParent = debuffMan.ActiveDeBuffWindow.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
-        //#endregion
-
-        //#region Shop Manager
-        //GameObject shopWin = GameObject.FindGameObjectWithTag("ShopWindow");
-        //shopMan.buyPopUp = shopWin.transform.GetChild(4).gameObject;
-        //shopMan.ItemDetails = shopWin.transform.GetChild(2).GetChild(0).gameObject;
-        //shopMan.ProductContent = shopWin.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<RectTransform>();
-        //#endregion
-
-        //#region Dialogue Manager
-        //GameObject dialogueWin = GameObject.FindGameObjectWithTag("DialogueWindow");
-        //dialMan.DialogueWindow = dialogueWin;
-        //dialMan.dialogue = dialogueWin.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        //dialMan.speaker = dialogueWin.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        //dialMan.choiceParent = dialogueWin.transform.GetChild(4).GetComponent<RectTransform>();
-        //#endregion
-
-        //#region Console Manager
-        //consoleMan.invMan = invMan;
-        //GameObject console = GameObject.FindGameObjectWithTag("ConsoleWindow");
-        //consoleMan.txtField = console.transform.GetChild(1).GetComponent<TMP_InputField>();
-        //consoleMan.MsgParent = console.transform.GetChild(2).GetChild(0);
-        //#endregion
-
-        #region Item Manager
         itemMan.itemsParent = GameObject.FindGameObjectWithTag("ItemsParent").transform;
-        #endregion
     }
 }

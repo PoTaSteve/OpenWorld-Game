@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: CommonMat
   m_EditorClassIdentifier: 
   ItemID: 300001
+  isStackable: 1
+  hasDetailIcon: 0
   materialName: Common material
   materialType: 0
-  rarity: 1
   icon: {fileID: 21300000, guid: 717718fefdedf6940953a97d99190722, type: 3}
   isCraftingResult: 0
   description: 'Test item: Common material. Crafting ingredient.'
-  numberOfSources: 0
-  sources: []
   buyCost: 10
   sellCost: 5
   Console_Name: material:common_test

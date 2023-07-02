@@ -7,6 +7,11 @@ TagManager:
   - Water
   - Enemy
   - ItemsParent
+  - DialogueWindow
+  - DeBuffParent
+  - ConsoleWindow
+  - DeBuffWindow
+  - ShopWindow
   layers:
   - Default
   - TransparentFX
@@ -23,7 +28,7 @@ TagManager:
   - See-Through
   - PlayerTrigger
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 

@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: LegendaryMat
   m_EditorClassIdentifier: 
   ItemID: 300005
+  isStackable: 1
+  hasDetailIcon: 0
   materialName: Legendary material
   materialType: 0
-  rarity: 5
   icon: {fileID: 21300000, guid: 717718fefdedf6940953a97d99190722, type: 3}
   isCraftingResult: 0
   description: 'Test item: Legendary material. Crafting ingredient.'
-  numberOfSources: 0
-  sources: []
   buyCost: 50
   sellCost: 25
   Console_Name: material:legendary_test

@@ -18,6 +18,8 @@ public class ThirdPersonCam : MonoBehaviour
     public Rigidbody rb;
     public PlayerMovement pm;
 
+    private Vector3 LastInputDir = Vector3.zero;
+
     public bool canUpdate;
 
     public float rotationSpeed;
@@ -97,13 +99,16 @@ public class ThirdPersonCam : MonoBehaviour
         {
             if (currentStyle == CameraStyle.EXPLORATION)
             {
-                float horizontalInput = Input.GetAxisRaw("Horizontal");
-                float verticalInput = Input.GetAxisRaw("Vertical");
+                float horizontalInput = GameManager.Instance.plInputMan.horizontalInput;
+                float verticalInput = GameManager.Instance.plInputMan.verticalInput;
                 Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-                if (inputDir != Vector3.zero)
+                if (inputDir != Vector3.zero && inputDir != LastInputDir)
                 {
-                    playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+                    LastInputDir = inputDir;
+
+                    StopAllCoroutines();
+                    StartCoroutine(LerpPlayerRot(inputDir));
                 }
             }
 
@@ -115,6 +120,16 @@ public class ThirdPersonCam : MonoBehaviour
                 playerObj.forward = dirToCombatLookAt.normalized;
             }
         }        
+    }
+
+    public IEnumerator LerpPlayerRot(Vector3 inputDir)
+    {
+        while (playerObj.forward.x != inputDir.x && player.forward.z != inputDir.z)
+        {
+            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+
+            yield return null;
+        }
     }
 
     public void SwitchCameraStyle(CameraStyle newStyle)

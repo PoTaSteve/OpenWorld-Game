@@ -10,9 +10,7 @@ public class WeaponInfo : Interactable
 
     public string UniqueID;
 
-    public bool hasBottomRightValue;
-    public bool hasTopRightValue;
-    public bool hasTopLeftValue;
+    public bool hasDetailIcon; // Icon in the top left
 
     #region InventoryInfos
     //Top
@@ -32,7 +30,9 @@ public class WeaponInfo : Interactable
 
     public override void Interact()
     {
-        GameManager.Instance.invMan.AddItemToInventoryST(ItemType.Weapon, gameObject);
+        GameManager.Instance.invMan.AddItemToInventory(ItemType.Weapon, gameObject, 1);
+
+        GameManager.Instance.plInteractMan.InRangeInteractables.Remove(gameObject);
 
         Destroy(gameObject);
     }
@@ -239,5 +239,17 @@ public class WeaponInfo : Interactable
         ID = scrObj.ItemID.ToString() + "_" + currentLevel.ToString() + "_" + currentMaxLevel.ToString() + "_" + ascensionLevel.ToString() + "_" + currentXp.ToString();
 
         return ID;
+    }
+
+    public void EquipWeapon()
+    {
+        GameManager.Instance.plStats.currWeaponAttack = baseATK;
+
+        // Set weapon GFX on player
+    }
+
+    public void DropWeapon()
+    {
+
     }
 }

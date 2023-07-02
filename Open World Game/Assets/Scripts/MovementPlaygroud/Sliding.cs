@@ -19,7 +19,6 @@ public class Sliding : MonoBehaviour
     private float startYScale;
 
     [Header("Input")]
-    public KeyCode slideKey;
     private float horizontalInput;
     private float verticalInput;
 
@@ -35,18 +34,7 @@ public class Sliding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
-        {
-            StartSlide();
-        }
-
-        if (Input.GetKeyUp(slideKey) && pm.sliding)
-        {
-            StopSlide();
-        }
     }
 
     private void FixedUpdate()
@@ -57,11 +45,14 @@ public class Sliding : MonoBehaviour
         }
     }
 
-    private void StartSlide()
+    public void StartSlide()
     {
         pm.sliding = true;
 
-        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
+        pm.anim.SetBool("IsSliding", true);
+
+        pm.playerCollider.center = new Vector3(0, -pm.playerHeight / 4f, 0);
+        pm.playerCollider.height = -pm.playerHeight / 2f;
 
         // Push down player since center is 1 unit above ground
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -93,10 +84,13 @@ public class Sliding : MonoBehaviour
         }
     }
 
-    private void StopSlide()
+    public void StopSlide()
     {
         pm.sliding = false;
 
-        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+        pm.playerCollider.center = Vector3.zero;
+        pm.playerCollider.height = pm.playerHeight;
+
+        pm.anim.SetBool("IsSliding", false);
     }
 }

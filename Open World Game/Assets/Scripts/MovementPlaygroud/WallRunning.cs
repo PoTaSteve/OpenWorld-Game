@@ -17,10 +17,10 @@ public class WallRunning : MonoBehaviour
 
     [Header("Input")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode upwardsRunKey = KeyCode.LeftShift;
-    public KeyCode downwardsRunKey = KeyCode.LeftControl;
-    private bool upwardsRunning;
-    private bool downwardsRunning;
+    //public KeyCode upwardsRunKey = KeyCode.LeftShift;
+    //public KeyCode downwardsRunKey = KeyCode.LeftControl;
+    //private bool upwardsRunning;
+    //private bool downwardsRunning;
     private float horizontalInput;
     private float verticalInput;
 
@@ -83,11 +83,11 @@ public class WallRunning : MonoBehaviour
     private void StateMachine()
     {
         // Get inputs
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = GameManager.Instance.plInputMan.horizontalInput;
+        verticalInput = GameManager.Instance.plInputMan.verticalInput;
 
-        upwardsRunning = Input.GetKey(upwardsRunKey);
-        downwardsRunning = Input.GetKey(downwardsRunKey);
+        //upwardsRunning = Input.GetKey(upwardsRunKey);
+        //downwardsRunning = Input.GetKey(downwardsRunKey);
 
         // State 1 - Wallrunning
         if ((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
@@ -175,14 +175,14 @@ public class WallRunning : MonoBehaviour
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
         // Upwards / Downwards force
-        if (upwardsRunning)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
-        }
-        if (downwardsRunning)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);
-        }
+        //if (upwardsRunning)
+        //{
+        //    rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
+        //}
+        //if (downwardsRunning)
+        //{
+        //    rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);
+        //}
 
         // Push to wall force
         if (!(wallLeft && horizontalInput > 0) || !(wallRight && horizontalInput < 0))
@@ -204,7 +204,7 @@ public class WallRunning : MonoBehaviour
         // Reset cam effects
     }
 
-    private void WallJump()
+    public void WallJump()
     {
         // Enter exiting wall state
         exitWallTimer = exitWallTime;

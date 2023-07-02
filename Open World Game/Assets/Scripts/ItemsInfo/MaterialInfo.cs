@@ -10,13 +10,11 @@ public class MaterialInfo : Interactable
 
     public int count;
 
-    public bool hasBottomRightValue;
-    public bool hasTopRightValue;
-    public bool hasTopLeftValue;
-
     public override void Interact()
     {
-        GameManager.Instance.invMan.AddItemToInventoryST(ItemType.Material, gameObject);
+        GameManager.Instance.invMan.AddItemToInventory(ItemType.Material, gameObject, count);
+
+        GameManager.Instance.plInteractMan.InRangeInteractables.Remove(gameObject);
 
         Destroy(gameObject);
     }

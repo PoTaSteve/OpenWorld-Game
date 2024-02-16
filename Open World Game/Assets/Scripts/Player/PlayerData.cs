@@ -8,13 +8,13 @@ public class PlayerData
     public int currLvl;
     public int currXp;
 
-    public int currHealth;
-    public int currExtraHealth;
-    public int currMaxHealth;
+    public int currHP;
+    public int currShield;
+    public int currMaxHP;
 
-    public float currAtk;
+    public int currATK;
 
-    public float currDef;
+    public int currDEF;
 
     public float currStamina;
     public float currMaxStamina;
@@ -24,13 +24,13 @@ public class PlayerData
         currLvl = player.currLvl;
         currXp = player.currXp;
 
-        currHealth = player.currHealth;
-        currExtraHealth = player.currExtraHealth;
-        currMaxHealth = player.currMaxHealth;
+        currHP = player.currHP;
+        currShield = player.currShield;
+        currMaxHP = player.GetCurrMaxHP();
 
-        currAtk = player.currAtk;
+        currATK = player.GetCurrATK();
 
-        currDef = player.currDef;
+        currDEF = player.GetCurrDEF();
 
         currStamina = player.currStamina;
         currMaxStamina = player.currMaxStamina;

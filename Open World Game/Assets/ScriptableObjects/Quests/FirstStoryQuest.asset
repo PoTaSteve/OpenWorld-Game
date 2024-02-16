@@ -13,10 +13,102 @@ MonoBehaviour:
   m_Name: FirstStoryQuest
   m_EditorClassIdentifier: 
   questName: First Story Quest
-  questID: 000001
+  questID: 000000
   questGiver: The Narrator
-  questPlace: The world
-  questDescription: Test Description for first story quest
-  questIcon: {fileID: 21300000, guid: 4f9cf839652f79b42b3fc971488e4a65, type: 3}
+  questPlace: The World
+  questDescription: Test description for first story quest
   questType: 0
-  stepsType: 
+  steps:
+  - stepType: 0
+    dialogueQuest:
+      NPC_ID: 100002
+      dialogueText: {fileID: 0}
+    giveItemQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+      items:
+      - ID: 0
+        ammount: 0
+      - ID: 0
+        ammount: 0
+    collectItemQuest:
+      items: []
+    interactQuest:
+      interactableID: 
+    killQuest:
+      targets: []
+    travelQuest:
+      TriggerPrefab: {fileID: 0}
+      TriggerPos: {x: 0, y: 0, z: 0}
+      TriggerRot: {x: 0, y: 0, z: 0, w: 0}
+  - stepType: 0
+    dialogueQuest:
+      NPC_ID: 100003
+      dialogueText: {fileID: 4900000, guid: 54648aac48872014592e1c52b8ad21d8, type: 3}
+    giveItemQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+      items:
+      - ID: 0
+        ammount: 0
+      - ID: 0
+        ammount: 0
+    collectItemQuest:
+      items: []
+    interactQuest:
+      interactableID: 
+    killQuest:
+      targets: []
+    travelQuest:
+      TriggerPrefab: {fileID: 0}
+      TriggerPos: {x: 0, y: 0, z: 0}
+      TriggerRot: {x: 0, y: 0, z: 0, w: 0}
+  - stepType: 0
+    dialogueQuest:
+      NPC_ID: 100004
+      dialogueText: {fileID: 4900000, guid: e4816424e1b51e54b92a237454dde413, type: 3}
+    giveItemQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+      items:
+      - ID: 0
+        ammount: 0
+      - ID: 0
+        ammount: 0
+    collectItemQuest:
+      items:
+      - ID: 0
+        ammount: 0
+    interactQuest:
+      interactableID: 
+    killQuest:
+      targets: []
+    travelQuest:
+      TriggerPrefab: {fileID: 0}
+      TriggerPos: {x: 0, y: 0, z: 0}
+      TriggerRot: {x: 0, y: 0, z: 0, w: 0}
+  questRewards:
+  - type: 0
+    ammount: 200
+    weapScrObj: {fileID: 0}
+    materialReward:
+      matScrObj: {fileID: 0}
+      count: 0
+    foodReward:
+      foodScrObj: {fileID: 0}
+      count: 0
+    specialItemReward:
+      specItemScrObj: {fileID: 0}
+      count: 0
+  - type: 1
+    ammount: 0
+    weapScrObj: {fileID: 11400000, guid: 9bdf6e3aec2127549b94c60cb220f982, type: 2}
+    materialReward:
+      matScrObj: {fileID: 0}
+      count: 0
+    foodReward:
+      foodScrObj: {fileID: 0}
+      count: 0
+    specialItemReward:
+      specItemScrObj: {fileID: 0}
+      count: 0

@@ -65,13 +65,13 @@ public class DayNightCycle : MonoBehaviour
         if (sun.intensity == 0 && sun.gameObject.activeInHierarchy)
         {
             sun.gameObject.SetActive(false);
-            //RenderSettings.skybox = nightSkybox;
+            RenderSettings.skybox = nightSkybox;
             RenderSettings.sun = moon;
         }
         else if (sun.intensity > 0 && !sun.gameObject.activeInHierarchy)
         {
             sun.gameObject.SetActive(true);
-            //RenderSettings.skybox = defaultSkybox;
+            RenderSettings.skybox = defaultSkybox;
             RenderSettings.sun = sun;
         }
 
@@ -79,13 +79,13 @@ public class DayNightCycle : MonoBehaviour
         if (moon.intensity == 0 && moon.gameObject.activeInHierarchy)
         {
             moon.gameObject.SetActive(false);
-            //RenderSettings.skybox = defaultSkybox;
+            RenderSettings.skybox = defaultSkybox;
             RenderSettings.sun = sun;
         }
         else if (moon.intensity > 0 && !moon.gameObject.activeInHierarchy)
         {
             moon.gameObject.SetActive(true);
-            //RenderSettings.skybox = nightSkybox;
+            RenderSettings.skybox = nightSkybox;
             RenderSettings.sun = moon;
         }
 

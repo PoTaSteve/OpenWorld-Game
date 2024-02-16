@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,8 +18,22 @@ public class QuestUI : MonoBehaviour
 
     public void OnEnable()
     {
-        anim.SetBool("isCompleted", quest.isCompleted);
-        anim.SetBool("isTracking", quest.isTracking);
+        if (quest.questState == QuestState.COMPLETED)
+        {
+            anim.SetBool("isCompleted", true);
+        }
+        else if (quest.questState == QuestState.STARTED_TRACKING)
+        {
+            anim.SetBool("isTracking", true);
+        }
+        else if (quest.questState == QuestState.STARTED_NOT_TRACKING)
+        {
+            anim.SetBool("isTracking", false);
+        }
+        else
+        {
+            Debug.Log("Error setting quest UI animator state");
+        }
     }
 
     public void InitializeQuestUI(Quest quest)
@@ -29,19 +42,12 @@ public class QuestUI : MonoBehaviour
 
         this.quest = quest;
 
-        questIcon.sprite = quest.questScrObj.questIcon;
         questName.text = quest.questScrObj.questName;
         questPlace.text = quest.questScrObj.questPlace;
-
-        quest.isTracking = false;
-        quest.isCompleted = false;
     }
 
     public void CompleteQuestUI()
     {
-        quest.isTracking = false;
-        quest.isCompleted = true;
-
         // Move quest to the bottom
         gameObject.transform.SetAsLastSibling();
     }
@@ -49,16 +55,42 @@ public class QuestUI : MonoBehaviour
     public void ClickQuest()
     {
         // Update quest details
-        GameManager.Instance.QuestsMan.UpdateQuestDetails(quest);
-
-        // Highlight
-        HighlightObj.SetActive(true);
+        GameManager.Instance.QuestUIMan.UpdateQuestDetails(quest);
     }
 
     public void ClickTrackQuest()
     {
-        quest.isTracking = !quest.isTracking;
+        bool tracking = anim.GetBool("isTracking");
 
-        anim.SetBool("isTracking", quest.isTracking);
+        if (!tracking)
+        {
+            ClickQuest();
+
+            // Start tracking and disable previous tracking
+            Quest trackingQuest = GameManager.Instance.QuestsMan.trackingQuest;
+
+            if (trackingQuest.questScrObj != null)
+            {
+                trackingQuest.questState = QuestState.STARTED_NOT_TRACKING;
+
+                trackingQuest.questUI.StopTrackingUI();
+            }
+
+            trackingQuest = quest;
+
+            StartTrackingUI();
+
+            trackingQuest.questState = QuestState.STARTED_TRACKING;
+        }
+    }
+
+    public void StartTrackingUI()
+    {
+        anim.SetBool("isTracking", true);
+    }
+
+    public void StopTrackingUI()
+    {
+        anim.SetBool("isTracking", false);
     }
 }

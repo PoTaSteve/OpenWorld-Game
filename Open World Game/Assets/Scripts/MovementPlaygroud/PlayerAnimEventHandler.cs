@@ -28,4 +28,9 @@ public class PlayerAnimEventHandler : MonoBehaviour
         plInputMan.attackCount = 0;
         plInputMan.canPrepareNextAttack = true;
     }
+
+    public void Attack()
+    {
+        plInputMan.CheckAndDamageEnemy();
+    }
 }

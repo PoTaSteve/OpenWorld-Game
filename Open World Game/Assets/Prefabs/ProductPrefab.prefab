@@ -108,12 +108,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   itemName: 
   description: 
-  rarity: 0
   itemType: 0
-  weapInfo: {fileID: 0}
-  matInfo: {fileID: 0}
-  foodInfo: {fileID: 0}
-  specItemInfo: {fileID: 0}
+  weapScrObj: {fileID: 0}
+  matScrObj: {fileID: 0}
+  foodScrObj: {fileID: 0}
+  specItemScrObj: {fileID: 0}
 --- !u!95 &227709
 Animator:
   serializedVersion: 5
@@ -942,7 +941,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3a34adbd8391aa643bb19e15ca2d878b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9919b8dcfe666e243a5b7af560f9ca3b, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

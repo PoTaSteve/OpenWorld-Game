@@ -9,7 +9,7 @@
 I lost my keys, can you help me find them? # Quest giver
 
     * [Sure]
-        Thank you so much!! # Quest giver # Quest # 000001
+        Thank you so much!! # Quest giver # Quest # 000000
         -> END
     * [Not my problem]
         -> leave

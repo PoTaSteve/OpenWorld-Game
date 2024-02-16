@@ -97,7 +97,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill1",
+                    "name": "Skill0",
                     "type": "Button",
                     "id": "8f8dea97-33ff-40b2-bd6b-704d4160e706",
                     "expectedControlType": "Button",
@@ -106,7 +106,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill2",
+                    "name": "Skill1",
                     "type": "Button",
                     "id": "0b9259c4-0db6-4e2c-bb91-1ff77bb0e8aa",
                     "expectedControlType": "Button",
@@ -115,7 +115,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill3",
+                    "name": "Skill2",
                     "type": "Button",
                     "id": "e084417a-fe4d-4893-90c2-46778ba7ac6a",
                     "expectedControlType": "Button",
@@ -206,7 +206,18 @@
                 {
                     "name": "",
                     "id": "cf4c9ab9-aff1-40e7-81bc-f21ee8160940",
-                    "path": "",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b872cf8-1f95-415d-861e-f9392f550a16",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -216,23 +227,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4b872cf8-1f95-415d-861e-f9392f550a16",
-                    "path": "",
+                    "id": "4ad86de2-9b23-4769-b6df-c29249d6f4f6",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Skill2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4ad86de2-9b23-4769-b6df-c29249d6f4f6",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Skill3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -518,38 +518,248 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "NextInventorySlot",
+                    "type": "Button",
+                    "id": "2c2fea9c-12a1-4429-be56-fc77ded5f884",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousInventorySlot",
+                    "type": "Button",
+                    "id": "e694b1fa-9e7c-41f7-831b-c447a0f9c5a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "82ac87f1-8bb9-428e-8eb2-64d58b07c699",
+                    "name": "Shift + D",
+                    "id": "21538f1c-a92b-4cf2-845d-1a08436462f3",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventoryPage",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "40b8af05-76b8-42c0-aa11-f6672aa7d3c3",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button",
+                    "id": "0594d8c1-861f-4554-bc09-a8417b24da75",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "NextInventoryPage",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shift + A",
+                    "id": "d1e7ca01-654a-4b7a-bf3f-2658c6bbfc2f",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventoryPage",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "c6bf572d-8264-4c06-832f-d1b46d181493",
+                    "name": "modifier",
+                    "id": "93fdc795-31ed-4853-9210-9bf7fa9ad66e",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "be2d2d08-40ad-4f5a-a93b-7305ec44cd38",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PreviousInventoryPage",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b28f98ea-5e39-4983-9887-450df40714c7",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventorySlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f48d3f0-3a82-4c39-8593-08b38f6a657c",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventorySlot",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Keyboard_SkillsUI",
-            "id": "1206371b-2da5-4d5c-afd9-1203cd3f266a",
-            "actions": [],
-            "bindings": []
+            "name": "Keyboard_EquipmentUI",
+            "id": "0e636c72-4ea3-4330-b8e9-0195a3052af8",
+            "actions": [
+                {
+                    "name": "NextInventoryPage",
+                    "type": "Button",
+                    "id": "f618dd64-1871-49e1-87e9-730c24559d3d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousInventoryPage",
+                    "type": "Button",
+                    "id": "4fa9fc02-602e-4eab-b137-92d58edabe07",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextInventorySlot",
+                    "type": "Button",
+                    "id": "721a3d3a-d127-4ef8-b782-db788b61a3ee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousInventorySlot",
+                    "type": "Button",
+                    "id": "4f7a9e59-4c0f-4ae8-a5c9-a37b2ea94f02",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Shift + D",
+                    "id": "3df7f6d8-0992-4be1-a1dd-97bc50279efd",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventoryPage",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "5aca17de-b47d-4226-822e-a63b89801e3f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button",
+                    "id": "3895ca41-e849-4c33-98ad-243ce9bab7a3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shift + A",
+                    "id": "95ef2f96-f079-4401-96a2-71a36d78f8ca",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventoryPage",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "7fcbf2a4-1aac-4499-9e6f-49aad54c932f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "2560069d-4456-4e2c-95a9-a1208d9698d5",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventoryPage",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e8d61968-53a8-4748-818e-19210fe04e0c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextInventorySlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4779d8ae-b78f-4443-9706-4f6e72f8768e",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousInventorySlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         },
         {
             "name": "Keyboard_SystemUI",
@@ -1229,7 +1439,7 @@
             ]
         },
         {
-            "name": "Controller_SkillsUI",
+            "name": "Controller_EquipmentUI",
             "id": "7d238661-9f19-40ef-96ac-24c178101bf4",
             "actions": [],
             "bindings": []

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e2a206e8e12584baec1cc1a7a98ef3, type: 3}
+  m_Name: CollectSwordQuest
+  m_EditorClassIdentifier: 
+  questName: The legendary sword
+  questID: 000001
+  questGiver: ???
+  questPlace: The Ruins
+  questDescription: You found a misterious sword. Probably the old man was looking
+    for it...
+  questType: 0
+  steps:
+  - stepType: 3
+    dialogueQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+    giveItemQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+      items: []
+    collectItemQuest:
+      items: []
+    interactQuest:
+      interactableID: 
+    killQuest:
+      targets: []
+    travelQuest:
+      TriggerPrefab: {fileID: 0}
+      TriggerPos: {x: 0, y: 0, z: 0}
+      TriggerRot: {x: 0, y: 0, z: 0, w: 0}
+  - stepType: 1
+    dialogueQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+    giveItemQuest:
+      NPC_ID: 
+      dialogueText: {fileID: 0}
+      items:
+      - ID: 400005
+        ammount: 1
+    collectItemQuest:
+      items: []
+    interactQuest:
+      interactableID: 
+    killQuest:
+      targets: []
+    travelQuest:
+      TriggerPrefab: {fileID: 0}
+      TriggerPos: {x: 0, y: 0, z: 0}
+      TriggerRot: {x: 0, y: 0, z: 0, w: 0}
+  questRewards:
+  - type: 0
+    ammount: 500
+    weapScrObj: {fileID: 0}
+    materialReward:
+      matScrObj: {fileID: 0}
+      count: 0
+    foodReward:
+      foodScrObj: {fileID: 0}
+      count: 0
+    specialItemReward:
+      specItemScrObj: {fileID: 0}
+      count: 0
+  - type: 2
+    ammount: 0
+    weapScrObj: {fileID: 0}
+    materialReward:
+      matScrObj: {fileID: 11400000, guid: 477a2fa2f4f736f4b997fc082a9e0410, type: 2}
+      count: 2
+    foodReward:
+      foodScrObj: {fileID: 0}
+      count: 0
+    specialItemReward:
+      specItemScrObj: {fileID: 0}
+      count: 0

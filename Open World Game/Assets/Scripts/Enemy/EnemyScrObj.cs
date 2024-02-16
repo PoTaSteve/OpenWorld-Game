@@ -5,8 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "Enemy")]
 public class EnemyScrObj : ScriptableObject
 {
-    public int attack;
-    public int defense;
-    public int speed;
-    public int heath;
+    public string enemyID;
+
+    public string enemyName;
+
+    public int baseAttack;
+    public int baseDefense;
+    public int baseSpeed;
+    public int maxHealth;
 }

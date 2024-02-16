@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77c98e276ad03941a3d751264afd28c, type: 3}
+  m_Name: Chest
+  m_EditorClassIdentifier: 
+  equipType: 2
+  itemID: 235672
+  itemName: Chest equip
+  itemDescription: Chest equip item test description
+  itemIcon: {fileID: 21300000, guid: 845f024673f03304eb099387f8d87de0, type: 3}
+  buyCost: 0
+  sellCost: 0

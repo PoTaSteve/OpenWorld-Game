@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e2a206e8e12584baec1cc1a7a98ef3, type: 3}
+  m_Name: HigherGrounds
+  m_EditorClassIdentifier: 
+  questName: Higher Grounds
+  questID: 000002
+  questGiver: ???
+  questPlace: The mountain peak
+  questDescription: You finally managed to experiance the breathtaking view on top
+    of the mountain. Go tell the old man about it, he might enjoy your story.
+  questType: 0
+  questRewards:
+  - type: 0
+    ammount: 1000
+    weapScrObj: {fileID: 0}
+    materialReward:
+      matScrObj: {fileID: 0}
+      count: 0
+    foodReward:
+      foodScrObj: {fileID: 0}
+      count: 0
+    specialItemReward:
+      specItemScrObj: {fileID: 0}
+      count: 0

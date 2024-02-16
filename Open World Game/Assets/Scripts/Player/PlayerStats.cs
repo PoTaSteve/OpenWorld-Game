@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Buffers.Text;
+using System;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -10,15 +12,28 @@ public class PlayerStats : MonoBehaviour
     public int currLvl;
     public int currXp;
 
-    public int currHealth;
-    public int currExtraHealth;
-    public int currMaxHealth;
-    
-    public float currAtk;
-    public float currWeaponAttack;
+    [Header("Health")]
+    public int currHP;
+    public int currShield;
 
-    public float currDef;
+    private int baseMaxHP;
+    public float percHPBuff;
+    public int flatHPBuff;
+    private int currMaxHP; // BaseHP * (1 + percHPBuff) + flatHPBuff
 
+    [Header("Attack")]
+    public float percATKBuff;
+    public int flatATKBuff;
+    private int baseATK;
+    private int currATK; // BaseATK * (1 + percATKBuff) + flatATKBuff
+
+    [Header("Defence")]
+    public float percDEFBuff;
+    public int flatDEFBuff;
+    private int baseDEF;
+    private int currDEF; // BaseDEF * (1 + percDEFBuff) + flatDEFBuff
+
+    [Header("Stamina")]
     public float currStamina;
     public float currMaxStamina;
     #endregion
@@ -33,6 +48,13 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI HealthText;
 
+    private void Start()
+    {
+        SetBaseStatsFromLevel(currLvl);
+
+        GameManager.Instance.equipmentMan.UpdatePlayerStatsUI();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
@@ -44,41 +66,60 @@ public class PlayerStats : MonoBehaviour
         {
             LoadPlayer();
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SetBaseStatsFromLevel(currLvl);
+
+            GameManager.Instance.equipmentMan.UpdatePlayerStatsUI();
+        }
     }
 
-    public void SetHealth(int health, int extraHealth)
+    public void SetHealth(int health)
     {
-        if (health > currMaxHealth)
+        if (health > currMaxHP)
         {
-            currHealth = currMaxHealth;
+            currHP = currMaxHP;
         }
         else
         {
-            currHealth = health;
-        }
+            currHP = health;
+        }        
 
-        if (extraHealth > currMaxHealth)
+        HealthBar.value = currHP;
+        
+
+        HealthText.text = currHP + "/" + currMaxHP;
+    }
+
+    public void SetShield(int shield)
+    {
+        if (shield > currMaxHP)
         {
-            currExtraHealth = currMaxHealth;
+            currShield = currMaxHP;
         }
         else
         {
-            currExtraHealth = extraHealth;
+            currShield = shield;
         }
 
-        HealthBar.value = currHealth;
-        ExtraHealthBar.value = currExtraHealth;
-
-        HealthText.text = currHealth + "/" + currMaxHealth;
+        ExtraHealthBar.value = currShield;
     }
 
-    public void SetMaxHelath(int maxHeath)
+    public void SetMaxHelath(int maxHeath, bool scaleCurrHealthPercentage)
     {
-        currMaxHealth = maxHeath;
+        if (scaleCurrHealthPercentage)
+        {
+            float perc = (float)currHP / currMaxHP;
+
+            currHP = (int)(maxHeath * perc);
+        }
+
+        currMaxHP = maxHeath;
         HealthBar.maxValue = maxHeath;
         ExtraHealthBar.maxValue = maxHeath;
 
-        HealthText.text = currHealth + "/" + currMaxHealth;
+        HealthText.text = currHP + "/" + currMaxHP;
     }
 
     public void GetDamage(int damage)
@@ -87,81 +128,81 @@ public class PlayerStats : MonoBehaviour
         int dmg = damage;
 
         // Anti one shot: if health is more than 90% health is set to 1% 
-        if (currHealth >= (currMaxHealth * 0.9f) && dmg >= (currExtraHealth + currHealth))
+        if (currHP >= (currMaxHP * 0.9f) && dmg >= (currShield + currHP))
         {
-            currExtraHealth = 0;
+            currShield = 0;
             ExtraHealthBar.value = 0;
 
-            currHealth = (int)(currMaxHealth * 0.01);
-            HealthBar.value = currHealth;
+            currHP = (int)(currMaxHP * 0.01);
+            HealthBar.value = currHP;
 
             return;
         }
 
-        if (currExtraHealth != 0)
+        if (currShield != 0)
         {
-            int newExtraHealth = currExtraHealth - dmg;
+            int newExtraHealth = currShield - dmg;
 
             if (newExtraHealth < 0)
             {
-                currExtraHealth = 0;
+                currShield = 0;
 
-                currHealth += newExtraHealth;
+                currHP += newExtraHealth;
             }
             else
             {
-                currExtraHealth = newExtraHealth;
+                currShield = newExtraHealth;
             }
         }
         else
         {
-            if (dmg >= currHealth)
+            if (dmg >= currHP)
             {
-                currHealth = 0;
+                currHP = 0;
 
                 Die();
             }
             else
             {
-                currHealth -= dmg;
+                currHP -= dmg;
             }
         }
 
-        HealthBar.value = currHealth;
-        ExtraHealthBar.value = currExtraHealth;
+        HealthBar.value = currHP;
+        ExtraHealthBar.value = currShield;
 
-        HealthText.text = currHealth + "/" + currMaxHealth;
+        HealthText.text = currHP + "/" + currMaxHP;
     }
 
     public void RegenHealth(int heal, bool isExtraHealth)
     {
         if (isExtraHealth)
         {
-            if (heal >= currMaxHealth - currExtraHealth)
+            if (heal >= currMaxHP - currShield)
             {
-                currExtraHealth = currMaxHealth;
+                currShield = currMaxHP;
             }
             else
             {
-                currExtraHealth += heal;
+                currShield += heal;
             }
         }
         else
         {
-            if (heal >= currMaxHealth - currHealth)
+            if (heal >= currMaxHP - currHP)
             {
-                currHealth = currMaxHealth;
+                currHP = currMaxHP;
             }
             else
             {
-                currHealth += heal;
+                currHP += heal;
             }
         }
 
-        HealthBar.value = currHealth;
-        ExtraHealthBar.value = currExtraHealth;
+        HealthBar.value = currHP;
+        ExtraHealthBar.value = currShield;
 
-        HealthText.text = currHealth + "/" + currMaxHealth;
+        HealthText.text = currHP + "/" + currMaxHP;
     }
 
     public void Die()
@@ -182,15 +223,64 @@ public class PlayerStats : MonoBehaviour
         currLvl = data.currLvl;
         currXp = data.currXp;
 
-        currHealth = data.currHealth;
-        currExtraHealth = data.currExtraHealth;
-        currMaxHealth = data.currMaxHealth;
+        currHP = data.currHP;
+        currShield = data.currShield;
+        currMaxHP = data.currMaxHP;
 
-        currAtk = data.currAtk;
+        currATK = data.currATK;
 
-        currDef = data.currDef;
+        currDEF = data.currDEF;
 
         currStamina = data.currStamina;
         currMaxStamina = data.currMaxStamina;
+    }
+
+    public void UpdateCurrMaxHP()
+    {
+        currMaxHP = (int)(baseMaxHP * (1 + percHPBuff) + flatHPBuff);
+    }
+
+    public void UpdateCurrATK()
+    {
+        currATK = (int)(baseATK * (1 + percATKBuff) + flatATKBuff);
+    }
+
+    public void UpdateCurrDEF()
+    {
+        currDEF = (int)(baseDEF * (1 + percDEFBuff) + flatDEFBuff);
+    }
+
+    public void UpdateAllCurrStats()
+    {
+        UpdateCurrMaxHP();
+        UpdateCurrATK();
+        UpdateCurrDEF();
+    }
+
+    public int GetCurrMaxHP()
+    {
+        return currMaxHP;
+    }
+
+    public int GetCurrATK()
+    {
+        return currATK;
+    }
+
+    public int GetCurrDEF()
+    {
+        return currDEF;
+    }
+
+    public int XpForNextLevel(int level)
+    {
+        return (int)(0.01f * MathF.Pow(level, 2) + 2 * level + 100);
+    }
+
+    public void SetBaseStatsFromLevel(int level)
+    {
+        baseMaxHP = 10 * level + (int)Math.Log(level) * level;
+        baseATK = 5 * level + (int)Math.Log(100 * level);
+        baseDEF = 2 * level;
     }
 }

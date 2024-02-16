@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NewQuest", menuName = "Quest")]
 public class QuestScrObj : ScriptableObject
@@ -12,10 +12,26 @@ public class QuestScrObj : ScriptableObject
     public string questPlace;
     [TextArea(4, 10)]
     public string questDescription;
-    public Sprite questIcon;
 
     public QuestType questType;
 
-    public List<QuestStepType> stepsType = new List<QuestStepType>();
-    public List<string> stepDescriptions = new List<string>();
+    public List<QuestReward> questRewards = new List<QuestReward>();
+}
+
+public enum QuestRewardType
+{
+    MONEY,
+    WEAPON
+}
+
+[Serializable]
+public class QuestReward
+{
+    public QuestRewardType type;
+
+    [DrawIf("type", QuestRewardType.MONEY)]
+    public int ammount;
+
+    [DrawIf("type", QuestRewardType.WEAPON)]
+    public WeaponScriptableObject weapScrObj;
 }

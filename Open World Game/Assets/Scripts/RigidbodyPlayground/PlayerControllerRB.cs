@@ -184,7 +184,7 @@ public class PlayerControllerRB : MonoBehaviour
                 }
             }
 
-            rb.velocity = velocity;
+            rb.linearVelocity = velocity;
 
             SetRotation(velocity);
 
@@ -211,7 +211,7 @@ public class PlayerControllerRB : MonoBehaviour
         stepsSinceLastGrounded += 1;
         stepsSinceLastJump += 1;
 
-        velocity = rb.velocity;
+        velocity = rb.linearVelocity;
 
         if (CheckClimbing() || CheckSwimming() || OnGround || SnapToGround() || CheckSteepContacts())
         {

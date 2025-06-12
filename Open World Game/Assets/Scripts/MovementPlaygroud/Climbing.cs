@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Cinemachine.CinemachineOrbitalTransposer;
 
 public class Climbing : MonoBehaviour
 {
@@ -198,7 +195,7 @@ public class Climbing : MonoBehaviour
 
             Vector3 forceToApply = transform.up * climbJumpUpForce + frontWallHit.normal * climbJumpBackForce;
 
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(forceToApply, ForceMode.Impulse);
         }        
     }
@@ -219,7 +216,7 @@ public class Climbing : MonoBehaviour
         {
             rb.AddForce(playerGFX.forward, ForceMode.Impulse);
 
-            if (rb.velocity.x < 0.1f && rb.velocity.z < 0.1f)
+            if (rb.linearVelocity.x < 0.1f && rb.linearVelocity.z < 0.1f)
             {
                 rb.AddForce(playerGFX.up, ForceMode.Force);
             }
@@ -231,6 +228,6 @@ public class Climbing : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 }

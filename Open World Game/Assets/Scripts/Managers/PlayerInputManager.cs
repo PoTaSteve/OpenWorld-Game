@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.EventSystems;
-using Cinemachine;
 
 public enum InputMethod
 {

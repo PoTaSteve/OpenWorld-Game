@@ -50,7 +50,7 @@ public class CustomGravityRigidbody : MonoBehaviour
 				return;
 			}
 
-			if (rb.velocity.sqrMagnitude < 0.0001f)
+			if (rb.linearVelocity.sqrMagnitude < 0.0001f)
 			{
 				floatDelay += Time.deltaTime;
 				if (floatDelay >= 1f)
@@ -68,7 +68,7 @@ public class CustomGravityRigidbody : MonoBehaviour
 		if (submergence > 0f)
 		{
 			float drag = Mathf.Max(0f, 1f - waterDrag * submergence * Time.deltaTime);
-			rb.velocity *= drag;
+			rb.linearVelocity *= drag;
 			rb.angularVelocity *= drag;
 			rb.AddForceAtPosition(gravity * -(buoyancy * submergence), transform.TransformPoint(buoyancyOffset), ForceMode.Acceleration);
 			submergence = 0f;

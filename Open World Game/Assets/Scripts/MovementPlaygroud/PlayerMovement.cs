@@ -123,11 +123,11 @@ public class PlayerMovement : MonoBehaviour
         // Handle drag
         if (isGrounded)
         {
-            rb.drag = groundDrag;
+            rb.linearDamping = groundDrag;
         }
         else
         {
-            rb.drag = 0;
+            rb.linearDamping = 0;
         }
     }
 
@@ -228,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         if (freeze)
         {
             state = MovementState.FREEZE;
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             desiredMoveSpeed = 0;
         }
         // Mode - Unlimited
@@ -255,7 +255,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.SLIDING;
 
-            if (OnSlope() && rb.velocity.y < 0.1f)
+            if (OnSlope() && rb.linearVelocity.y < 0.1f)
             {
                 desiredMoveSpeed = slideSpeed;
             }
@@ -346,7 +346,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
 
             // Avoid bumbing-like movement
-            if (rb.velocity.y > 0)
+            if (rb.linearVelocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
@@ -376,22 +376,22 @@ public class PlayerMovement : MonoBehaviour
         // Limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.velocity.magnitude > moveSpeed)
+            if (rb.linearVelocity.magnitude > moveSpeed)
             {
-                rb.velocity = rb.velocity.normalized * moveSpeed;
+                rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
             }
         }
 
         // Limiting speed on ground or in air
         else
         {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
             // Limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
     }
@@ -417,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
                 exitingSlope = true;
 
                 // Reset y velocity
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             }
